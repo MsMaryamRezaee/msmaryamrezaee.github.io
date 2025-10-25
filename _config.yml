@@ -1,6 +1,8 @@
 # Site settings
 title: A blog about lorem ipsum dolor sit amet
 description: A blog about lorem ipsum dolor sit amet
+title: Maryam Rezaee | CS Researcher
+description: A computer science researcher specializing in LLM Interpretability and Cognitively-Inspired AI.
 # baseurl: "/particle" # the subpath of your site, e.g. /blog
 # url: "localhost:3000" # the base hostname & protocol for your site e.g. http://willianjusten.com.br
 
@@ -12,6 +14,13 @@ email: anon@anon.com
 twitter_username: lorem_ipsum
 github_username:  lorem_ipsum
 gplus_username:  lorem_ipsum
+username: Maryam Rezaee
+user_description: |
+  A computer science researcher specializing in LLM Interpretability and Cognitively-Inspired AI. My objective is to develop robust, explainable systems by investigating the integration of human inductive biases and symbolic reasoning structures into neural models. My foundational experience includes a thesis on LLM input-output interactions and research in concept-based interpretability. I am now expanding this focus toward neurosymbolic architectures, evidenced by projects in program generation. I seek to advance this research with the aim of developing models capable of more robust and human-aligned reasoning.
+user_title: AI Researcher
+email: msmaryamrezaee@gmail.com
+telegram_username: msmrexe
+github_username:  msmrexe
 
 # Google-analytics
 google-analytics:
