@@ -84,8 +84,8 @@ gulp.task('js', function() {
 gulp.task('watch', function() {
   gulp.watch('src/styles/**/*.scss', gulp.series(['sass', 'jekyll-rebuild']));
   gulp.watch('src/js/**/*.js', gulp.series(['js', 'jekyll-rebuild']));
-  gulp.watch('src/fonts/**/*.{tff,woff,woff2}', gulp.series(['fonts']));
-  gulp.watch('src/img/**/*.{jpg,png,gif}', gulp.series(['imagemin']));
+  gulp.watch('src/fonts/**/*.{ttf,woff,woff2}', gulp.series(['fonts', 'jekyll-rebuild']));
+  gulp.watch('src/img/**/*.{jpg,png,gif}', gulp.series(['imagemin', 'jekyll-rebuild']));
   gulp.watch(['*html', '_includes/*html', '_layouts/*.html'], gulp.series(['jekyll-rebuild']));
 });
 
