@@ -40,26 +40,16 @@ gulp.task('browser-sync', gulp.series(['jekyll-build'], function(done) {
 }));
 
 /*
-* Create a base SCSS file for body background
-*/
-gulp.task('css-base', function(done) {
-	var fs = require('fs');
-	// This will create a file that sets the dark background on the body
-	fs.writeFileSync('src/styles/_base.scss', 'body, html { background-color: $main; }');
-	done();
-});
-
-/*
 * Compile and minify sass
 */
-gulp.task('sass', gulp.series(['css-base'], function() {
+gulp.task('sass', function() {
   return gulp.src('src/styles/**/*.scss')
     .pipe(plumber())
     .pipe(sass())
     .pipe(concat('main.css'))
     .pipe(csso())
-		.pipe(gulp.dest('assets/css/'))
-}));
+	.pipe(gulp.dest('assets/css/'))
+});
 
 /*
 * Compile fonts

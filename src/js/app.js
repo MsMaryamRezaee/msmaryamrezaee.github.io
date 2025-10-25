@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       },
       "color": {
-        "value": "#ffffff"
+        // NOTE: This color must be manually synced with $text-primary in _vars.scss
+        "value": "#EAEAEA"
       },
       "shape": {
         "type": "polygon",
@@ -53,7 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
       "line_linked": {
         "enable": true,
         "distance": 150,
-        "color": "#ffffff",
+        // NOTE: This color must be manually synced with $text-primary in _vars.scss
+        "color": "#EAEAEA",
         "opacity": 0.4,
         "width": 1
       },
