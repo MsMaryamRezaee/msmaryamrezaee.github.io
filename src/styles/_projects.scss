@@ -21,7 +21,7 @@
     margin: 0;
   }
   li {
-    color: $main;
+    color: $text-secondary;
     font-size: 1.1rem;
   }
   p {
@@ -70,25 +70,25 @@
 .project-link {
   display: inline-block;
   margin: 10px 0px;
-  padding: 5px;
-  color: $main;
+  padding: 5px 10px;
+  color: $accent;
   background-color: transparent;
-  border: 1px solid $main;
+  border: 1px solid $accent;
   border-radius: 10px;
   text-align: center;
   outline: none;
   text-decoration: none;
   cursor: pointer;
   transition: color 0.3s ease-out,
-              background-color 0.3s ease-out,
-              border-color 0.3s ease-out;
+    background-color 0.3s ease-out,
+    border-color 0.3s ease-out;
   &:hover {
-    background-color: $purple;
-    border-color: $purple;
-    color: #fff;
+    background-color: $accent;
+    border-color: $accent;
+    color: $main;
     transition: color 0.3s ease-in,
-                background-color 0.3s ease-in,
-                border-color 0.3s ease-in;
+      background-color 0.3s ease-in,
+      border-color 0.3s ease-in;
   }
   &:active {
     background-color: $purple;
