@@ -1,5 +1,5 @@
 # Site settings
-title: Maryam Rezaee | CS Researcher
+title: Maryam Rezaee | AI Researcher
 description: A computer science researcher specializing in LLM Interpretability and Cognitively-Inspired AI.
 # baseurl: "/particle" # the subpath of your site, e.g. /blog
 # url: "localhost:3000" # the base hostname & protocol for your site e.g. http://willianjusten.com.br
@@ -11,7 +11,7 @@ user_description: |
 user_title: AI Researcher
 email: msmaryamrezaee@gmail.com
 telegram_username: msmrexe
-github_username:  msmrexe
+github_username: msmrexe
 
 # Google-analytics
 google-analytics:
