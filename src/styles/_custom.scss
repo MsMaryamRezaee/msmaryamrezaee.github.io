@@ -246,3 +246,45 @@
     }
   }
 }
+
+// --- 6. Intro Typewriter Section ---
+
+#intro {
+  // We want this section to be vertically centered in the 
+  // remaining space between the header and the highlights.
+  // Using min-height: 100vh and some padding can achieve this.
+  padding-bottom: 100px; // Give space before highlights
+}
+
+.intro-container {
+  // Center the text and give it a max-width
+  text-align: center;
+  max-width: 800px; // Keep the paragraph readable
+  margin-top: 100px;
+}
+
+#typewriter-text {
+  font-size: 1.25rem;
+  color: $text-secondary;
+  line-height: 1.8;
+  // This helps keep the layout stable as text appears
+  min-height: 200px; 
+  display: inline; // Makes the cursor appear right after the text
+
+  // This creates the blinking cursor effect
+  &::after {
+    content: '_';
+    font-weight: 400;
+    color: $accent;
+    font-size: 1.5rem;
+    position: relative;
+    top: -5px;
+    animation: blink 1s infinite;
+  }
+}
+
+// Blinking animation for the cursor
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

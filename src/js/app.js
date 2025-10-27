@@ -257,4 +257,41 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(el);
   });
 
+  /**
+   * Typewriter Effect
+   */
+  const sourceElement = document.getElementById('typewriter-source');
+  const targetElement = document.getElementById('typewriter-text');
+  
+  if (sourceElement && targetElement) {
+    const text = sourceElement.textContent.trim();
+    let i = 0;
+    const speed = 30; // Speed in milliseconds (lower is faster)
+
+    function typeWriter() {
+      if (i < text.length) {
+        targetElement.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      } else {
+        // When finished, make the cursor static (not blinking)
+        targetElement.classList.add('finished-typing');
+      }
+    }
+    
+    // Start the typing effect
+    typeWriter();
+
+    // We also need to add a CSS rule to stop the blinking
+    // by creating a style tag in the head
+    const style = document.createElement('style');
+    style.innerHTML = `
+      #typewriter-text.finished-typing::after {
+        animation: none;
+        opacity: 1;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
 }, false);
