@@ -45,9 +45,10 @@
     display: flex;
     flex-direction: column;
     
-    // The subtle shadow you requested
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Very subtle black shadow
     transition: all 0.3s ease-out;
+
+    will-change: transform, box-shadow;
 
     &:hover {
       transform: translateY(-5px);
@@ -122,6 +123,8 @@
     border-bottom: 3px solid transparent;
     transition: all 0.4s ease-out; // The animation magic!
 
+    will-change: transform, border-color;
+
     &:hover {
       transform: translateY(-8px); // Lift it up
       border-radius: 8px; // Curve *all* corners
@@ -131,9 +134,6 @@
       border-top-color: $accent;
       border-right-color: $accent;
       border-bottom-color: $accent;
-      
-      // Add a subtle glow
-      box-shadow: 0 10px 25px rgba($accent, 0.15); 
     }
   }
 
@@ -284,7 +284,7 @@
   font-size: 1.25rem;
   color: $text-secondary;
   line-height: 1.8;
-  min-height: 600px; // Keep to prevent layout jump
+  min-height: 200px; // Keep to prevent layout jump
 
   // Style for each individual word span
   > span {
