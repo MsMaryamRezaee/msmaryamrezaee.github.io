@@ -1,11 +1,37 @@
-<footer class="footer">
+<!-- This is the new footer container that allows for a particle background -->
+<section class="footer-container">
+  
+  <!-- This div will hold the footer's particle canvas -->
+  <div id="footer-particles"></div>
+
+  <!-- This div holds your content, layered on top of the particles -->
+  <div class="footer-content">
+    
+    <!-- Re-added contact icons -->
+    <div class="footer-icons">
+      <a aria-label="My Email" href="mailto:{{site.email}}"><i class="icon fa fa-envelope"></i></a>
+      <a aria-label="My Telegram" target="_blank" href="https://telegram.me/{{site.telegram_username}}"><i class="icon fa fa-telegram" aria-hidden="true"></i></a>
+      <a aria-label="My Github" target="_blank" href="https://github.com/{{site.github_username}}"><i class="icon fa fa-github-alt" aria-hidden="true"></i></a>
+      <a aria-label="Download My CV" target="_blank" href="/assets/pdf/Maryam_Rezaee_CV.pdf"><i class="icon fa fa-download" aria-hidden="true"></i></a>
+    </div>
+
+    <!-- Added location -->
+    <p class="footer-location">
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
+      Tehran, Iran
+    </p>
+
+    <!-- Updated credits -->
     <p>&copy; {{ site.time | date: "%Y" }} {{site.username}}</p>
     <p>
       Design customized by <a href="https://github.com/{{site.github_username}}" target="_blank">Maryam Rezaee</a>.
       <br>
       Based on the <a href="https://github.com/nrandecker/particle" target="_blank">Particle Theme</a> by Nathan Randecker.
     </p>
-</footer>
+  </div>
+</section>
+
+<!-- Scripts remain outside the new footer section -->
 <script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="{{ "/assets/js/sweet-scroll.min.js" | prepend: site.baseurl }}"></script>
 <script src="{{ "/assets/js/main.js" | prepend: site.baseurl }}"></script>
