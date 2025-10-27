@@ -1,0 +1,159 @@
+// This file contains all new styles for the custom sections
+
+// --- 1. Global Section Styling ---
+
+.new-section-container {
+  width: 90%;
+  margin: 100px auto 0 auto; // Adds space between sections
+  max-width: 960px;
+  @media only screen and (min-width: $cut) {
+    width: 80%;
+  }
+
+  // Section title style (matches old _projects.html title)
+  h1 {
+    text-align: center;
+    margin-bottom: 2em;
+    padding-top: 0;
+  }
+}
+
+// --- 2. "Selected Highlights" Section ---
+
+#highlights {
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: 1fr; // 1 column on mobile
+    gap: 25px;
+    
+    // 2 columns on tablet
+    @media only screen and (min-width: 600px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    // 3 columns on desktop
+    @media only screen and (min-width: 900px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .highlight-card {
+    background-color: lighten($main, 5%); // Slightly lighter than bg
+    border: 1px solid lighten($main, 10%);
+    border-radius: 8px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    
+    // The subtle shadow you requested
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Very subtle black shadow
+    transition: all 0.3s ease-out;
+
+    &:hover {
+      transform: translateY(-5px);
+      // On hover, we use a subtle glow from the accent color
+      box-shadow: 0 6px 20px rgba($accent, 0.15); 
+    }
+
+    .highlight-type {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: $accent;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .highlight-title {
+      font-size: 1.25rem;
+      color: $text-primary;
+      margin: 0 0 15px 0;
+      padding: 0;
+      line-height: 1.4;
+    }
+
+    .highlight-desc {
+      font-size: 0.9rem;
+      color: $text-secondary;
+      margin: 0 0 20px 0;
+      flex-grow: 1; // This ensures the description text fills the space
+    }
+
+    .highlight-tags {
+      margin-bottom: 20px;
+      span {
+        display: inline-block;
+        background-color: lighten($main, 10%);
+        color: $text-secondary;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        margin: 3px 2px;
+      }
+    }
+    
+    .project-link {
+      margin-top: auto; // This pushes the button to the bottom of the card
+    }
+  }
+}
+
+
+// --- 3. "Current Focus" Section ---
+
+#focus {
+  .focus-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 800px; // Make it a bit narrower than full width
+    margin: 0 auto;
+  }
+
+  .focus-item {
+    display: flex;
+    align-items: flex-start; // Aligns icon with top of text
+    gap: 20px;
+    background-color: lighten($main, 3%); // Even subtler bg
+    border-left: 3px solid $accent; // Gives a nice "timeline" feel
+    padding: 20px;
+    border-radius: 0 8px 8px 0; // Rounded corners on one side
+  }
+
+  .focus-icon {
+    font-size: 1.75rem;
+    color: $accent;
+    padding-top: 3px; // Small alignment tweak
+    min-width: 25px; // Ensures alignment even if icon is narrow
+    text-align: center;
+  }
+
+  .focus-content {
+    h4 {
+      margin: 0 0 5px 0;
+      padding: 0;
+      font-size: 1.15rem;
+      color: $text-primary;
+    }
+    p {
+      margin: 0;
+      color: $text-secondary;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+  }
+}
+
+
+// --- 4. Animation (for fade-in-on-scroll) ---
+
+.js-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  // This matches the animation from the Neumorphism theme
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

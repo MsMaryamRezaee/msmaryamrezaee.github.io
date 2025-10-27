@@ -1,6 +1,10 @@
 <footer class="footer">
-    <p>&copy; {{site.username}}</p>
-    <p>Build with Jekyll and <span class="love">❤</span> by <a href="https://github.com/nrandecker">Nathan Randecker</a></p>
+    <p>&copy; {{ site.time | date: "%Y" }} {{site.username}}</p>
+    <p>
+      Design customized by <a href="https://github.com/{{site.github_username}}" target="_blank">Maryam Rezaee</a>.
+      <br>
+      Based on the <a href="https://github.com/nrandecker/particle" target="_blank">Particle Theme</a> by Nathan Randecker.
+    </p>
 </footer>
 <script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="{{ "/assets/js/sweet-scroll.min.js" | prepend: site.baseurl }}"></script>

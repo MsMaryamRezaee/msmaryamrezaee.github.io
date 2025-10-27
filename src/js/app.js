@@ -117,4 +117,31 @@ document.addEventListener("DOMContentLoaded", function () {
     "retina_detect": true
   });
 
+/**
+   * Reveal-on-scroll animation
+   * Inspired by the Neumorphism theme
+   */
+  const revealElements = document.querySelectorAll('.js-reveal');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // When the element is in view, add the 'is-visible' class
+        entry.target.classList.add('is-visible');
+        
+        // We don't need to keep watching it
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    root: null, // observes intersections relative to the viewport
+    rootMargin: '0px',
+    threshold: 0.1 // Triggers when 10% of the element is visible
+  });
+
+  // Tell the observer to watch each of our 'js-reveal' elements
+  revealElements.forEach(el => {
+    observer.observe(el);
+  });
+  
 }, false);
