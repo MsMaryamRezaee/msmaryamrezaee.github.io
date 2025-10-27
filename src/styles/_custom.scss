@@ -334,11 +334,20 @@
     color: $text-secondary;
     transition: color 0.3s ease;
 
-    i {
-      font-size: 4rem; // Icon size
-      color: $text-primary; // Make icon brighter
+> i {
+      font-size: 4rem;
+      color: $text-primary;
+      
+      // This forces the correct font-family to be applied,
+      // winning the specificity war.
+      &[class^="devicon-"] {
+        font-family: "devicon";
+      }
+      &[class*=" si-"] {
+        font-family: "simple-icons";
+      }
     }
-
+    
     span {
       font-size: 0.9rem;
       margin-top: 10px;
