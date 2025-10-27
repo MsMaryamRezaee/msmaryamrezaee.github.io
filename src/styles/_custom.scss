@@ -97,7 +97,6 @@
   }
 }
 
-
 // --- 3. "Current Focus" Section ---
 
 #focus {
@@ -113,17 +112,38 @@
     display: flex;
     align-items: flex-start; // Aligns icon with top of text
     gap: 20px;
-    background-color: lighten($main, 3%); // Even subtler bg
-    border-left: 3px solid $accent; // Gives a nice "timeline" feel
+    background-color: lighten($main, 3%);
+    border-left: 3px solid $accent;
     padding: 20px;
-    border-radius: 0 8px 8px 0; // Rounded corners on one side
+    border-radius: 0 8px 8px 0; // Initial radius
+    
+    // --- NEW ANIMATION ---
+    border-top: 3px solid transparent;    // Add placeholder borders
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    transition: all 0.4s ease-out; // The animation magic!
+
+    &:hover {
+      transform: translateY(-8px); // Lift it up
+      border-radius: 8px; // Curve *all* corners
+      
+      // "Expand" the border to be all-around
+      border-left-color: $accent;
+      border-top-color: $accent;
+      border-right-color: $accent;
+      border-bottom-color: $accent;
+      
+      // Add a subtle glow
+      box-shadow: 0 10px 25px rgba($accent, 0.15); 
+    }
+    // --- END NEW ANIMATION ---
   }
 
   .focus-icon {
     font-size: 1.75rem;
     color: $accent;
-    padding-top: 3px; // Small alignment tweak
-    min-width: 25px; // Ensures alignment even if icon is narrow
+    padding-top: 3px; 
+    min-width: 25px; 
     text-align: center;
   }
 
@@ -142,7 +162,6 @@
     }
   }
 }
-
 
 // --- 4. Animation (for fade-in-on-scroll) ---
 
