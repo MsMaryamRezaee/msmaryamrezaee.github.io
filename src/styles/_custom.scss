@@ -288,3 +288,70 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+
+// --- 7. Skills Scroller Section ---
+
+#skills {
+  // Reset the top margin from .new-section-container
+  // because we just want the title
+  .new-section-container {
+    margin-top: 100px;
+    margin-bottom: 0;
+  }
+}
+
+.skills-scroller {
+  background: lighten($main, 3%);
+  overflow: hidden;
+  padding: 40px 0;
+  margin-top: 2em; // Space after the "Core Technologies" title
+  white-space: nowrap;
+
+  // This creates the fade-out effect on the left and right edges
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+
+  .skills-track {
+    display: inline-block; // Use inline-block for animation
+    animation: scroll-left 40s linear infinite;
+  }
+
+  .skill-icon {
+    display: inline-flex; // Use flex to align icon and text
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px; // Fixed width for each icon
+    margin: 0 20px;
+    color: $text-secondary;
+    transition: color 0.3s ease;
+
+    i {
+      font-size: 4rem; // Icon size
+      color: $text-primary; // Make icon brighter
+    }
+
+    span {
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    &:hover {
+      color: $accent; // Highlight text on hover
+      i {
+        color: $accent; // Highlight icon on hover
+      }
+    }
+  }
+}
+
+// The scrolling animation
+// We move it -50% because our track is 200% width (original + duplicate)
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
