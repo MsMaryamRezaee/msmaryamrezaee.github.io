@@ -258,40 +258,46 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /**
-   * Typewriter Effect
+   * Word-by-Word Reveal Effect (Lighter)
    */
   const sourceElement = document.getElementById('typewriter-source');
   const targetElement = document.getElementById('typewriter-text');
-  
+
   if (sourceElement && targetElement) {
-    const text = sourceElement.textContent.trim();
-    let i = 0;
-    const speed = 30; // Speed in milliseconds (lower is faster)
+    // 1. Get the text and split it into words
+    const words = sourceElement.textContent.trim().split(/\s+/);
 
-    function typeWriter() {
-      if (i < text.length) {
-        targetElement.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-      } else {
-        // When finished, make the cursor static (not blinking)
-        targetElement.classList.add('finished-typing');
-      }
-    }
-    
-    // Start the typing effect
-    typeWriter();
+    // 2. Create a <span> for each word and add it to the DOM
+    // We do this all at once for performance.
+    words.forEach(word => {
+      const span = document.createElement('span');
+      span.textContent = word;
+      targetElement.appendChild(span);
+      // Add the space back
+      targetElement.appendChild(document.createTextNode(' ')); 
+    });
 
-    // We also need to add a CSS rule to stop the blinking
-    // by creating a style tag in the head
-    const style = document.createElement('style');
-    style.innerHTML = `
-      #typewriter-text.finished-typing::after {
-        animation: none;
-        opacity: 1;
+    // 3. Get all the spans we just created
+    const spans = targetElement.querySelectorAll('span');
+
+    // 4. Use an observer to start the animation only when it's in view
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        // 5. Stagger the 'is-visible' class addition
+        spans.forEach((span, index) => {
+          setTimeout(() => {
+            span.classList.add('is-visible');
+          }, index * 75); // 75ms delay between each word
+        });
+        // We're done, so stop observing
+        observer.unobserve(targetElement);
       }
-    `;
-    document.head.appendChild(style);
+    }, { 
+      threshold: 0.1 // Start when 10% is visible
+    });
+
+    // Start observing the text container
+    observer.observe(targetElement);
   }
   
 }, false);

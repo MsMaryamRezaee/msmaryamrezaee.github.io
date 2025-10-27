@@ -117,7 +117,6 @@
     padding: 20px;
     border-radius: 0 8px 8px 0; // Initial radius
     
-    // --- NEW ANIMATION ---
     border-top: 3px solid transparent;    // Add placeholder borders
     border-right: 3px solid transparent;
     border-bottom: 3px solid transparent;
@@ -136,7 +135,6 @@
       // Add a subtle glow
       box-shadow: 0 10px 25px rgba($accent, 0.15); 
     }
-    // --- END NEW ANIMATION ---
   }
 
   .focus-icon {
@@ -286,26 +284,21 @@
   font-size: 1.25rem;
   color: $text-secondary;
   line-height: 1.8;
-  // This helps keep the layout stable as text appears
-  min-height: 200px; 
-  display: inline; // Makes the cursor appear right after the text
+  min-height: 600px; // Keep to prevent layout jump
 
-  // This creates the blinking cursor effect
-  &::after {
-    content: '_';
-    font-weight: 400;
-    color: $accent;
-    font-size: 1.5rem;
-    position: relative;
-    top: -5px;
-    animation: blink 1s infinite;
+  // Style for each individual word span
+  > span {
+    display: inline-block; // Needed for transform
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
   }
-}
-
-// Blinking animation for the cursor
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  
+  // The class our JS adds
+  > span.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // --- 7. Skills Scroller Section ---
