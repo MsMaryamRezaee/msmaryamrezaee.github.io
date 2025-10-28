@@ -44,45 +44,73 @@
     padding: 25px;
     display: flex;
     flex-direction: column;
-    // We make the card a positioning context for the glow
+    // Make the card a container for its pseudo-elements
     position: relative; 
-    z-index: 2; // Sits on top of the glow element
+    z-index: 2; // Sits on top of the shadows
 
-    // We KEEP the static, non-animated shadow for depth
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-
-    // We ONLY transition the 'transform' property, not 'all'
+    // We ONLY transition the 'transform' property
     transition: transform 0.3s ease-out;
-    will-change: transform;
+    // will-change: transform;
 
     &:hover {
       transform: translateY(-5px);
       // On hover, we use a subtle glow from the accent color
       // box-shadow: 0 6px 20px rgba($accent, 0.15); 
-      // We will show the ::after element instead
+
+      // On hover, fade OUT the static shadow
+      &::before {
+        opacity: 0;
+      }
+
+      // On hover, fade IN the accent glow
       &::after {
         opacity: 1;
       }
     }
 
-    // This is the new, lightweight "glow"
-    &::after {
+    // This is the NEW STATIC SHADOW
+    &::before {
       content: '';
       position: absolute;
-      // Position it behind the card
-      z-index: -1; 
-      // Make it the same size as the card
+      z-index: -1; // Sits behind the card
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      // This is the gradient that fakes the glow
-      background: radial-gradient(ellipse at center, rgba($accent, 0.3) 0%, transparent 70%);
-      // Start hidden
-      opacity: 0;
-      // Animate its opacity (very fast!)
+      
+      // The "fading grading"
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.25) 0%, transparent 70%);
+      
+      // Mimic the shadow being "pushed down"
+      transform: translateY(6px) scale(0.98); 
+      
+      // It's on by default
+      opacity: 1; 
+      
+      // It will fade out on hover
       transition: opacity 0.3s ease-out;
-      will-change: opacity;
+    }
+
+    // This is the NEW HOVER GLOW
+    // This is the accent-colored gradient
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: -1; // Sits behind the card
+      top: -5px;   // Make it slightly larger
+      left: -5px;
+      width: calc(100% + 10px);
+      height: calc(100% + 10px);
+      
+      // The accent-colored "fading grading"
+      background: radial-gradient(ellipse at center, rgba($accent, 0.15) 0%, transparent 70%);
+      
+      // It's hidden by default
+      opacity: 0; 
+      
+      // It will fade in on hover
+      transition: opacity 0.3s ease-out;
+      // will-change: opacity;
     }
 
     .highlight-type {
