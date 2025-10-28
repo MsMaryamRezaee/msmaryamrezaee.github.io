@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "color": "#000000"
         },
         "polygon": {
-          "nb_sides": 5
+          "nb_sides": 6
         },
         "image": {
           "src": "img/github.svg",
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "color": "#000000"
         },
         "polygon": {
-          "nb_sides": 5
+          "nb_sides": 6
         },
         "image": {
           "src": "img/github.svg",

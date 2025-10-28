@@ -44,14 +44,45 @@
     padding: 25px;
     display: flex;
     flex-direction: column;
-    
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Very subtle black shadow
-    transition: all 0.3s ease-out;
+    // We make the card a positioning context for the glow
+    position: relative; 
+    z-index: 2; // Sits on top of the glow element
+
+    // We KEEP the static, non-animated shadow for depth
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    // We ONLY transition the 'transform' property, not 'all'
+    transition: transform 0.3s ease-out;
+    will-change: transform;
 
     &:hover {
       transform: translateY(-5px);
       // On hover, we use a subtle glow from the accent color
-      box-shadow: 0 6px 20px rgba($accent, 0.15); 
+      // box-shadow: 0 6px 20px rgba($accent, 0.15); 
+      // We will show the ::after element instead
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    // This is the new, lightweight "glow"
+    &::after {
+      content: '';
+      position: absolute;
+      // Position it behind the card
+      z-index: -1; 
+      // Make it the same size as the card
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      // This is the gradient that fakes the glow
+      background: radial-gradient(ellipse at center, rgba($accent, 0.3) 0%, transparent 70%);
+      // Start hidden
+      opacity: 0;
+      // Animate its opacity (very fast!)
+      transition: opacity 0.3s ease-out;
+      will-change: opacity;
     }
 
     .highlight-type {
