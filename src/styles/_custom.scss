@@ -48,7 +48,7 @@
     // Layer 1 (top): The gradient, fading to TRANSPARENT
     // Layer 2 (bottom): The solid card color
     background: 
-      radial-gradient(ellipse at center, rgba($main, 0.2) 0%, transparent 70%),
+      radial-gradient(ellipse at center, rgba($main, 0.1) 0%, transparent 70%),
       lighten($main, 5%);
 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -65,7 +65,7 @@
       // Layer 1: Accent glow, fading to TRANSPARENT
       // Layer 2: The solid card color
       background: 
-        radial-gradient(ellipse at center, rgba($accent, 0.15) 0%, transparent 70%),
+        radial-gradient(ellipse at center, rgba($accent, 0.05) 0%, transparent 70%),
         lighten($main, 5%);
     }
 
@@ -388,7 +388,7 @@
         font-family: "devicon";
       }
       &[class*="si-"] {
-        font-family: "simple-icons";
+        font-family: "Simple Icons";
       }
     }
     
