@@ -45,13 +45,16 @@
     flex-direction: column;
 
     // This is the normal state background
-    // Fades from main bg color to the card color
-    background: radial-gradient(ellipse at center, rgba($main, 0.5) 0%, lighten($main, 5%) 70%);
+    // Layer 1 (top): The gradient, fading to TRANSPARENT
+    // Layer 2 (bottom): The solid card color
+    background: 
+      radial-gradient(ellipse at center, rgba($main, 0.2) 0%, transparent 70%),
+      lighten($main, 5%);
+
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 
     // We transition 'all' to animate the background, shadow, and transform
     transition: all 0.3s ease-out;
-    transition: transform 0.3s ease-out;
 
     &:hover {
       transform: translateY(-5px);
@@ -59,8 +62,11 @@
       box-shadow: 0 6px 20px rgba($accent, 0.15);
       
       // This is the hover state background
-      // Fades from a subtle accent glow to the card color
-      background: radial-gradient(ellipse at center, rgba($accent, 0.2) 0%, lighten($main, 5%) 70%);
+      // Layer 1: Accent glow, fading to TRANSPARENT
+      // Layer 2: The solid card color
+      background: 
+        radial-gradient(ellipse at center, rgba($accent, 0.15) 0%, transparent 70%),
+        lighten($main, 5%);
     }
 
     .highlight-type {
