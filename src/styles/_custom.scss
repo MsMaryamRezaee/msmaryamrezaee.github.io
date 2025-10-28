@@ -315,13 +315,42 @@
   margin-top: 2em; // Space after the "Core Technologies" title
   white-space: nowrap;
 
-  // This creates the fade-out effect on the left and right edges
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  // This is the key: we make the container relative
+  // so we can add gradient overlays
+  position: relative;
+  
+  // This is the CHEAP overlay for the left fade
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15%; // 15% of the container width
+    height: 100%;
+    // Fades from the background color to transparent
+    background: linear-gradient(to right, $main, transparent);
+    z-index: 2; // Sits on top of the scrolling content
+    pointer-events: none; // Lets you click "through" it
+  }
+  
+  // This is the CHEAP overlay for the right fade
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15%;
+    height: 100%;
+    // Fades from transparent to the background color
+    background: linear-gradient(to left, $main, transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
 
   .skills-track {
     display: inline-block; // Use inline-block for animation
     animation: scroll-left 40s linear infinite;
+    transform: translateZ(0);
   }
 
   .skill-icon {
@@ -334,7 +363,7 @@
     color: $text-secondary;
     transition: color 0.3s ease;
 
-> i {
+    > i {
       font-size: 4rem;
       color: $text-primary;
       
