@@ -38,91 +38,31 @@
   }
 
   .highlight-card {
+    border: 1px solid lighten($main, 10%);
     border-radius: 8px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    // Make the card a container for its pseudo-elements
-    position: relative; 
-    z-index: 2; // Sits on top of the shadows
 
-    // We ONLY transition the 'transform' property
+    // This is the normal state background
+    // Fades from main bg color to the card color
+    background: radial-gradient(ellipse at center, $main 0%, lighten($main, 5%) 70%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    // We transition 'all' to animate the background, shadow, and transform
+    transition: all 0.3s ease-out;
     transition: transform 0.3s ease-out;
-    // will-change: transform;
 
     &:hover {
       transform: translateY(-5px);
       // On hover, we use a subtle glow from the accent color
-      // box-shadow: 0 6px 20px rgba($accent, 0.15); 
-
-      // On hover, fade OUT the static shadow
-      &::before {
-        opacity: 0;
-      }
-
-      // On hover, fade IN the accent glow
-      &::after {
-        opacity: 1;
-      }
+      box-shadow: 0 6px 20px rgba($accent, 0.15);
+      
+      // This is the hover state background
+      // Fades from a subtle accent glow to the card color
+      background: radial-gradient(ellipse at center, rgba($accent, 0.1) 0%, lighten($main, 5%) 70%);
     }
 
-    // This is the static lightweight shadow
-    &::before {
-      content: '';
-      position: absolute;
-      z-index: -1; // Sits behind the card
-      top: -5px;
-      left: -5px;
-      width: calc(100% + 10px);
-      height: calc(100% + 10px);
-      
-      // The "fading grading"
-      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.2) 20%, transparent 70%);
-      // Mimic the shadow being "pushed down"
-      transform: translateY(6px);      
-      // It's on by default
-      opacity: 1; 
-      // It will fade out on hover
-      transition: opacity 0.3s ease-out;
-    }
-
-    // This is lightweight hover glow
-    &::after {
-      content: '';
-      position: absolute;
-      z-index: -1; // Sits behind the card
-      top: -5px;   // Make it slightly larger
-      left: -5px;
-      width: calc(100% + 10px);
-      height: calc(100% + 10px);
-      
-      // The accent-colored "fading grading"
-      background: radial-gradient(ellipse at center, rgba($accent, 0.15) 20%, transparent 70%);
-      // It's hidden by default
-      opacity: 0; 
-      // It will fade in on hover
-      transition: opacity 0.3s ease-out;
-      // will-change: opacity;
-    }
-
-    // The wrapper to style the actual card
-    .card-content-wrapper {
-      // Apply the background, border, and padding HERE
-      background-color: lighten($main, 5%);  // Slightly lighter than bg
-      border: 1px solid lighten($main, 10%);
-      border-radius: 8px; // Match the parent
-      padding: 25px;
-      
-      // Sits on top of the parent's pseudo-elements
-      position: relative; 
-      z-index: 1; 
-      
-      // These rules are needed to make flexbox work correctly
-      display: flex;
-      flex-direction: column;
-      height: 100%; // Fill the parent card
-    }
-
-    // These styles apply to the content *inside* the wrapper
     .highlight-type {
       font-size: 0.8rem;
       text-transform: uppercase;
