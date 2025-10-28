@@ -4,7 +4,7 @@
 
 .new-section-container {
   width: 90%;
-  margin: 100px auto 0 auto; // Adds space between sections
+  margin: 150px auto 0 auto; // Adds space between sections
   max-width: 960px;
   @media only screen and (min-width: $cut) {
     width: 80%;
@@ -194,7 +194,7 @@
   overflow: hidden;
   background: $main; // Fallback if particles don't load
   padding: 60px 20px; // 60px top/bottom, 20px left/right
-  margin-top: 100px;
+  margin-top: 150px;
 }
 
 #footer-particles {
@@ -295,7 +295,7 @@
   font-size: 1.25rem;
   color: $text-secondary;
   line-height: 1.8;
-  min-height: 200px; // Keep to prevent layout jump
+  min-height: 150px; // Keep to prevent layout jump
 
   // Style for each individual word span
   > span {
@@ -318,7 +318,7 @@
   // Reset the top margin from .new-section-container
   // because we just want the title
   .new-section-container {
-    margin-top: 100px;
+    margin-top: 150px;
     margin-bottom: 0;
   }
 }
