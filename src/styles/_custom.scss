@@ -46,7 +46,7 @@
 
     // This is the normal state background
     // Fades from main bg color to the card color
-    background: radial-gradient(ellipse at center, $main 0%, lighten($main, 5%) 70%);
+    background: radial-gradient(ellipse at center, rgba($main, 0.5) 0%, lighten($main, 5%) 70%);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 
     // We transition 'all' to animate the background, shadow, and transform
@@ -60,7 +60,7 @@
       
       // This is the hover state background
       // Fades from a subtle accent glow to the card color
-      background: radial-gradient(ellipse at center, rgba($accent, 0.1) 0%, lighten($main, 5%) 70%);
+      background: radial-gradient(ellipse at center, rgba($accent, 0.2) 0%, lighten($main, 5%) 70%);
     }
 
     .highlight-type {
