@@ -387,9 +387,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      height: 4rem;  // Force a consistent height (same as font-size)
-      width: 4rem;   // Force a consistent width
-      
+      height: 5rem;  // Force a consistent height
+      width: 5rem;   // Force a consistent width
+
       // This forces the correct font-family to be applied,
       // winning the specificity war.
       &[class^="devicon-"] {
