@@ -456,54 +456,26 @@
   // --- LOGO'S LOOK ---
   stroke: $text-primary; 
   stroke-width: 1px; 
-  fill: transparent;
-  
-  // --- ANIMATION CONTROLS ---
-  // We've removed the 'animation' property from here.
-  // JavaScript will add a class to trigger it.
+  fill: transparent; // No fill
 }
 
 // This class will be added by JS on scroll
 #logo-path.is-animating {
-  // Runs our new loop animation, which lasts 10 seconds
-  animation: logo-loop 10s ease-in-out infinite;
+  // 1. "draw": the name of our animation
+  // 2. "3s": takes 3 seconds to draw
+  // 3. "ease-in-out": smooth speed
+  // 4. "infinite": loops forever
+  // 5. "alternate": runs forwards (draws), then backwards (undraws)
+  animation: draw 3s ease-in-out infinite alternate;
 }
 
-/* Keyframe 1: The New Loop
-  - 0-40%: Draws the line (4s)
-  - 40-50%: Fills the shape (1s)
-  - 50-70%: Holds the filled shape (2s)
-  - 70-85%: Fades everything out (1.5s)
-  - 85-100%: Pauses (1.5s) & resets
+/* Keyframe 1: The Drawing Animation
+   It animates FROM its JS-set state (stroke-dashoffset: length)
+   TO this state (stroke-dashoffset: 0).
+   The "alternate" direction handles the "undraw" automatically.
 */
-@keyframes logo-loop {
-  0% {
-    stroke-dashoffset: 0; // JS sets this to length, 0 is just a placeholder
-    fill: transparent;
-    opacity: 1;
-  }
-  40% {
+@keyframes draw {
+  to {
     stroke-dashoffset: 0;
-    fill: transparent;
-    opacity: 1;
-  }
-  50% {
-    stroke-dashoffset: 0;
-    fill: $text-primary; // Fill fades in (matches request #1)
-    opacity: 1;
-  }
-  70% {
-    stroke-dashoffset: 0;
-    fill: $text-primary;
-    opacity: 1;
-  }
-  85% {
-    stroke-dashoffset: 0;
-    fill: $text-primary;
-    opacity: 0; // Fade out the whole logo
-  }
-  100% {
-    fill: transparent;
-    opacity: 0;
   }
 }
