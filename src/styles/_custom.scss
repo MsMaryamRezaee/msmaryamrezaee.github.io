@@ -424,3 +424,46 @@
     transform: translateX(-50%);
   }
 }
+
+// --- 8. Logo Animation ---
+
+.logo-animation-container {
+  text-align: center;
+  // Use the same margin as your other sections
+  margin: 150px auto 0 auto; 
+
+  svg {
+    width: 300px; // You can adjust this size
+  }
+}
+
+#logo-path {
+  // --- LOGO'S LOOK ---
+  // Use the theme's text color for the line
+  stroke: $text-primary; 
+  stroke-width: 1px; 
+  fill: transparent;
+
+  // --- ANIMATION CONTROLS ---
+  animation: draw 4s ease-in-out forwards, 
+             fill-in 0.5s 4s forwards;
+}
+
+/* Keyframe 1: The Drawing Animation */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Keyframe 2: The Fill Animation */
+@keyframes fill-in {
+  from {
+    fill: transparent;
+  }
+  to {
+    // Use your theme's text color for the fill
+    fill: $text-primary; 
+    stroke: transparent;
+  }
+}

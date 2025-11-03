@@ -299,5 +299,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Start observing the text container
     observer.observe(targetElement);
   }
+
+  /**
+   * SVG Logo Drawing Animation
+   */
+  const logoPath = document.querySelector('#logo-path');
+  if (logoPath) {
+    const length = logoPath.getTotalLength();
+    logoPath.style.strokeDasharray = length;
+    logoPath.style.strokeDashoffset = length;
+  }
   
 }, false);
