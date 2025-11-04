@@ -21,6 +21,11 @@
 // --- 2. "Selected Highlights" Section ---
 
 #highlights {
+
+  .new-section-container {
+  margin-top: 0;
+  }
+
   .highlights-grid {
     display: grid;
     grid-template-columns: 1fr; // 1 column on mobile
@@ -445,8 +450,8 @@
   position: relative; // Must be on top of particles
   z-index: 2;
   text-align: center;
-  margin: 150px auto 0 auto; 
-
+  margin: 150px auto; // This means 150px top/bottom, auto left/right
+  
   svg {
     width: 300px; 
   }
