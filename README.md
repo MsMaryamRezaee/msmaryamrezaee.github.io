@@ -1,71 +1,119 @@
-# Particle Jekyll Theme
+# MR: Personal Portfolio Website
 
-![](./particle.jpg)
+<a href="https://msmaryamrezaee.github.io">
+  <img src="https://raw.githubusercontent.com/MsMaryamRezaee/.github/main/profile/banner.gif" alt="MR Banner">
+</a>
 
-This is a simple and minimalist template for Jekyll designed for developers that want to show of their portfolio.
+This repository contains the source code for my personal portfolio and academic website, built with Jekyll and hosted on GitHub Pages. The design is a custom redesign based on an initial basic theme, now reorganized for maintainability and scalability.
 
-The Theme features:
+## 🤖 Tech Stack
 
-- Gulp
-- SASS
-- Sweet Scroll
-- Particle.js
-- BrowserSync
-- Font Awesome and Devicon icons
-- Google Analytics
-- Info Customization
+* **Jekyll:** Static site generator
+* **Sass (SCSS):** CSS pre-processor for modular styles
+* **Gulp.js:** Task runner for compiling assets (Sass, JS)
+* **particles.js:** Background animations
+* **GitHub Pages:** Hosting
 
-## Basic Setup
+---
 
-1. [Install Jekyll](http://jekyllrb.com)
-2. Clone the particle theme: `git clone https://github.com/nrandecker/particle.git`
-3. Edit `_config.yml` to personalize your site.
+## 📂 Website Structure
 
-## Site and User Settings
-
-You have to fill some informations on `_config.yml` to customize your site.
+This repository uses a `src` directory for all pre-compiled assets (Sass, JS) and follows a modular Jekyll structure.
 
 ```
-# Site settings
-description: A blog about lorem ipsum dolor sit amet
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://localhost:3000" # the base hostname & protocol for your site
-
-# User settings
-username: Lorem Ipsum
-user_description: Anon Developer at Lorem Ipsum Dolor
-user_title: Anon Developer
-email: anon@anon.com
-twitter_username: lorem_ipsum
-github_username:  lorem_ipsum
-gplus_username:  lorem_ipsum
+msmaryamrezaee.github.io/
+│
+├── .gitignore                        # Ignores compiled assets and node_modules
+├── LICENSE                           # MIT License
+├── README.md                         # This file
+├── _config.yml                       # Main Jekyll configuration
+├── gulpfile.js                       # Gulp task definitions
+├── package.json                      # Node.js dependencies
+│
+├── index.html                        # The homepage
+├── about.md                          # Placeholder for About page
+├── research.md                       # Placeholder for Research page
+├── projects.md                       # Placeholder for Projects page
+├── talks.md                          # Placeholder for Talks page
+│
+├── favicon/                          # Site favicons
+│
+├── _layouts/
+│   ├── default.html                  # Base template (head, body, footer)
+│   ├── home.html                     # Homepage layout (includes hero header)
+│   └── page.html                     # Standard layout for all other pages
+│
+├── _includes/
+│   ├── head.html                     # HTML <head> contents
+│   ├── google-analytics.html         # Analytics
+│   ├── logo-animation.html           # Animation of MR logo
+│   ├── footer.html                   # Site footer
+│   ├── hero-header.html              # Homepage hero banner (with particles)
+│   ├── nav-header.html               # Standard navigation bar for subpages
+│   └── ...                           # Homepage section components (intro, highlights, skills)
+│
+├── src/
+│   ├── js/
+│   │   └── app.js                    # Custom JavaScript (animations, particles)
+│   └── styles/
+│       ├── main.scss                 # Main SASS file, imports all partials
+│       ├── lib/                      # 3rd-party libraries (normalize, etc.)
+│       ├── _base/                    # Global styles (reset, typography)
+│       ├── _config/                  # SASS variables
+│       ├── _components/              # Reusable components (buttons, footer, hero-header)
+│       ├── _layout/                  # Layout helpers (containers, nav-header, page structure)
+│       ├── _pages/                   # Page-specific styles (home, about, etc.)
+│       └── _utils/                   # Animations and mixins
+│
+└── assets/
+    ├── files/                        # Static files (CV, papers)
+    ├── js/                           # Compiled JS (main.js) & vendor JS
+    ├── css/                          # Compiled CSS (main.css)
+    └── (fonts/, img/)                # Compiled by Gulp from src/
 ```
 
-**Don't forget to change your url before you deploy your site!**
+---
 
-## Color and Particle Customization
-- Color Customization
-  - Edit the sass variables
-- Particle Customization
-  - Edit the json data in particle function in app.js
-  - Refer to [Particle.js](https://github.com/VincentGarreau/particles.js/) for help
+## 💻 Running Locally
 
-## Running the blog in local
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/MsMaryamRezaee/msmaryamrezaee.github.io.git
+    cd msmaryamrezaee.github.io
+    ```
 
-In order to compile the assets and run Jekyll on local you need to follow those steps:
+2.  **Install Dependencies:**
+    You will need [Node.js](https://nodejs.org/) (which includes `npm`) and [Ruby](https://www.ruby-lang.org/en/downloads/) (with [Bundler](https://bundler.io/)).
 
-- Install [NodeJS](https://nodejs.org/)
-- Install [Jekyll](https://jekyllrb.com): `sudo gem install bundler jekyll`
-- Install [Yarn](https://yarnpkg.com/): `npm install -g yarn`
-- Install dependencies: `yarn`
-- Run: `gulp`
+    ```bash
+    # Install Ruby gems
+    bundle install
+    
+    # Install Node.js packages
+    npm install
+    ```
 
-## License
+3.  **Run the Server:**
+    This project uses Gulp to compile assets and run the development server.
 
-This theme is free and open source software, distributed under the The MIT License. So feel free to use this Jekyll theme anyway you want.
+    ```bash
+    gulp
+    ```
+    Gulp will compile all assets, start a local server at `http://localhost:3000`, and watch for any file changes to automatically rebuild and reload your browser.
 
-## Credits
+---
 
-This theme was partially designed with the inspiration from these fine folks
-- [Willian Justen](https://github.com/willianjusten/will-jekyll-template)
-- [Vincent Garreau](https://github.com/VincentGarreau/particles.js/)
+## ✨ Credits
+
+* **Design:** Maryam Rezaee
+* **Inspiration:** This site's header was originally taken from the [Particle Theme](https://github.com/nrandecker/particle) by Nathan Randecker.
+* **Particles:** Uses [particles.js](https://github.com/VincentGarreau/particles.js/) by Vincent Garreau in various sections.
+
+## 👤 Author
+
+* **Maryam Rezaee**
+* **GitHub:** [@msmrexe](https://github.com/msmrexe)
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for full details.
