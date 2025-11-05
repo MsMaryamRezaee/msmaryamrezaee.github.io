@@ -1,0 +1,295 @@
+@use '../_config/variables' as *;
+
+/*
+ * =========================================
+ * Page-Specific: Homepage
+ * =========================================
+ */
+
+// --- 1. "Selected Highlights" Section ---
+#highlights {
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: 1fr; // 1 column on mobile
+    gap: 25px;
+    
+    // 2 columns on tablet
+    @media only screen and (min-width: 600px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    // 3 columns on desktop
+    @media only screen and (min-width: 900px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .highlight-card {
+    border: 1px solid lighten($main, 10%);
+    border-radius: 8px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+
+    background: 
+      radial-gradient(ellipse at center, rgba($main, 0.15) 0%, transparent 70%),
+      lighten($main, 5%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-out;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba($accent, 0.15);
+      background: 
+        radial-gradient(ellipse at center, rgba($accent, 0.05) 0%, transparent 70%),
+        lighten($main, 5%);
+    }
+
+    .highlight-type {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: $accent;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .highlight-title {
+      font-size: 1.25rem;
+      color: $text-primary;
+      margin: 0 0 15px 0;
+      padding: 0;
+      line-height: 1.4;
+    }
+
+    .highlight-desc {
+      font-size: 0.9rem;
+      color: $text-secondary;
+      margin: 0 0 20px 0;
+      flex-grow: 1; // Fills space, pushes button down
+    }
+
+    .highlight-tags {
+      margin-bottom: 20px;
+      span {
+        display: inline-block;
+        background-color: lighten($main, 10%);
+        color: $text-secondary;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        margin: 3px 2px;
+      }
+    }
+    
+    .action-link {
+      margin-top: auto; // Pushes the button to the bottom
+    }
+  }
+}
+
+// --- 2. "Current Focus" Section ---
+#focus {
+  .focus-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 800px; // Narrower
+    margin: 0 auto;
+  }
+
+  .focus-item {
+    display: flex;
+    align-items: flex-start; 
+    gap: 20px;
+    background-color: lighten($main, 3%);
+    border-left: 3px solid $accent;
+    padding: 20px;
+    border-radius: 0 8px 8px 0; 
+    
+    border-top: 3px solid transparent;    // Placeholder borders
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    transition: all 0.4s ease-out; 
+
+    &:hover {
+      transform: translateY(-8px); // Lift
+      border-radius: 8px; // Curve all corners
+      border-left-color: $accent;
+      border-top-color: $accent;
+      border-right-color: $accent;
+      border-bottom-color: $accent;
+    }
+  }
+
+  .focus-icon {
+    font-size: 1.75rem;
+    color: $accent;
+    padding-top: 3px; 
+    min-width: 25px; 
+    text-align: center;
+  }
+
+  .focus-content {
+    h4 {
+      margin: 0 0 5px 0;
+      padding: 0;
+      font-size: 1.15rem;
+      color: $text-primary;
+    }
+    p {
+      margin: 0;
+      color: $text-secondary;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+  }
+}
+
+// --- 3. Intro Typewriter Section ---
+.intro-container {
+  text-align: center;
+  max-width: 800px; 
+}
+
+#typewriter-text {
+  font-size: 1.25rem;
+  color: $text-secondary;
+  line-height: 1.8;
+  min-height: 100px; // Prevent layout jump
+
+  // Style for each individual word span
+  > span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  }
+  
+  // The class our JS adds
+  > span.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// --- 4. Skills Scroller Section ---
+.skills-scroller {
+  background: lighten($main, 3%);
+  overflow: hidden;
+  padding: 40px 0;
+  margin-top: 2em; // Space after the "Core Technologies" title
+  white-space: nowrap;
+  position: relative;
+  
+  // Left fade overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15%; 
+    height: 100%;
+    background: linear-gradient(to right, $main, transparent);
+    z-index: 2; 
+    pointer-events: none; 
+  }
+  
+  // Right fade overlay
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15%;
+    height: 100%;
+    background: linear-gradient(to left, $main, transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .skills-track {
+    display: inline-block; 
+    animation: scroll-left 40s linear infinite;
+    transform: translateZ(0);
+  }
+
+  .skill-icon {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px; 
+    margin: 0 20px;
+    color: $text-secondary;
+    transition: color 0.3s ease;
+
+    > i {
+      font-size: 4rem;
+      color: $text-primary;
+      
+      // Standardize icon box
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 5rem;
+      width: 5rem;
+
+      // Force correct font-family
+      &[class^="devicon-"] {
+        font-family: "devicon";
+      }
+      &[class*="si-"] {
+        font-family: "Simple Icons";
+      }
+    }
+    
+    span {
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    &:hover {
+      color: $accent; // Highlight text
+      i {
+        color: $accent; // Highlight icon
+      }
+    }
+  }
+}
+
+// --- 5. Logo Animation ---
+#logo-section {
+  position: relative;
+  overflow: hidden; // Clips the particles
+}
+
+#logo-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; // Behind the logo
+}
+
+.logo-animation-container {
+  position: relative; 
+  z-index: 2;
+  text-align: center;
+  margin: 150px auto; 
+  
+  svg {
+    width: 300px; 
+  }
+}
+
+#logo-path {
+  stroke: $text-primary; 
+  stroke-width: 1px; 
+  fill: transparent; // No fill
+}
+
+// Class added by JS on scroll
+#logo-path.is-animating {
+  animation: draw 3s ease-in-out infinite alternate;
+}

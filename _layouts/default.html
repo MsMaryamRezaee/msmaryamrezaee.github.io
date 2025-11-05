@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   {% include head.html %}
-  <body>
-      {% include header.html %}
+  
+  <body class="page-{{ page.title | slugify | default: 'home' }}">
+    
+    <div class="site-wrapper">
+      {% if page.layout == 'home' %}
+        {% include hero-header.html %}
+      {% else %}
+        {% include nav-header.html %}
+      {% endif %}
       
-      <section id="intro">
-        {% include intro.html %}
-      </section>
-
-      {% include logo-animation.html %}
-
-      <section id="highlights">
-        {% include highlights.html %}
-      </section>
-
-      <section id="skills">
-        {% include skills.html %}
-      </section>
-      
-      <section id="focus">
-        {% include focus.html %}
-      </section>
-      
-      {{ content }}
+      <main class="site-content">
+        {{ content }}
+      </main>
       
       {% include footer.html %}
+    </div>
+    
+    <script src="//cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="{{ "/assets/js/sweet-scroll.min.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/assets/js/main.js" | prepend: site.baseurl }}"></script>
+    {% include google-analytics.html %}
+    
   </body>
 </html>

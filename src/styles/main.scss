@@ -1,14 +1,47 @@
-@import 'vars';
+/*
+ * =========================================
+ * MAIN SASS MANIFEST (Using modern @use)
+ * =========================================
+ */
 
-@import "lib/normalize";
-@import "lib/fontawesome";
-// @import "lib/devicon";
+// 1. Configuration & Libraries
+// We use "as *" to make variables global, like @import did.
+@use 'lib/normalize';
+@use 'lib/fontawesome';
 
-@import 'base';
-@import 'animation';
-@import 'header';
-@import 'about';
-@import 'projects';
-@import 'footer';
+// 2. Base Styles
+@use '_base/reset';
+@use '_base/typography';
 
-@import 'custom';
+// 3. Reusable Utilities
+@use '_utils/animations';
+
+// 4. Layout
+@use '_layout/containers';
+@use '_layout/nav-header'; 
+@use '_layout/page';      
+
+// 5. Reusable Components
+@use '_components/action-link';
+@use '_components/hero-header';
+@use '_components/footer';
+
+// 6. Page-Specific Styles
+// The @use rule can't be inside a class, so we use @import
+// here. This is an acceptable use case.
+
+.page-home {
+  @import '_pages/home';
+}
+.page-about {
+  @import '_pages/about';
+}
+.page-research {
+  @import '_pages/research';
+}
+.page-projects {
+  @import '_pages/projects';
+}
+.page-talks {
+  @import '_pages/talks';
+}

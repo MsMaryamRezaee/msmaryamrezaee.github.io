@@ -1,0 +1,58 @@
+@use '../_config/variables' as *;
+
+/*
+ * =========================================
+ * Navigation Header (Subpages)
+ * =========================================
+ */
+
+.nav-header {
+  padding: 20px 5%;
+  background: lighten($main, 5%);
+  border-bottom: 1px solid lighten($main, 10%);
+
+  .nav-container {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $text-primary;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $accent;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 25px;
+
+    a {
+      font-size: 1rem;
+      color: $text-secondary;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      padding-bottom: 5px;
+      border-bottom: 2px solid transparent;
+
+      &:hover {
+        color: $text-primary;
+      }
+      
+      // Simple active state (optional)
+      // .page-about &.nav-link-about,
+      // .page-research &.nav-link-research {
+      //   color: $accent;
+      //   border-bottom-color: $accent;
+      // }
+    }
+  }
+}

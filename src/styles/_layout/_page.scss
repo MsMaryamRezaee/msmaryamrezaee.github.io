@@ -1,0 +1,35 @@
+@use '../_config/variables' as *;
+
+/*
+ * =========================================
+ * Standard Page Layout
+ * =========================================
+ */
+
+.page-section.page-container {
+  // Use the global container's top margin
+  margin-top: 100px; 
+  margin-bottom: 100px;
+
+  .page-title {
+    text-align: left;
+    margin-bottom: 1.5em;
+    border-bottom: 2px solid $accent;
+    padding-bottom: 0.5em;
+  }
+  .page-content {
+    h2 {
+      text-align: left;
+    }
+    p {
+      line-height: 1.7;
+    }
+    a {
+      color: $accent;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

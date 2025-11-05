@@ -1,4 +1,4 @@
-# MR: Personal Portfolio Website
+# MR Portfolio Website
 
 <a href="https://msmaryamrezaee.github.io">
   <img src="https://raw.githubusercontent.com/MsMaryamRezaee/.github/main/profile/banner.gif" alt="MR Banner">

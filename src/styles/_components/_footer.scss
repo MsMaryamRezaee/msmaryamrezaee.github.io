@@ -1,0 +1,95 @@
+@use '../_config/variables' as *;
+
+/*
+ * =========================================
+ * Site Footer
+ * =========================================
+ */
+
+.footer-container {
+  position: relative; // Needed to contain the absolute-positioned particles
+  overflow: hidden;
+  background: $main; // Fallback if particles don't load
+  padding: 60px 20px; // 60px top/bottom, 20px left/right
+  margin-top: 150px;
+  width: 100%;
+  box-sizing: border-box; // Ensures padding doesn't break layout
+}
+
+#footer-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; // Behind content
+}
+
+.footer-content {
+  position: relative;
+  z-index: 2; // On top of particles
+  text-align: center;
+  color: $text-secondary;
+  max-width: 960px; // Match your other content
+  margin: 0 auto;
+}
+
+// Cleaner, top-level selectors for your footer content
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 25px;
+
+  .icon {
+    // Re-using the header icon style
+    text-align: center;
+    color: $text-primary;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 50%;
+    border: 2px solid $text-primary;
+    transition: all .7s;
+
+    &:hover, &:active {
+      color: $main;
+      background: $text-primary;
+    }
+    
+    // Make them slightly smaller than the main header icons
+    @media only screen and (min-width:$cut) {
+      width: 30px; 
+      height: 30px;
+      font-size: 30px;
+    }
+  }
+}
+
+.footer-location {
+  font-size: 1rem;
+  color: $text-primary;
+  margin: 0 0 25px 0;
+
+  .fa { // Style for the map-marker icon
+    margin-right: 8px;
+    color: $accent;
+  }
+}
+
+// Target just the <p> tags inside .footer-content
+.footer-content p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+
+  a {
+    color: $text-primary;
+    text-decoration: none;
+    &:hover {
+      color: $accent;
+    }
+  }
+}

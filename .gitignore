@@ -1,7 +1,13 @@
+# Jekyll
 _site
 .sass-cache
+
+# Node
 node_modules
+
+# macOS
 .DS_STORE
 
+# Original Assets
 src/fonts/
 src/img/
