@@ -105,7 +105,7 @@ msmaryamrezaee.github.io/
 
 ## ✨ Credits
 
-* **Design:** Maryam Rezaee
+* **Design:** [Maryam Rezaee](https://msmaryamrezaee.github.io)
 * **Inspiration:** This site's header was originally taken from the [Particle Theme](https://github.com/nrandecker/particle) by Nathan Randecker.
 * **Particles:** Uses [particles.js](https://github.com/VincentGarreau/particles.js/) by Vincent Garreau in various sections.
 
