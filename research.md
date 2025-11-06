@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Research
+description: None.
 ---
 
 This is the Research page.

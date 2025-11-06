@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Talks
+description: None.
 ---
 
 This is the Talks page.

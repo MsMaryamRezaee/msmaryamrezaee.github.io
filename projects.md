@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Projects
+description: None.
 ---
 
 This is the Projects page.

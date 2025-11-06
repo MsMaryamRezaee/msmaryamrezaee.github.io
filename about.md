@@ -1,6 +1,7 @@
 ---
 layout: page
 title: About
+description: A brief summary of my academic background, research interests, and personal journey into AI.
 ---
 
 This is the About page.
