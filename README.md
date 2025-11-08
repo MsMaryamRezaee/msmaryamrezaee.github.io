@@ -4,7 +4,7 @@
   <img src="https://raw.githubusercontent.com/MsMaryamRezaee/.github/main/profile/banner.gif" alt="MR Banner">
 </a>
 
-This repository contains the source code for my personal portfolio and academic website, built with Jekyll and hosted on GitHub Pages. The design is a custom redesign based on an initial basic theme, now reorganized for maintainability and scalability.
+This repository contains the source code for my personal portfolio and academic website, built with Jekyll and hosted on GitHub Pages. The design is custom-made by myself, taking an initial basic theme and completely redesigning it to define new sections, styles, and animation, with additional reorganization for maintainability and scalability.
 
 ## 🤖 Tech Stack
 
