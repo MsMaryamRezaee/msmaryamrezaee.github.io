@@ -13,14 +13,9 @@
     grid-template-columns: 1fr; // 1 column on mobile
     gap: 25px;
     
-    // 2 columns on tablet
+    // 2 columns on tablet AND desktop (perfect for 4 items)
     @media only screen and (min-width: 600px) {
       grid-template-columns: repeat(2, 1fr);
-    }
-    
-    // 3 columns on desktop
-    @media only screen and (min-width: 900px) {
-      grid-template-columns: repeat(3, 1fr);
     }
   }
 
