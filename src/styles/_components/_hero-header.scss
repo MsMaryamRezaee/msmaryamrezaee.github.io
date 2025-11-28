@@ -81,6 +81,12 @@
     border-radius: 50%;
     border: 2px solid $text-primary;
     transition: all .7s;
+
+    // This targets ONLY the CV file icon
+    &.fa-file-text {
+      font-size: 17px; // Slightly smaller on mobile (default is 20px)
+    }
+
     &:hover {
       color: $main;
       background: $text-primary;
@@ -93,6 +99,11 @@
       width: 35px;
       height: 35px;
       font-size: 35px;
+
+      // This keeps it smaller on desktop too
+      &.fa-file-text {
+        font-size: 28px; // Smaller than the default 35px
+      }
     }
   }
 }
