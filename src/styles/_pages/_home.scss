@@ -311,3 +311,100 @@
 #logo-path.is-animating {
   animation: draw 3s ease-in-out infinite alternate;
 }
+
+// --- 6. "Construction" Section / CTA Bar ---
+.full-width-cta {
+  width: 100%;
+  // Match the Highlights bar background and borders for consistency
+  background-color: lighten($main, 2%); 
+  border-top: 1px solid rgba($accent, 0.15);
+  border-bottom: 1px solid rgba($accent, 0.15);
+  
+  padding: 50px 0;
+  margin-top: 100px; // Space from the section above
+  margin-bottom: 0;  // It sits right above the footer usually
+
+  .cta-grid {
+    // Reset the default page-section margins inside here
+    margin: 0 auto; 
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    // On Desktop, make it side-by-side
+    @media only screen and (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+    }
+  }
+
+  .cta-text {
+    flex: 1; // Takes up available space
+    max-width: 600px;
+
+    h3 {
+      margin: 0 0 15px 0;
+      padding: 0;
+      font-size: 1.4rem;
+      color: $text-primary;
+      font-weight: 500;
+      
+      .accent-icon {
+        color: $accent;
+        margin-right: 10px;
+      }
+    }
+
+    p {
+      margin: 15px 0 0 0;
+      font-size: 1rem;
+      color: $text-secondary;
+      line-height: 1.6;
+    }
+  }
+
+  // Visual "Loading" Bar decoration
+  .progress-bar-container {
+    width: 100%;
+    height: 4px;
+    background: lighten($main, 8%);
+    border-radius: 2px;
+    overflow: hidden;
+    
+    .progress-bar {
+      height: 100%;
+      width: 60%; // Represents "Under Construction"
+      background: $accent;
+      // Optional: Add a subtle stripe pattern
+      background-image: linear-gradient(
+        45deg,rgba(255,255,255,.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255,255,255,.15) 50%,
+        rgba(255,255,255,.15) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 1rem 1rem;
+    }
+  }
+
+  // The Button Area
+  .cta-action {
+    flex-shrink: 0; // Don't let the button shrink
+    
+    .large-button {
+      font-size: 1.1rem;
+      padding: 12px 25px;
+      border-width: 2px; // Slightly thicker border
+      
+      i {
+        margin-right: 8px;
+      }
+    }
+  }
+}
