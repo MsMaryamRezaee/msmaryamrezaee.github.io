@@ -6,6 +6,32 @@
  * =========================================
  */
 
+ // --- 0. Full Width Section Header ---
+.full-width-header {
+  width: 100%;
+  // A very subtle background difference to separate sections
+  background-color: lighten($main, 2%); 
+  
+  // Thin "Tech" borders using a transparent version of your accent
+  border-top: 1px solid rgba($accent, 0.15);
+  border-bottom: 1px solid rgba($accent, 0.15);
+  
+  padding: 40px 0;
+  margin-bottom: 40px; // Push the grid down a bit
+  margin-top: 50px;    // Push away from the Logo section
+  
+  // Override the default .page-section margin inside this bar
+  .page-section {
+    margin: 0 auto;
+    h1 {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      letter-spacing: 1px; // Adds a bit of elegance
+    }
+  }
+}
+
 // --- 1. "Selected Highlights" Section ---
 #highlights {
   .highlights-grid {
