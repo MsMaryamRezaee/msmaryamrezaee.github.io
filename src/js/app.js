@@ -102,28 +102,45 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   
-  /* 4. Word-by-Word Reveal Effect */
+  /* 4. Word-by-Word Reveal Effect (Multi-paragraph support) */
   const sourceElement = document.getElementById('typewriter-source');
   const targetElement = document.getElementById('typewriter-text');
 
   if (sourceElement && targetElement) {
-    const words = sourceElement.textContent.trim().split(/\s+/);
+    // 1. Get the text and split by NEWLINES first (to detect paragraphs)
+    const paragraphs = sourceElement.textContent.split(/\n+/).filter(p => p.trim() !== '');
 
-    words.forEach(word => {
-      const span = document.createElement('span');
-      span.textContent = word;
-      targetElement.appendChild(span);
-      targetElement.appendChild(document.createTextNode(' ')); 
+    paragraphs.forEach((paragraphText, index) => {
+      // 2. Split this paragraph into words
+      const words = paragraphText.trim().split(/\s+/);
+      
+      words.forEach(word => {
+        const span = document.createElement('span');
+        span.textContent = word;
+        targetElement.appendChild(span);
+        // Add a space after the word
+        targetElement.appendChild(document.createTextNode(' ')); 
+      });
+
+      // 3. If this isn't the last paragraph, add a double break (paragraph gap)
+      if (index < paragraphs.length - 1) {
+        const breakEl = document.createElement('div');
+        breakEl.style.height = "20px"; // The height of the gap between paragraphs
+        breakEl.style.width = "100%";  // Force a line break
+        targetElement.appendChild(breakEl);
+      }
     });
 
+    // 4. Get all the spans we just created for the animation
     const spans = targetElement.querySelectorAll('span');
 
+    // 5. Use an observer to start the animation
     const typewriterObserver = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         spans.forEach((span, index) => {
           setTimeout(() => {
             span.classList.add('is-visible');
-          }, index * 75); // 75ms delay
+          }, index * 50); // Speed up delay slightly (50ms) so long text doesn't take forever
         });
         typewriterObserver.unobserve(targetElement);
       }
