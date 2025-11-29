@@ -17,7 +17,7 @@
   border-bottom: 1px solid rgba($accent, 0.15);
   
   padding: 40px 0;
-  margin-bottom: 40px; // Push the grid down a bit
+  margin-bottom: 80px; // Push the grid down a bit
   margin-top: 50px;    // Push away from the Logo section
   
   // Override the default .page-section margin inside this bar
@@ -25,9 +25,6 @@
     margin: 0 auto;
     h1 {
       margin: 0;
-      padding: 0;
-      text-align: center;
-      letter-spacing: 1px; // Adds a bit of elegance
     }
   }
 }

@@ -32,6 +32,10 @@
     text-align: center;
     margin-bottom: 2em;
     padding-top: 0;
+    font-size: 2rem;            // Smaller than 2.5rem default
+    letter-spacing: 4px;        // Much wider spacing for that "tech" look
+    text-transform: uppercase;  // Optional: usually looks best with wide spacing
+    font-weight: 600;           // Slightly less bold
   }
 }
 
