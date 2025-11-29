@@ -89,7 +89,7 @@
 
     // This targets ONLY the CV file icon
     &.fa-file-text {
-      font-size: 17px; // Slightly smaller on mobile (default is 20px)
+      font-size: 18px; // Slightly smaller on mobile (default is 20px)
     }
 
     &:hover {
@@ -107,7 +107,7 @@
 
       // This keeps it smaller on desktop too
       &.fa-file-text {
-        font-size: 28px; // Smaller than the default 35px
+        font-size: 30px; // Smaller than the default 35px
       }
     }
   }

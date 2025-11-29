@@ -45,6 +45,11 @@
     // Re-using the header icon style
     text-align: center;
     color: $text-primary;
+
+    display: inline-flex;    /* Makes the circle a flex container */
+    justify-content: center; /* Centers horizontally */
+    align-items: center;     /* Centers vertically */
+
     width: 20px;
     height: 20px;
     font-size: 20px;
@@ -53,6 +58,11 @@
     border-radius: 50%;
     border: 2px solid $text-primary;
     transition: all .7s;
+
+    // This targets ONLY the CV file icon
+    &.fa-file-text {
+      font-size: 18px; // Slightly smaller on mobile (default is 20px)
+    }
 
     &:hover, &:active {
       color: $main;
@@ -64,6 +74,11 @@
       width: 30px; 
       height: 30px;
       font-size: 30px;
+
+      // This keeps it smaller on desktop too
+      &.fa-file-text {
+        font-size: 25px; // Smaller than the default 30px
+      }
     }
   }
 }
