@@ -73,6 +73,11 @@
   .icon {
     text-align: center;
     color: $text-primary;
+
+    display: inline-flex;    /* Makes the circle a flex container */
+    justify-content: center; /* Centers horizontally */
+    align-items: center;     /* Centers vertically */
+    
     width: 20px;
     height: 20px;
     font-size: 20px;
