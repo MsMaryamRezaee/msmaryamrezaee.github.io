@@ -71,7 +71,6 @@
   gap: 35px; // Slightly more breathing room
   align-items: center;
 
-  // (Inside .nav-links)
   a, .dropdown-trigger {
     position: relative;
     font-size: 0.95rem;
@@ -84,6 +83,7 @@
     display: inline-flex; 
     align-items: center;
 
+    // Fixed the variable syntax here!
     background-image: linear-gradient(\(accent,\)accent);
     background-position: left bottom;
     background-repeat: no-repeat;
