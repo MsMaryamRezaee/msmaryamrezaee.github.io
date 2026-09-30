@@ -239,6 +239,32 @@
   opacity: 0.6;
 }
 
+// --- Dropdown Specific Tooltips (Left-Side) ---
+// Moves tooltips to the left so the 0.6 opacity doesn't overlap text
+.dropdown-content [data-tooltip] {
+  &::before {
+    bottom: auto;
+    left: auto;
+    top: 50%;
+    // Box sits just outside the left edge of the dropdown item
+    right: calc(100% + 8px); 
+    transform: translateY(-50%); // Centers it perfectly vertically
+  }
+
+  &::after {
+    bottom: auto;
+    left: auto;
+    top: 50%;
+    // Arrow perfectly bridges the gap with a 1px overlap
+    right: calc(100% + 4px); 
+    transform: translateY(-50%);
+    
+    // Changes the triangle to point to the RIGHT
+    border-width: 5px 0 5px 5px !important;
+    border-color: transparent transparent transparent $accent !important;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .nav-links {
     gap: 15px;
