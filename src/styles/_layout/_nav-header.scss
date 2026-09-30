@@ -71,6 +71,7 @@
   gap: 35px; // Slightly more breathing room
   align-items: center;
 
+  // (Inside .nav-links)
   a, .dropdown-trigger {
     position: relative;
     font-size: 0.95rem;
@@ -79,29 +80,19 @@
     cursor: pointer;
     padding-bottom: 5px;
     font-weight: 500;
-    transition: color 0.3s ease;
     
-    // Forces perfect vertical alignment across normal text and text with icons
     display: inline-flex; 
     align-items: center;
 
-    // Sliding underline animation
-    &::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 1px; // Thinner underline to fix the thickness issue
-      bottom: 0;
-      left: 0;
-      background-color: $accent;
-      transition: width 0.3s ease;
-    }
+    background-image: linear-gradient(\(accent,\)accent);
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    background-size: 0% 1px; // Starts at 0 width, 1px height
+    transition: background-size 0.3s ease, color 0.3s ease;
 
     &:hover {
       color: $accent;
-      &::after {
-        width: 100%;
-      }
+      background-size: 100% 1px; // Expands to 100% width on hover
     }
   }
 
@@ -157,6 +148,7 @@
         font-size: 0.9rem;
         color: $text-secondary;
         display: block;
+        background-image: none;
         
         &::after { display: none; } // Disable underline inside the dropdown
         
@@ -183,8 +175,8 @@
   &::before {
     content: attr(data-tooltip);
     position: absolute;
-    // Box sits exactly 8px above the container
-    bottom: calc(100% + 8px); 
+    // Box is moved down 1 pixel (from 8px to 7px) to force an overlap
+    bottom: calc(100% + 7px); 
     left: 50%;
     transform: translateX(-50%);
     background: $accent;
@@ -204,8 +196,7 @@
   &::after {
     content: '';
     position: absolute;
-    // Arrow is 5px tall. Sits at 3px above container. 
-    // Top of arrow hits exactly 8px (touching the box perfectly)
+    // Arrow top reaches 8px. Box bottom is 7px. Perfect 1px fusion!
     bottom: calc(100% + 3px); 
     left: 50%;
     transform: translateX(-50%);
@@ -231,9 +222,9 @@
   cursor: not-allowed !important;
   opacity: 0.6;
   
-  // Prevents the sliding underline animation from triggering on WIP links
-  &:not(.dropdown-content a)::after {
-    display: none !important;
+  // Prevents the background underline animation from triggering
+  &:hover {
+    background-size: 0% 1px !important;
   }
 }
 
