@@ -149,9 +149,7 @@
         color: $text-secondary;
         display: block;
         background-image: none;
-        
-        &::after { display: none; } // Disable underline inside the dropdown
-        
+                
         &:hover {
           color: $main;
           background: $accent;
@@ -194,15 +192,15 @@
   }
 
   &::after {
-    content: '';
+    content: '' !important;
     position: absolute;
-    // Arrow top reaches 8px. Box bottom is 7px. Perfect 1px fusion!
     bottom: calc(100% + 3px); 
     left: 50%;
     transform: translateX(-50%);
-    border-width: 5px 5px 0 5px;
-    border-style: solid;
-    border-color: $accent transparent transparent transparent;
+    border-width: 5px 5px 0 5px !important;
+    border-style: solid !important;
+    border-color: $accent transparent transparent transparent !important;
+    display: block !important;
     opacity: 0;
     visibility: hidden;
     transition: all 0.2s ease;
