@@ -1,5 +1,5 @@
 # Site settings
-title: Maryam Rezaee | AI Researcher
+title: Maryam Rezaee
 description: A computer science researcher specializing in LLM Interpretability and Cognitively-Inspired AI.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://maryamrezaee.me" # the base hostname & protocol
@@ -14,7 +14,7 @@ user_description: |
 
   My journey has taken me from theoretical narrative algorithms to rigorous concept-based interpretability. Currently, I am expanding my focus towards Neurosymbolic architectures, aiming to build systems that don’t just predict the next token, but reason in a way that is verifiable, explainable, and aligned with human thought.
 
-user_title: AI Researcher
+# user_title: AI Researcher
 email: msmaryamrezaee@gmail.com
 telegram_username: msmrexe
 github_username: msmrexe
