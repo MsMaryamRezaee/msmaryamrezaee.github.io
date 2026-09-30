@@ -1,6 +1,6 @@
 ---
 layout: null
-permalink: /cv/
+permalink: /cv
 ---
 <html lang="en">
 <head>
@@ -303,7 +303,7 @@ permalink: /cv/
           const rawCode = [
             '---',
             'layout: null',
-            'permalink: /cv/',
+            'permalink: /cv',
             '---',
             '<html lang="en">',
             '<head>',
