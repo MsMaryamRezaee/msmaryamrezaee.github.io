@@ -305,7 +305,6 @@ permalink: /cv/
             'layout: null',
             'permalink: /cv/',
             '---',
-            '<!DOCTYPE html>',
             '<html lang="en">',
             '<head>',
             '  <meta charset="utf-8">',
