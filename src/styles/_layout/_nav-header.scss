@@ -7,28 +7,29 @@
  */
 
 .nav-header {
-  padding: 25px 5%;
+  padding: 15px 5%;
   width: 100%;
   box-sizing: border-box;
   z-index: 100;
   transition: all 0.3s ease;
-  background: transparent; // Completely transparent globally
-  border: none;            // No borders globally
 
-  // Home Page State: Absolute to overlay the hero image
+  // Home Page State: Transparent, sits over the hero
   &.nav-home {
     position: absolute;
     top: 0;
     left: 0;
+    background: transparent;
   }
 
-  // Subpage State: Relative to stack naturally above content
+  // Subpage State: Relative, dark background, particle container
   &.nav-subpage {
     position: relative;
+    background: lighten($main, 3%);
+    border-bottom: 1px solid rgba($accent, 0.2);
+    overflow: hidden; // Keeps particles inside
   }
 }
 
-// Particle container restricted to nav bar height
 #nav-particles {
   position: absolute;
   top: 0;
@@ -37,14 +38,12 @@
   height: 100%;
   z-index: 1;
   pointer-events: none;
-  overflow: hidden; // Keeps particles inside without cutting off dropdowns
 }
 
 .nav-container {
   position: relative;
   z-index: 2;
-  width: 100%;
-  max-width: 1200px; // Pushed further to the sides
+  max-width: 1000px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -68,7 +67,7 @@
 // Links & Dropdowns
 .nav-links {
   display: flex;
-  gap: 35px; // Slightly more breathing room
+  gap: 30px;
   align-items: center;
 
   a, .dropdown-trigger {
@@ -80,17 +79,13 @@
     padding-bottom: 5px;
     font-weight: 500;
     transition: color 0.3s ease;
-    
-    // Forces perfect vertical alignment across normal text and text with icons
-    display: inline-flex; 
-    align-items: center;
 
     // Sliding underline animation
     &::after {
       content: '';
       position: absolute;
       width: 0;
-      height: 1px; // Thinner underline to fix the thickness issue
+      height: 2px;
       bottom: 0;
       left: 0;
       background-color: $accent;
@@ -108,11 +103,11 @@
   // Dropdown Logic
   .nav-dropdown {
     position: relative;
-    display: flex;
-    align-items: center;
+    padding-bottom: 15px; // Extends hover area down to the menu
+    margin-bottom: -15px;
 
     .fa-angle-down {
-      margin-left: 6px;
+      margin-left: 5px;
       font-size: 0.9em;
       transition: transform 0.3s ease;
     }
@@ -124,19 +119,9 @@
       }
     }
 
-    // Invisible bridge to keep hover menu open when moving mouse down
-    &::before {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      height: 25px;
-    }
-
     .dropdown-content {
       position: absolute;
-      top: calc(100% + 20px);
+      top: 100%;
       right: 0;
       background: lighten($main, 5%);
       border: 1px solid rgba($accent, 0.2);
@@ -150,15 +135,13 @@
       display: flex;
       flex-direction: column;
       padding: 10px 0;
-      z-index: 1000;
 
       a {
         padding: 10px 20px;
         font-size: 0.9rem;
         color: $text-secondary;
-        display: block;
         
-        &::after { display: none; } // Disable underline inside the dropdown
+        &::after { display: none; } // Hide the underline in dropdowns
         
         &:hover {
           color: $main;
@@ -180,12 +163,12 @@
 .wip-link {
   position: relative;
   cursor: not-allowed !important;
-  opacity: 0.6;
+  opacity: 0.6; // Dims the unready links slightly
   
   &::before {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 120%;
+    bottom: 120%; // Pop up above the link
     left: 50%;
     transform: translateX(-50%) translateY(5px);
     background: $accent;
@@ -202,6 +185,7 @@
     pointer-events: none;
   }
 
+  // Little triangle pointing down
   &::after {
     content: '';
     position: absolute;
@@ -218,16 +202,6 @@
     pointer-events: none;
   }
 
-  // Prevents the underline animation from triggering on WIP links
-  &.wip-link:not(.dropdown-content a)::after {
-    display: none; 
-  }
-
-  // Brings back the triangle tooltip arrow
-  &.wip-link:not(.dropdown-content a):hover::after {
-    display: block;
-  }
-
   &:hover::before,
   &:hover::after {
     opacity: 1;
@@ -236,6 +210,7 @@
   }
 }
 
+// Mobile responsive adjustments
 @media only screen and (max-width: 768px) {
   .nav-links {
     gap: 15px;
