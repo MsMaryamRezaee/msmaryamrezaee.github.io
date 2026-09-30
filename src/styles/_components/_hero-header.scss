@@ -92,6 +92,12 @@
       font-size: 18px; // Slightly smaller on mobile (default is 20px)
     }
 
+    // Nudges the flask drawing up slightly to visually center it inside the circle
+    &.fa-flask::before {
+      position: relative;
+      top: -2px; 
+    }
+
     &:hover {
       color: $main;
       background: $text-primary;
@@ -100,14 +106,16 @@
       color: $main;
       background: $text-primary;
     }
+    
+    // Laptop/Desktop Sizes (Slightly smaller than before)
     @media only screen and (min-width:$cut) {
-      width: 35px;
-      height: 35px;
-      font-size: 35px;
+      width: 28px;
+      height: 28px;
+      font-size: 28px;
 
-      // This keeps it smaller on desktop too
+      // Keeps the CV icon proportionally smaller on desktop too
       &.fa-file-text {
-        font-size: 30px; // Smaller than the default 35px
+        font-size: 24px;
       }
     }
   }
