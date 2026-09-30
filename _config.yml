@@ -2,7 +2,7 @@
 title: Maryam Rezaee | AI Researcher
 description: A computer science researcher specializing in LLM Interpretability and Cognitively-Inspired AI.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://msmaryamrezaee.github.io" # the base hostname & protocol
+url: "https://maryamrezaee.me" # the base hostname & protocol
 
 # User settings
 username: Maryam Rezaee
@@ -18,6 +18,10 @@ user_title: AI Researcher
 email: msmaryamrezaee@gmail.com
 telegram_username: msmrexe
 github_username: msmrexe
+
+lab_url: "https://lab.maryamrezaee.me"
+design_url: "https://design.maryamrezaee.me"
+me_url: "https://me.maryamrezaee.me"
 
 # Google-analytics
 google-analytics:

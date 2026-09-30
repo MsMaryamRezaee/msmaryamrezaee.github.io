@@ -1,20 +1,34 @@
 <div id="hero-particles" class="hero-header">
   <div class="header-content">
-      <h1>
-        <span class="site-title">{{site.username}}</span>
-        <span class="site-description">{{site.user_title}}</span>
-      </h1>
-      <div class="header-icons">
-        <a aria-label="My Email" href="mailto:{{site.email}}"><i class="icon fa fa-envelope"></i></a>
-        <a aria-label="My Telegram" target="_blank" rel="noopener noreferrer" href="https://telegram.me/{{site.telegram_username}}"><i class="icon fa fa-telegram" aria-hidden="true"></i></a>
-        <a aria-label="My Github" target="_blank" rel="noopener noreferrer" href="https://github.com/{{site.github_username}}"><i class="icon fa fa-github-alt" aria-hidden="true"></i></a>
-        <a aria-label="Download My CV" target="_blank" rel="noopener noreferrer" href="/assets/files/MaryamRezaeeCV2025.pdf"><i class="icon fa fa-file-text" aria-hidden="true"></i></a>
-      </div>
-      <div class="header-links">
-        <a class="link" href="#highlights" data-scroll>Highlights</a>
-        <a class="link" href="#skills" data-scroll>Skills</a>
-        <a class="link" href="#focus" data-scroll>Focus</a>
-      </div>
+    <h1>
+      <span class="site-title">{{ site.username }}</span>
+      <span class="site-description">{{ site.user_title }}</span>
+    </h1>
+
+    <div class="header-icons">
+      <!-- CV Link -->
+      <a aria-label="CV" href="/cv/" class="wip-link" data-tooltip="Connecting...">
+        <i class="icon fa fa-file-text" aria-hidden="true"></i>
+      </a>
+
+      <!-- The Lab Subdomain -->
+      <a aria-label="The Lab" href="{{ site.lab_url | default: 'https://lab.maryamrezaee.me' }}" class="wip-link" data-tooltip="Booting...">
+        <i class="icon fa fa-flask" aria-hidden="true"></i>
+      </a>
+
+      <!-- Design Subdomain -->
+      <a aria-label="Design" href="{{ site.design_url | default: 'https://design.maryamrezaee.me' }}" class="wip-link" data-tooltip="Rendering...">
+        <i class="icon fa fa-paint-brush" aria-hidden="true"></i>
+      </a>
+
+      <!-- Personal Space Subdomain -->
+      <a aria-label="Personal Space" href="{{ site.me_url | default: 'https://me.maryamrezaee.me' }}" target="_blank" rel="noopener noreferrer">
+        <i class="icon fa fa-moon-o" aria-hidden="true"></i>
+      </a>
+    </div>
   </div>
-  <a class="scroll-down-arrow" href="#intro" data-scroll><i class="icon fa fa-chevron-down" aria-hidden="true"></i></a>
+
+  <a class="scroll-down-arrow" href="#intro" data-scroll aria-label="Scroll down">
+    <i class="icon fa fa-chevron-down" aria-hidden="true"></i>
+  </a>
 </div>

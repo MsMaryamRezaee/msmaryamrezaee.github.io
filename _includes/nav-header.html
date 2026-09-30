@@ -1,13 +1,40 @@
-<header class="nav-header">
+<header class="nav-header {% if page.layout == 'home' %}nav-home{% else %}nav-subpage{% endif %}">
+  {% if page.layout != 'home' %}
+    <div id="nav-particles"></div>
+  {% endif %}
+
   <div class="nav-container">
-    <a class="nav-title" href="/">
-      {{ site.username }}
+    <a class="nav-logo" href="/" aria-label="Home">
+      <img src="/favicon/logo.svg" alt="{{ site.username | default: 'Logo' }}" />
     </a>
+
     <nav class="nav-links">
       <a href="/about/">About</a>
-      <a href="/research/">Research</a>
-      <a href="/projects/">Projects</a>
-      <a href="/talks/">Talks</a>
+      <a href="/cv/">CV</a>
+      <a href="/contact/" class="wip-link" data-tooltip="Connecting...">Contact</a>
+
+      <div class="nav-dropdown">
+        <span class="dropdown-trigger">
+          Academia <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </span>
+        <div class="dropdown-content">
+          <a href="/research/" class="wip-link" data-tooltip="System Updating...">Research</a>
+          <a href="/experience/" class="wip-link" data-tooltip="System Updating...">Experience</a>
+          <a href="/projects/" class="wip-link" data-tooltip="System Updating...">Projects</a>
+          <a href="/talks/" class="wip-link" data-tooltip="System Updating...">Talks</a>
+        </div>
+      </div>
+
+      <div class="nav-dropdown">
+        <span class="dropdown-trigger">
+          Ecosystem <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </span>
+        <div class="dropdown-content">
+          <a href="{{ site.lab_url | default: 'https://lab.maryamrezaee.me' }}" class="wip-link" data-tooltip="Booting up...">The Lab</a>
+          <a href="{{ site.design_url | default: 'https://design.maryamrezaee.me' }}" class="wip-link" data-tooltip="Rendering...">Design</a>
+          <a href="{{ site.me_url | default: 'https://me.maryamrezaee.me' }}" target="_blank" rel="noopener noreferrer">Me</a>
+        </div>
+      </div>
     </nav>
   </div>
 </header>

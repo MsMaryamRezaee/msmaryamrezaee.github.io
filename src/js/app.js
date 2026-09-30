@@ -86,6 +86,10 @@ document.addEventListener("DOMContentLoaded", function () {
   if (document.getElementById('logo-particles')) {
     particlesJS('logo-particles', particleConfig);
   }
+  if (document.getElementById('nav-particles')) {
+    // We can use the same config, or you could create a sparser config for the nav
+    particlesJS('nav-particles', particleConfig);
+  }
 
   
   /* 3. Reveal-on-scroll animation */
@@ -205,5 +209,13 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+
+  /* 7. Under Construction Links (WIP) Interception */
+  const wipLinks = document.querySelectorAll('.wip-link');
+  wipLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault(); // Stops the link from navigating anywhere
+    });
+  });
 
 }, false);
