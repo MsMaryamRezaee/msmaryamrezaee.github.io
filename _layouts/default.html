@@ -5,10 +5,10 @@
   <body class="page-{{ page.title | slugify | default: 'home' }}">
     
     <div class="site-wrapper">
+      {% include nav-header.html %}
+
       {% if page.layout == 'home' %}
         {% include hero-header.html %}
-      {% else %}
-        {% include nav-header.html %}
       {% endif %}
       
       <main class="site-content">
