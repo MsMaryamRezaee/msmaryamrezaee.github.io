@@ -1,118 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>about.md Source Code Utility</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color: #121221;
-            --text-primary: #EAEAEA;
-            --text-secondary: #B3B3B3;
-            --accent-color: #bb86fc;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        h1 {
-            color: var(--accent-color);
-            margin: 0;
-            font-weight: 600;
-            text-align: center;
-            letter-spacing: 1px;
-        }
-
-        p.instructions {
-            text-align: center;
-            color: var(--text-secondary);
-            margin: 0 0 10px 0;
-            line-height: 1.5;
-        }
-
-        textarea {
-            width: 100%;
-            height: 500px;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-            border: 2px solid rgba(187, 134, 252, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            line-height: 1.6;
-            resize: vertical;
-            outline: none;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
-
-        textarea:focus {
-            border-color: var(--accent-color);
-        }
-
-        button {
-            background-color: transparent;
-            color: var(--accent-color);
-            border: 2px solid var(--accent-color);
-            border-radius: 8px;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            font-family: 'Montserrat', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: block;
-            margin: 0 auto;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        button:hover {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            box-shadow: 0 4px 15px rgba(187, 134, 252, 0.3);
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        button.success {
-            background-color: #4ade80;
-            border-color: #4ade80;
-            color: var(--bg-color);
-            box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <h1>about.md Source Code</h1>
-        <p class="instructions">Click the button below to safely copy the raw code, then paste it directly into your <strong>about.md</strong> file in VS Code.</p>
-        
-        <textarea id="source-code" readonly>---
+---
 layout: page
 title: About Me
 description: A brief summary of my academic background, research interests, and personal journey into AI.
@@ -132,12 +18,12 @@ description: A brief summary of my academic background, research interests, and 
   
   <div class="about-image-container js-reveal">
     <div class="tech-frame">
-      <img src="/assets/img/Profile.jpg" alt="Maryam Rezaee">
+      <img src="/assets/img/Profile.jpg" alt="Maryam Rezaee" />
     </div>
   </div>
 </div>
 
-<hr class="section-divider">
+<hr class="section-divider" />
 
 <!-- EDUCATION TIMELINE -->
 <div class="about-section">
@@ -177,7 +63,7 @@ description: A brief summary of my academic background, research interests, and 
   </div>
 </div>
 
-<hr class="section-divider">
+<hr class="section-divider" />
 
 <!-- TECHNICAL SKILLS (TABS & BARS) -->
 <div class="about-section">
@@ -259,7 +145,7 @@ description: A brief summary of my academic background, research interests, and 
   </div>
 </div>
 
-<hr class="section-divider">
+<hr class="section-divider" />
 
 <!-- AWARDS AND SPOKEN LANGUAGES (GRID) -->
 <div class="about-section bottom-grids">
@@ -300,46 +186,4 @@ description: A brief summary of my academic background, research interests, and 
     </ul>
   </div>
 
-</div></textarea>
-        
-        <button id="copy-btn">Copy to Clipboard</button>
-    </div>
-
-    <script>
-        document.getElementById('copy-btn').addEventListener('click', function() {
-            const textArea = document.getElementById('source-code');
-            const btn = document.getElementById('copy-btn');
-            
-            // Select the text area content
-            textArea.select();
-            textArea.setSelectionRange(0, 99999); // For mobile devices
-
-            try {
-                // Execute the copy command
-                document.execCommand('copy');
-                
-                // Deselect the text
-                window.getSelection().removeAllRanges();
-                
-                // Visual feedback
-                const originalText = btn.innerText;
-                btn.innerText = 'Copied!';
-                btn.classList.add('success');
-                
-                // Revert button back after 2 seconds
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.classList.remove('success');
-                }, 2000);
-                
-            } catch (err) {
-                console.error('Failed to copy text: ', err);
-                btn.innerText = 'Failed to copy';
-                setTimeout(() => {
-                    btn.innerText = 'Copy to Clipboard';
-                }, 2000);
-            }
-        });
-    </script>
-</body>
-</html>
+</div>
