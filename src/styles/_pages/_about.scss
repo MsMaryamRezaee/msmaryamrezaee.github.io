@@ -1,14 +1,339 @@
+@use '../_config/variables' as *;
+
 /*
  * =========================================
  * Page-Specific: About
  * =========================================
  */
 
-// Styles added here will only apply to the /about page.
-// For example:
-//
-// .about-profile-pic {
-//   float: right;
-//   border-radius: 50%;
-//   margin-left: 20px;
-// }
+// General Layout Utilities
+.section-divider {
+  border: 0;
+  height: 1px;
+  background: rgba($text-primary, 0.1);
+  margin: 60px 0;
+}
+
+.about-section {
+  margin-bottom: 60px;
+  
+  .section-title {
+    font-size: 1.5rem;
+    color: $accent;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+}
+
+// 1. Hero Bio & Image
+.about-hero {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 40px;
+  align-items: center;
+  margin-top: 20px;
+
+  @media only screen and (min-width: 800px) {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .about-bio {
+    flex: 3;
+    h2 {
+      margin-top: 0;
+      color: $text-primary;
+    }
+    p {
+      color: $text-secondary;
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+  }
+
+  .about-image-container {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    // Tech Corner Frame Design
+    .tech-frame {
+      position: relative;
+      padding: 15px;
+      
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        border-color: $accent;
+        border-style: solid;
+        transition: all 0.3s ease;
+      }
+
+      // Top Left Corner
+      &::before {
+        top: 0;
+        left: 0;
+        border-width: 3px 0 0 3px;
+      }
+
+      // Bottom Right Corner
+      &::after {
+        bottom: 0;
+        right: 0;
+        border-width: 0 3px 3px 0;
+      }
+
+      &:hover::before, &:hover::after {
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+      }
+
+      img {
+        display: block;
+        max-width: 250px;
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+        filter: grayscale(20%) contrast(1.1);
+        transition: filter 0.3s ease;
+
+        &:hover {
+          filter: grayscale(0%) contrast(1);
+        }
+      }
+    }
+  }
+}
+
+// 2. Timeline
+.timeline {
+  position: relative;
+  padding-left: 30px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 7px; // Centers line with marker
+    width: 2px;
+    background: rgba($accent, 0.3);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: -30px;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: $main;
+      border: 3px solid $accent;
+      box-shadow: 0 0 10px rgba($accent, 0.5);
+      z-index: 1;
+    }
+
+    .timeline-content {
+      background: lighten($main, 3%);
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 3px solid transparent;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-left: 3px solid $accent;
+        transform: translateX(5px);
+        background: lighten($main, 5%);
+      }
+
+      .timeline-date {
+        display: inline-block;
+        font-size: 0.85rem;
+        color: $accent;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      h3 {
+        margin: 0 0 5px 0;
+        padding: 0;
+        font-size: 1.2rem;
+        color: $text-primary;
+      }
+
+      h4 {
+        margin: 0 0 15px 0;
+        padding: 0;
+        font-size: 0.95rem;
+        color: rgba($text-primary, 0.7);
+        font-weight: 400;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+// 3. Technical Skills (Tabs & Bars)
+.skills-wrapper {
+  background: lighten($main, 2%);
+  border: 1px solid rgba($accent, 0.15);
+  border-radius: 8px;
+  padding: 30px;
+
+  .skills-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba($text-primary, 0.1);
+    padding-bottom: 15px;
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: $text-secondary;
+      font-size: 1rem;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: $text-primary;
+        background: rgba($text-primary, 0.05);
+      }
+
+      &.active {
+        color: $main;
+        background: $accent;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .tab-content {
+    display: none;
+    animation: fadeIn 0.5s ease-out forwards;
+
+    &.active {
+      display: block;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+
+      @media only screen and (min-width: 700px) {
+        grid-template-columns: 1fr 1fr; // 2 columns on desktop
+        gap: 30px 50px;
+      }
+
+      .skill-row {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .skill-name {
+          color: $text-primary;
+          font-size: 0.95rem;
+          font-weight: 500;
+        }
+
+        .skill-bar-bg {
+          width: 100%;
+          height: 6px;
+          background: rgba($text-primary, 0.1);
+          border-radius: 3px;
+          overflow: hidden;
+
+          .skill-bar-fill {
+            height: 100%;
+            background: $accent;
+            border-radius: 3px;
+            box-shadow: 0 0 8px rgba($accent, 0.6);
+            transform-origin: left;
+            animation: fillBar 1s cubic-bezier(0.1, 0.7, 0.1, 1) forwards;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 4. Awards & Languages Grid
+.bottom-grids {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+
+  @media only screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .styled-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 20px;
+
+      &::before {
+        content: '▹';
+        position: absolute;
+        left: 0;
+        top: 2px;
+        color: $accent;
+        font-size: 1.2rem;
+        line-height: 1;
+      }
+
+      strong {
+        display: block;
+        color: $text-primary;
+        font-size: 1.05rem;
+        margin: 0 0 5px 0;
+        padding: 0;
+      }
+
+      span {
+        display: block;
+        color: $text-secondary;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+// Keyframes for Skills
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fillBar {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
