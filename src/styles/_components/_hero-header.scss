@@ -95,7 +95,13 @@
     // Nudges the flask drawing up slightly to visually center it inside the circle
     &.fa-flask::before {
       position: relative;
-      top: -2px; 
+      top: -1px; 
+    }
+
+    // Nudges the eye drawing up slightly to visually center it inside the circle
+    &.fa-eye::before {
+      position: relative;
+      top: -1px; 
     }
 
     &:hover {
