@@ -76,10 +76,16 @@ document.addEventListener("DOMContentLoaded", function () {
   /* 1. Initialize SweetScroll */
   new SweetScroll({/* some options */});
 
-  /* 2. Initialize all Particle instances */
-  particlesJS('hero-particles', particleConfig);
-  particlesJS('footer-particles', particleConfig);
-  particlesJS('logo-particles', particleConfig);
+  /* 2. Initialize all Particle instances SAFELY */
+  if (document.getElementById('hero-particles')) {
+    particlesJS('hero-particles', particleConfig);
+  }
+  if (document.getElementById('footer-particles')) {
+    particlesJS('footer-particles', particleConfig);
+  }
+  if (document.getElementById('logo-particles')) {
+    particlesJS('logo-particles', particleConfig);
+  }
 
   
   /* 3. Reveal-on-scroll animation */
@@ -175,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
     logoObserver.observe(logoContainer);
   }
 
-  
+
   /* 6. About Page Skills Tabs Logic */
   const tabBtns = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
