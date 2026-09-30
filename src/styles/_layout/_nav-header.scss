@@ -176,18 +176,17 @@
   }
 }
 
-// --- Under Construction Tooltip (WIP Links) ---
-.wip-link {
+// --- Universal Tooltips ---
+[data-tooltip] {
   position: relative;
-  cursor: not-allowed !important;
-  opacity: 0.6;
   
   &::before {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 120%;
+    // Box sits exactly 8px above the container
+    bottom: calc(100% + 8px); 
     left: 50%;
-    transform: translateX(-50%) translateY(5px);
+    transform: translateX(-50%);
     background: $accent;
     color: $main;
     padding: 6px 12px;
@@ -198,41 +197,43 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.2s ease;
-    z-index: 10;
+    z-index: 100;
     pointer-events: none;
   }
 
   &::after {
     content: '';
     position: absolute;
-    bottom: 100%;
+    // Arrow is 5px tall. Sits at 3px above container. 
+    // Top of arrow hits exactly 8px (touching the box perfectly)
+    bottom: calc(100% + 3px); 
     left: 50%;
-    transform: translateX(-50%) translateY(5px);
-    border-width: 5px;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0 5px;
     border-style: solid;
     border-color: $accent transparent transparent transparent;
     opacity: 0;
     visibility: hidden;
     transition: all 0.2s ease;
-    z-index: 10;
+    z-index: 100;
     pointer-events: none;
-  }
-
-  // Prevents the underline animation from triggering on WIP links
-  &.wip-link:not(.dropdown-content a)::after {
-    display: none; 
-  }
-
-  // Brings back the triangle tooltip arrow
-  &.wip-link:not(.dropdown-content a):hover::after {
-    display: block;
   }
 
   &:hover::before,
   &:hover::after {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// --- Under Construction Links (WIP) ---
+.wip-link {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  
+  // Prevents the sliding underline animation from triggering on WIP links
+  &:not(.dropdown-content a)::after {
+    display: none !important;
   }
 }
 

@@ -87,8 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
     particlesJS('logo-particles', particleConfig);
   }
   if (document.getElementById('nav-particles')) {
-    // We can use the same config, or you could create a sparser config for the nav
-    particlesJS('nav-particles', particleConfig);
+    // Clone the config to make specific nav bar adjustments
+    const navParticleConfig = JSON.parse(JSON.stringify(particleConfig));
+    navParticleConfig.particles.number.value = 80; // Increase number of particles
+    navParticleConfig.particles.size.value = 1.5;  // Make them smaller
+    particlesJS('nav-particles', navParticleConfig);
   }
 
   

@@ -31,3 +31,34 @@ a img {
 sup, sub {
   line-height: 0;
 }
+
+/*
+ * =========================================
+ * Custom Scrollbar
+ * =========================================
+ */
+
+// WebKit (Chrome, Edge, Safari)
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $accent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+// Firefox
+html {
+  scrollbar-width: thin;
+  scrollbar-color: $accent transparent;
+}
