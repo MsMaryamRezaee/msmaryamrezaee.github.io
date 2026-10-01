@@ -224,10 +224,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  /* 8. Contact Page Hover & Lock Interactions */
+  /* 8. Contact Page Hover & Reset Interactions */
   const channelBtns = document.querySelectorAll('.channel-btn');
   const displayContents = document.querySelectorAll('.display-content');
-  let lockedTargetId = null; // Memory for which panel is locked by a click
 
   function activateContactPanel(targetId) {
     displayContents.forEach(c => c.classList.remove('active'));
@@ -248,36 +247,27 @@ document.addEventListener("DOMContentLoaded", function () {
     channelBtns.forEach(btn => {
       const targetId = btn.getAttribute('data-target');
 
-      // Hover displays the panel temporarily
+      // Hovering immediately locks the button and panel
       btn.addEventListener('mouseenter', () => {
         activateContactButton(btn);
         activateContactPanel(targetId);
       });
 
-      // Click locks the panel into memory
+      // (Optional fallback for touch screens to ensure taps act like hovers)
       btn.addEventListener('click', () => {
-        lockedTargetId = targetId;
         activateContactButton(btn);
         activateContactPanel(targetId);
       });
     });
 
-    // When the mouse leaves the entire left-side menu
-    const contactChannelsContainer = document.querySelector('.contact-channels');
-    if (contactChannelsContainer) {
-      contactChannelsContainer.addEventListener('mouseleave', () => {
-        if (lockedTargetId) {
-          // If a user clicked a button, revert to that specific locked display
-          const lockedBtn = document.querySelector(`.channel-btn[data-target="${lockedTargetId}"]`);
-          activateContactButton(lockedBtn);
-          activateContactPanel(lockedTargetId);
-        } else {
-          // If nothing was clicked yet, revert to the default ready screen
-          activateContactButton(null);
-          activateContactPanel('info-default');
-        }
-      });
-    }
+    // Clicking ANYWHERE else on the page resets the display to default
+    document.addEventListener('click', (e) => {
+      // Check if the click happened outside the buttons AND outside the display box
+      if (!e.target.closest('.contact-channels') && !e.target.closest('.contact-display')) {
+        activateContactButton(null);
+        activateContactPanel('info-default');
+      }
+    });
   }
 
 }, false);

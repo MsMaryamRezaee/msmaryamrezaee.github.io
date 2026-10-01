@@ -37,7 +37,9 @@ description: Communication channels and engagement protocols.
       <div class="display-screen">
         
         <div class="display-content active" id="info-default">
-          <h3><i class="fa fa-terminal" aria-hidden="true"></i> <span class="title-primary">System Ready</span></h3>
+          <h3>
+            <span class="title-primary"><i class="fa fa-terminal" aria-hidden="true"></i> System Ready</span>
+          </h3>
           <p>Hover over a communication channel on the left to view descriptions and direct links. Click a channel to lock it on the screen.</p>
         </div>
 

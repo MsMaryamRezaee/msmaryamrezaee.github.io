@@ -233,9 +233,14 @@
       margin: 0;
     }
 
-    // Pushes the action button down slightly
+    // Pushes the action button down, makes it full width, and spaces the text
     .action-link {
+      display: block; // Forces it to span the container
+      width: 100%;
+      text-align: center; // Centers the text inside the full-width button
       margin-top: 25px; 
+      letter-spacing: 4px; // Adds the spaced-out character design
+      box-sizing: border-box; // Ensures padding doesn't overflow the box
     }
   }
 }
