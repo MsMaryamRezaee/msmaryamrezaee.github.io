@@ -38,7 +38,6 @@
     background: rgba($main, 0.85); // Uses your dark background color but makes it translucent
     backdrop-filter: blur(12px); // The magical frosted glass blur
     -webkit-backdrop-filter: blur(12px); // Safari support
-    border-bottom: 1px solid rgba($accent, 0.1); // A sleek, subtle accent line at the bottom
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); // Adds depth so it visually floats over the page
   }
 }
