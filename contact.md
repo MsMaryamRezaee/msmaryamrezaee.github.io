@@ -13,19 +13,19 @@ description: Communication channels and engagement protocols.
       <h1 class="contact-title">Initialize Contact</h1>
       
       <a class="channel-btn" data-target="info-email" href="mailto:{{site.email}}">
-        <i class="fa fa-envelope" aria-hidden="true"></i> Email
+        <i class="fa fa-envelope" aria-hidden="true"></i> Professional Chat | E-Mail
       </a>
       
       <a class="channel-btn" data-target="info-telegram" href="https://telegram.me/{{site.telegram_username}}" target="_blank" rel="noopener noreferrer">
-        <i class="fa fa-telegram" aria-hidden="true"></i> Telegram
+        <i class="fa fa-telegram" aria-hidden="true"></i> Casual Chat | Telegram
       </a>
       
       <a class="channel-btn" data-target="info-github" href="https://github.com/{{site.github_username}}" target="_blank" rel="noopener noreferrer">
-        <i class="fa fa-github-alt" aria-hidden="true"></i> GitHub
+        <i class="fa fa-github-alt" aria-hidden="true"></i> Work Base | GitHub
       </a>
       
       <a class="channel-btn" data-target="info-tumblr" href="{{site.me_url | default: 'https://me.maryamrezaee.me'}}" target="_blank" rel="noopener noreferrer">
-        <i class="fa fa-tumblr" aria-hidden="true"></i> Personal Blog
+        <i class="fa fa-tumblr" aria-hidden="true"></i> Personal Blog | Tumblr
       </a>
     </div>
 
@@ -38,23 +38,23 @@ description: Communication channels and engagement protocols.
         </div>
 
         <div class="display-content" id="info-email">
-          <h3>Electronic Mail</h3>
-          <p>Email is my preferred channel for professional inquiries and deep-dive discussions. I monitor my inbox frequently; however, since I reserve this space for long-form, thoughtful communication, it may take me a bit of time to craft a comprehensive response.</p>
+          <h3>Professional Chat | E-Mail</h3>
+          <p>My preferred channel for professional inquiries and discussions. Inbox is frequently monitored; however, since this route is for long-form communication, it may take me a bit of time to respond properly.</p>
         </div>
 
         <div class="display-content" id="info-telegram">
-          <h3>Telegram Secure Chat</h3>
-          <p>For a more casual, quick chat, hit me up on Telegram. I check it regularly and, given its casual nature, I tend to respond much faster here—unless I am currently buried deep in research or code.</p>
+          <h3>Casual Chat | Telegram</h3>
+          <p>For a more casual, quick chat, hit me up on Telegram. I check it regularly and, given its nature, tend to respond much faster through it—unless I happen to be buried deep in work, of course.</p>
         </div>
 
         <div class="display-content" id="info-github">
-          <h3>GitHub Repositories</h3>
-          <p>GitHub isn't a messaging platform, but if you want to find me for collaborative projects, trace my open-source work, or inspect my code quality, this is the repository of truth.</p>
+          <h3>Work Base | GitHub</h3>
+          <p>Not a messaging platform, but if you want to find me for collaborative projects or trace my open-source work, my profile is available—I make most thing public.</p>
         </div>
 
         <div class="display-content" id="info-tumblr">
-          <h3>Mer of Night</h3>
-          <p>Welcome to my personal ecosystem for journaling, poetry, and photography. You can explore the blog to find more personal ways of reaching out; the space has its own dedicated contact page.</p>
+          <h3>Personal Blog | Tumblr</h3>
+          <p>This would be my personal space for journaling, writing, and art. You can explore the blog to find more personal ways of reaching out; the space has its own dedicated contact page.</p>
         </div>
 
       </div>
