@@ -22,12 +22,12 @@
 }
 
 .header-content {
-  z-index: 1;
+  position: relative;
+  z-index: 2;
   text-align: center;
   // 1s is the duration, ease-out makes it slow down smoothly at the end
   animation: fadeInDown 1s ease-out forwards;
   color: $text-primary;
-  position: absolute;
   top: 50%;
   left: 50%;
   margin: 0 auto;
