@@ -181,10 +181,20 @@
       position: relative;
       top: 1px;
 
-      // Nudges the email drawing up slightly to visually center it inside the circle
+      // Nudges the icons up slightly to visually center it inside the circle
       &.fa-envelope::before {
         position: relative;
-        top: -1px; 
+        top: -0.75px; 
+      }
+
+      &.fa-telegram::before {
+        position: relative;
+        top: -0.5px; 
+      }
+
+      &.fa-github-alt::before {
+        position: relative;
+        top: -0.25px; 
       }
     }
 
