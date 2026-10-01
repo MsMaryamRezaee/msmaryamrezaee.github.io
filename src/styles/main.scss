@@ -7,7 +7,6 @@
 // 1. Configuration & Libraries
 // We use "as *" to make variables global, like @import did.
 @use 'lib/normalize';
-@use 'lib/fontawesome';
 
 // 2. Base Styles
 @use '_base/reset';

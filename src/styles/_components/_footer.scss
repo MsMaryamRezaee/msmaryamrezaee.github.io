@@ -177,19 +177,9 @@
       margin: 0;
       padding: 0;
       font-size: 18px;
-      // Manually force the icon down 1 pixel to fix optical centering
       position: relative;
       top: 1px;
 
-      // Nudges the icons up slightly to visually center it inside the circle
-      &.fa-envelope::before {
-        position: relative;
-        top: -0.15px; 
-      }
-      &.fa-telegram::before {
-        position: relative;
-        top: -0.1px; 
-      }
       &.fa-github-alt::before {
         position: relative;
         top: -0.25px; 
