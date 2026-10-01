@@ -13,9 +13,6 @@
   align-items: center;     /* Centers vertically */
   width: 100%;
   min-height: 100vh;
-  padding-bottom: 100px; /* Physically adds 100px of particles below the screen fold */
-  box-sizing: content-box; /* Forces the padding to extend the container height */
-  overflow: hidden;
   overflow: hidden;        /* Kills the horizontal scroll bug */
   background-repeat: no-repeat;
   background-size: cover;
@@ -26,7 +23,7 @@
     top: 0;
     left: 0;
     width: 100% !important;
-    height: 100% !important;
+    height: 100vh !important;
   }
 }
 
@@ -40,8 +37,7 @@
   padding: 0 12vw; // 12% of the screen width on both sides
   box-sizing: border-box;
   margin-top: -8vh;
-  margin-bottom: 100px; /* Eats up the new bottom padding so your text stays perfectly centered on the screen */
-
+  
   .site-title {
     font-size: 50px;
     display: block;
@@ -142,7 +138,7 @@
 .scroll-down-arrow {
   color: $text-primary;
   position: absolute;
-  bottom: 125px; 
+  bottom: 25px;
   width: 100%;
   margin: 0 auto;
   display: block;
