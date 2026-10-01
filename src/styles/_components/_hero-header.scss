@@ -24,6 +24,8 @@
 .header-content {
   z-index: 1;
   text-align: center;
+  // 1s is the duration, ease-out makes it slow down smoothly at the end
+  animation: fadeInDown 1s ease-out forwards;
   color: $text-primary;
   position: absolute;
   top: 50%;
@@ -156,5 +158,16 @@
     &:active {
       color: $accent;
     }
+  }
+}
+
+@keyframes fadeInDown {
+  from { 
+    opacity: 0; 
+    transform: translateY(-30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
   }
 }
