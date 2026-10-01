@@ -1,6 +1,6 @@
 # Site settings
 title: Maryam Rezaee
-description: A computer science researcher specializing in LLM Interpretability and Cognitively-Inspired AI.
+description: A computer science researcher specialising in LLM Interpretability and Cognitively-Inspired AI.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://maryamrezaee.me" # the base hostname & protocol
 

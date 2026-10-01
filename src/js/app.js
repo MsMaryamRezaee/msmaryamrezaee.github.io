@@ -247,16 +247,13 @@ document.addEventListener("DOMContentLoaded", function () {
     channelBtns.forEach(btn => {
       const targetId = btn.getAttribute('data-target');
 
-      // Hovering immediately locks the button and panel
-      btn.addEventListener('mouseenter', () => {
-        activateContactButton(btn);
-        activateContactPanel(targetId);
-      });
-
-      // (Optional fallback for touch screens to ensure taps act like hovers)
-      btn.addEventListener('click', () => {
-        activateContactButton(btn);
-        activateContactPanel(targetId);
+      // Binds mouse enter, clicks, and instantaneous mobile touches 
+      // (passive: true ensures we don't accidentally block the user from scrolling)
+      ['mouseenter', 'click', 'touchstart'].forEach(evt => {
+        btn.addEventListener(evt, () => {
+          activateContactButton(btn);
+          activateContactPanel(targetId);
+        }, { passive: true });
       });
     });
 
