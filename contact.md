@@ -13,22 +13,22 @@ description: Ways to find me. Do reach out if you’re interested in collaborati
       <h1 class="contact-title">Contact Channels</h1>
       
       <div class="channel-btn" data-target="info-email">
-        <div class="btn-left"><i class="fa fa-envelope" aria-hidden="true"></i> E-Mail</div>
+        <div class="btn-left"><i class="fa-solid fa-envelope" aria-hidden="true"></i> E-Mail</div>
         <div class="btn-right">PROFESSIONAL CHAT</div>
       </div>
       
       <div class="channel-btn" data-target="info-telegram">
-        <div class="btn-left"><i class="fa fa-telegram" aria-hidden="true"></i> Telegram</div>
+        <div class="btn-left"><i class="fa-brands fa-telegram" aria-hidden="true"></i> Telegram</div>
         <div class="btn-right">CASUAL CHAT</div>
       </div>
       
       <div class="channel-btn" data-target="info-github">
-        <div class="btn-left"><i class="fa fa-github-alt" aria-hidden="true"></i> GitHub</div>
+        <div class="btn-left"><i class="fa-brands fa-github-alt" aria-hidden="true"></i> GitHub</div>
         <div class="btn-right">WORK BASE</div>
       </div>
       
       <div class="channel-btn" data-target="info-tumblr">
-        <div class="btn-left"><i class="fa fa-tumblr" aria-hidden="true"></i> Tumblr</div>
+        <div class="btn-left"><i class="fa-brands fa-tumblr" aria-hidden="true"></i> Tumblr</div>
         <div class="btn-right">PERSONAL BLOG</div>
       </div>
     </div>
@@ -38,7 +38,7 @@ description: Ways to find me. Do reach out if you’re interested in collaborati
         
         <div class="display-content active" id="info-default">
           <h3>
-            <span class="title-primary"><i class="fa fa-terminal" aria-hidden="true"></i> System Ready</span>
+            <span class="title-primary"><i class="fa-solid fa-terminal" aria-hidden="true"></i> System Ready</span>
           </h3>
           <p>Hover over a contact channel to view descriptions and direct links. Click anywhere on the screen to disable selection.</p>
         </div>
