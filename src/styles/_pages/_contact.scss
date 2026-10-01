@@ -22,7 +22,7 @@
 
 // Closes the massive gap between the content and the footer
 .footer-container {
-  margin-top: 0 !important; 
+  margin-top: 30px !important; 
   padding-top: 20px !important; 
 }
 
@@ -34,7 +34,7 @@
   width: 100vw;
   height: 100vh;
   z-index: 0; // Sits at the very back of the entire window
-  pointer-events: none;
+//   pointer-events: none;
 }
 
 /* --- 2. Main Layout --- */
@@ -79,7 +79,7 @@
     content: '';
     position: absolute;
     left: 0;
-    top: 15px; // Aligns perfectly with the horizontal line
+    top: 0px; // Aligns perfectly with the horizontal line
     bottom: 0; // Aligns exactly with the bottom edge of the last button
     width: 15px;
     border-left: 2px solid rgba($accent, 0.4);
