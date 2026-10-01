@@ -6,95 +6,147 @@
  * =========================================
  */
 
+/* --- 1. Global Page Overrides (Seamless Particles & Spacing) --- */
+// This removes the backgrounds from the nav and footer on THIS page only
+body.page-contact {
+  .nav-header.nav-subpage, .footer-container {
+    background: transparent !important;
+    border: none !important;
+  }
+  
+  // Hides the separate particle systems so they don't clash
+  #nav-particles, #footer-particles {
+    display: none !important;
+  }
+
+  // Closes the massive gap between the content and the footer
+  .footer-container {
+    margin-top: 0 !important; 
+    padding-top: 20px !important; 
+  }
+}
+
+// The contact particles now act as a fixed background for the entire window
+#contact-particles {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; // Sits at the very back of everything
+  pointer-events: none;
+}
+
+/* --- 2. Main Layout --- */
 .contact-wrapper {
   position: relative;
   width: 100%;
-  // Takes up full screen height minus header/footer approximations
   min-height: 80vh; 
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 5% 50px 5%;
+  padding: 80px 5% 20px 5%; // Reduced bottom padding
   box-sizing: border-box;
-}
-
-#contact-particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
 }
 
 .contact-grid {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1100px; // Slightly wider for the sleek laptop layout
   display: grid;
   grid-template-columns: 1fr;
   gap: 40px;
   animation: fadeIn 0.8s ease-out forwards;
 
   @media only screen and (min-width: 768px) {
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: 1fr 1.3fr; // Gives the text box slightly more room
     gap: 60px;
-    align-items: center;
+    align-items: flex-start; // Aligns to the top instead of the center
   }
 }
 
-.contact-title {
-  margin-top: 0;
-  margin-bottom: 30px;
-  font-size: 2rem;
-  color: $text-primary;
-  border-bottom: 2px solid $accent;
-  padding-bottom: 10px;
-  display: inline-block;
-}
-
+/* --- 3. Left Side: The "Cybernetic" Connecting Lines --- */
 .contact-channels {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding-left: 30px; // Makes room for the vertical drop line
 
-  .channel-btn {
-    display: flex;
-    align-items: center;
-    background: lighten($main, 3%);
-    border: 1px solid rgba($accent, 0.2);
-    border-left: 4px solid transparent;
-    padding: 18px 25px;
-    border-radius: 6px;
-    color: $text-primary;
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    cursor: pointer;
+  // The curved line that drops down the left side
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15px; // Aligns with the middle of the title
+    bottom: 20px; // Drops down to the bottom button
+    width: 15px;
+    border-left: 2px solid rgba($accent, 0.4);
+    border-top: 2px solid rgba($accent, 0.4);
+    border-top-left-radius: 12px;
+    z-index: -1;
+  }
+}
 
+/* The redesigned title */
+.contact-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.15rem; // Matched to your other page headers
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: $text-primary;
+  margin: 0 0 30px -10px; // Pulls it left so it visually "cuts" into the curve
+  white-space: nowrap;
+
+  // The line extending to the right
+  &::after {
+    content: '';
+    flex: 1; // Forces the line to stretch to the edge of the container
+    height: 2px;
+    background: rgba($accent, 0.4);
+    margin-left: 20px; // Space between the text and the right line
+  }
+}
+
+/* Interactive Buttons */
+.channel-btn {
+  display: flex;
+  align-items: center;
+  background: lighten($main, 3%);
+  border: 1px solid rgba($accent, 0.15); // Standard border for all sides
+  border-left: 4px solid rgba($accent, 0.15); // Thicker left border even when inactive!
+  padding: 18px 25px;
+  border-radius: 6px;
+  color: $text-primary;
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  i {
+    font-size: 1.4rem;
+    margin-right: 15px;
+    color: $text-secondary;
+    transition: color 0.3s ease;
+  }
+
+  &:hover, &.active {
+    background: rgba($accent, 0.05);
+    border-color: rgba($accent, 0.3);
+    border-left-color: $accent; // Highlights just the thick left edge
+    transform: translateX(5px);
+    
     i {
-      font-size: 1.4rem;
-      margin-right: 15px;
-      color: $text-secondary;
-      transition: color 0.3s ease;
-    }
-
-    &:hover, &.active {
-      background: rgba($accent, 0.05);
-      border-color: rgba($accent, 0.5);
-      border-left-color: $accent;
-      transform: translateX(5px);
-      
-      i {
-        color: $accent;
-      }
+      color: $accent;
     }
   }
 }
 
+/* --- 4. Right Side: Display Screen --- */
 .contact-display {
   height: 100%;
   display: flex;
@@ -102,23 +154,19 @@
   .display-screen {
     position: relative;
     width: 100%;
-    background: lighten($main, 5%);
-    border: 1px solid rgba($accent, 0.3);
-    border-radius: 8px;
+    background: lighten($main, 3%); 
+    
+    // Only the top border exists
+    border: none;
+    border-top: 4px solid $accent; 
+    
+    // Top corners are sharp, bottom corners are curved
+    border-radius: 0 0 12px 12px; 
+    
     padding: 40px;
-    box-shadow: 0 0 25px rgba($accent, 0.1);
-    min-height: 250px; // Prevents the box from collapsing
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); // Subtle shadow for depth
+    min-height: 250px; 
     overflow: hidden;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: $accent;
-    }
   }
 
   .display-content {
@@ -144,9 +192,9 @@
     h3 {
       margin: 0 0 20px 0;
       color: $accent;
-      font-size: 1.4rem;
+      font-size: 1.25rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
 
       i {
         margin-right: 10px;
