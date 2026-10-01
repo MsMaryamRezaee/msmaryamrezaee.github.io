@@ -38,7 +38,7 @@ description: Ways to find me. Do reach out if you’re interested in collaborati
         
         <div class="display-content active" id="info-default">
           <h3>
-            <span class="title-primary"><i class="fa-solid fa-terminal" aria-hidden="true"></i>System Ready</span>
+            <span class="title-primary"><i class="fa fa-terminal fa-legacy" aria-hidden="true"></i>System Ready</span>
           </h3>
           <p>Hover over a contact channel to view descriptions and direct links. Click anywhere on the screen to disable selection.</p>
         </div>
