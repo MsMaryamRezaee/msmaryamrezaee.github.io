@@ -5,7 +5,6 @@
  */
 
 // 1. Configuration & Libraries
-// We use "as *" to make variables global, like @import did.
 @use 'lib/normalize';
 
 // 2. Base Styles
@@ -15,20 +14,17 @@
 // 3. Reusable Utilities
 @use '_utils/animations';
 
-// 4. Layout
+// 4. Layout (Macro structure & global blocks)
 @use '_layout/containers';
 @use '_layout/nav-header'; 
+@use '_layout/hero-header';
+@use '_layout/footer';
 @use '_layout/page';      
 
-// 5. Reusable Components
+// 5. Reusable Components (Micro widgets & buttons)
 @use '_components/action-link';
-@use '_components/hero-header';
-@use '_components/footer';
 
 // 6. Page-Specific Styles
-// The @use rule can't be inside a class, so we use @import
-// here. This is an acceptable use case.
-
 .page-home {
   @import '_pages/home';
 }
