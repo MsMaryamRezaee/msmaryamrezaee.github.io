@@ -39,6 +39,9 @@
   grid-template-columns: 1fr 1fr; 
   gap: 40px;
   margin-bottom: 50px;
+  
+  // Extra side space on mobile only for the main content
+  padding: 0 10%; 
 
   // Make the Brand column take up the full width on mobile
   .brand-col {
@@ -47,11 +50,13 @@
 
   @media only screen and (min-width: 768px) {
     // Desktop layout: 3 columns. 
-    // Brand takes 2 fractions, the other two take 1 fraction each
     grid-template-columns: 2fr 1fr 1fr;
     gap: 60px;
+    
+    // Remove the extra padding on desktop so it aligns normally
+    padding: 0; 
 
-    // Reset Brand column to only take up its designated space
+    // Reset Brand column
     .brand-col {
       grid-column: auto; 
     }
@@ -128,8 +133,8 @@
         bottom: auto;
         left: auto;
         top: 50%;
-        // Box sits just outside the right edge of the text
-        left: calc(100% + 12px); 
+        // Changed from 12px to 11px to force a 1px overlap with the arrow
+        left: calc(100% + 11px); 
         transform: translateY(-50%); 
       }
 
@@ -137,7 +142,7 @@
         bottom: auto;
         left: auto;
         top: 50%;
-        // Arrow perfectly bridges the gap
+        // Arrow starts at 7px and is 5px wide, ending at 12px. Overlaps the box at 11px.
         left: calc(100% + 7px); 
         transform: translateY(-50%);
         
@@ -156,7 +161,6 @@
   grid-template-columns: repeat(2, max-content); 
   gap: 15px;
 
-  // The  tag itself becomes the flex container to perfectly center the * tag
   a {
     display: inline-flex;
     justify-content: center;
@@ -169,11 +173,13 @@
     transition: all 0.3s ease;
     text-decoration: none;
 
-    // Reset the internal * tag so it doesn't mess with alignment
     .icon {
       margin: 0;
       padding: 0;
       font-size: 18px;
+      // Manually force the icon down 1 pixel to fix optical centering
+      position: relative;
+      top: 1px;
     }
 
     &:hover {
