@@ -180,6 +180,12 @@
       // Manually force the icon down 1 pixel to fix optical centering
       position: relative;
       top: 1px;
+
+      // Nudges the email drawing up slightly to visually center it inside the circle
+      &.fa-envelope::before {
+        position: relative;
+        top: -1px; 
+      }
     }
 
     &:hover {
