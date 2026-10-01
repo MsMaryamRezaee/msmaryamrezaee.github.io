@@ -18,3 +18,10 @@ h3 {
 h4 {
   font-size: 1rem;
 }
+
+/* Force Legacy Font Awesome 4 for specific icons */
+.fa-legacy, 
+.fa-legacy::before {
+  font-family: 'FontAwesome' !important;
+  font-weight: normal !important; /* FA4 requires normal weight, FA7 forces bold */
+}

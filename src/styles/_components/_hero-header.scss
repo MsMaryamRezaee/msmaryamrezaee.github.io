@@ -96,21 +96,16 @@
     border: 2px solid $text-primary;
     transition: all .7s;
 
-    // This targets ONLY the CV file icon
     &.fa-file-text {
       font-size: 18px; // Slightly smaller on mobile (default is 20px)
     }
-
-    // Nudges the flask drawing up slightly to visually center it inside the circle
     &.fa-flask::before {
       position: relative;
       top: -1px; 
     }
-
-    // Nudges the eye drawing up slightly to visually center it inside the circle
-    &.fa-eye::before {
+    &.fa-palette::before {
       position: relative;
-      top: -1px; 
+      top: -0.1px; 
     }
 
     &:hover {
