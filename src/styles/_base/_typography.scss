@@ -19,17 +19,27 @@ h4 {
   font-size: 1rem;
 }
 
-/* Force Legacy Font Awesome 4 for specific icons */
+/* 1. Define a completely protected name for the FA4 font */
+@font-face {
+  font-family: 'FontAwesomeLegacy';
+  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
+       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 2. Force Legacy Font Awesome 4 for specific icons */
 .fa.fa-legacy, 
 .fa.fa-legacy::before,
 .fa.fa-legacy::after {
-  /* 1. Override standard properties */
-  font-family: 'FontAwesome' !important;
-  font-weight: 400 !important; /* FA4 strictly requires 400/normal */
+  /* Target our custom, isolated font */
+  font-family: 'FontAwesomeLegacy' !important;
+  font-weight: 400 !important; 
   
-  /* 2. Nuke FA7's CSS Variables so they don't hijack the font */
-  --fa-family: 'FontAwesome' !important;
-  --_fa-family: 'FontAwesome' !important;
-  --fa-style-family: 'FontAwesome' !important;
+  /* Overwrite FA7's variable system to enforce the protected font */
+  --fa-family: 'FontAwesomeLegacy' !important;
+  --_fa-family: 'FontAwesomeLegacy' !important;
+  --fa-style-family: 'FontAwesomeLegacy' !important;
   --fa-style: 400 !important;
 }
