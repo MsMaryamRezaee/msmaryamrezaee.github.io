@@ -75,11 +75,11 @@ html {
  */
 
 ::selection {
-  background-color: rgba($accent, 0.4); // A translucent, darker wash of your accent color
-  color: #ffffff; // Forces selected text to be pure white
+  background-color: $accent-secondary;
+  color: #ffffff;
 }
 
 ::-moz-selection {
-  background-color: rgba($accent, 0.4);
+  background-color: $accent-secondary;
   color: #ffffff;
 }
