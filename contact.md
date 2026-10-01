@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Contact
-description: Communication channels and engagement protocols.
+description: Ways to find me. Do reach out if you’re interested in collaborating.
 ---
 
 <div class="contact-wrapper">
