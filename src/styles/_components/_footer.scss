@@ -32,17 +32,29 @@
   margin: 0 auto;
 }
 
-/* --- 3-Column Grid Layout --- */
+/* --- Grid Layout (Mobile First) --- */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1fr; // Mobile: 1 column
+  // Mobile layout: 2 columns
+  grid-template-columns: 1fr 1fr; 
   gap: 40px;
   margin-bottom: 50px;
 
+  // Make the Brand column take up the full width on mobile
+  .brand-col {
+    grid-column: 1 / -1; 
+  }
+
   @media only screen and (min-width: 768px) {
-    // Desktop: 3 columns. Brand gets more space (2 fractions vs 1)
+    // Desktop layout: 3 columns. 
+    // Brand takes 2 fractions, the other two take 1 fraction each
     grid-template-columns: 2fr 1fr 1fr;
     gap: 60px;
+
+    // Reset Brand column to only take up its designated space
+    .brand-col {
+      grid-column: auto; 
+    }
   }
 }
 
@@ -102,34 +114,67 @@
       text-decoration: none;
       font-size: 0.95rem;
       transition: color 0.3s ease, transform 0.3s ease;
-      width: fit-content; // Ensures hover trigger isn't full width
+      width: fit-content;
 
       &:hover {
         color: $accent;
-        transform: translateX(5px); // Sleek slight movement on hover
+        transform: translateX(5px);
+      }
+    }
+
+    // --- Footer Nav Specific Tooltips (Right-Side) ---
+    [data-tooltip] {
+      &::before {
+        bottom: auto;
+        left: auto;
+        top: 50%;
+        // Box sits just outside the right edge of the text
+        left: calc(100% + 12px); 
+        transform: translateY(-50%); 
+      }
+
+      &::after {
+        bottom: auto;
+        left: auto;
+        top: 50%;
+        // Arrow perfectly bridges the gap
+        left: calc(100% + 7px); 
+        transform: translateY(-50%);
+        
+        // Changes the triangle to point to the LEFT
+        border-width: 5px 5px 5px 0 !important;
+        border-color: transparent $accent transparent transparent !important;
       }
     }
   }
 }
 
-/* Social Icons */
+/* Social Icons (2x2 Grid) */
 .footer-icons {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  // Forces exactly 2 columns, perfectly wrapping the icons
+  grid-template-columns: repeat(2, max-content); 
   gap: 15px;
 
-  .icon {
+  // The  tag itself becomes the flex container to perfectly center the * tag
+  a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     width: 40px;
     height: 40px;
-    font-size: 18px;
     color: $text-primary;
     border: 1px solid rgba($text-primary, 0.2);
     border-radius: 50%;
     transition: all 0.3s ease;
     text-decoration: none;
+
+    // Reset the internal * tag so it doesn't mess with alignment
+    .icon {
+      margin: 0;
+      padding: 0;
+      font-size: 18px;
+    }
 
     &:hover {
       color: $main;
