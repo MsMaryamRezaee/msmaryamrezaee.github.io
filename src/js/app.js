@@ -74,7 +74,9 @@ const particleConfig = {
 document.addEventListener("DOMContentLoaded", function () {
   
   /* 1. Initialize SweetScroll */
-  new SweetScroll({/* some options */});
+  new SweetScroll({
+    offset: -100 /* Stops the scroll 100px early to leave room for the sticky nav */
+  });
 
   
   /* 2. Initialize all Particle instances SAFELY */
