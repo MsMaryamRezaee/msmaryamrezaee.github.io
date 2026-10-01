@@ -154,7 +154,8 @@
     text-transform: uppercase;
   }
 
-  &:hover, &.active {
+  // The active state controlled by JavaScript
+  &.active {
     background: rgba($accent, 0.05);
     border-color: rgba($accent, 0.3);
     border-left-color: $accent; 
@@ -162,6 +163,21 @@
     
     .btn-left i {
       color: $accent;
+    }
+  }
+
+  // Tells the browser to ONLY apply hover effects on devices with a real mouse cursor.
+  // This completely eliminates the "sticky hover" bug on phones and tablets!
+  @media (hover: hover) {
+    &:hover {
+      background: rgba($accent, 0.05);
+      border-color: rgba($accent, 0.3);
+      border-left-color: $accent; 
+      transform: translateX(10px);
+      
+      .btn-left i {
+        color: $accent;
+      }
     }
   }
 }
@@ -253,7 +269,7 @@
       text-align: center; // Centers the text inside the full-width button
       // Forces the button to the absolute bottom of the flex container!
       margin-top: auto;
-      letter-spacing: 3px; // Adds the spaced-out character design
+      letter-spacing: 1px; // Adds the spaced-out character design
       box-sizing: border-box; // Ensures padding doesn't overflow the box
     }
   }
