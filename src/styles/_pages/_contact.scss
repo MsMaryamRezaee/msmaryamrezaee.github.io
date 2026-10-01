@@ -1,0 +1,168 @@
+@use '../_config/variables' as *;
+
+/*
+ * =========================================
+ * Page-Specific: Contact
+ * =========================================
+ */
+
+.contact-wrapper {
+  position: relative;
+  width: 100%;
+  // Takes up full screen height minus header/footer approximations
+  min-height: 80vh; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 5% 50px 5%;
+  box-sizing: border-box;
+}
+
+#contact-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.contact-grid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  animation: fadeIn 0.8s ease-out forwards;
+
+  @media only screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
+    align-items: center;
+  }
+}
+
+.contact-title {
+  margin-top: 0;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: $text-primary;
+  border-bottom: 2px solid $accent;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.contact-channels {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .channel-btn {
+    display: flex;
+    align-items: center;
+    background: lighten($main, 3%);
+    border: 1px solid rgba($accent, 0.2);
+    border-left: 4px solid transparent;
+    padding: 18px 25px;
+    border-radius: 6px;
+    color: $text-primary;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    i {
+      font-size: 1.4rem;
+      margin-right: 15px;
+      color: $text-secondary;
+      transition: color 0.3s ease;
+    }
+
+    &:hover, &.active {
+      background: rgba($accent, 0.05);
+      border-color: rgba($accent, 0.5);
+      border-left-color: $accent;
+      transform: translateX(5px);
+      
+      i {
+        color: $accent;
+      }
+    }
+  }
+}
+
+.contact-display {
+  height: 100%;
+  display: flex;
+
+  .display-screen {
+    position: relative;
+    width: 100%;
+    background: lighten($main, 5%);
+    border: 1px solid rgba($accent, 0.3);
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 0 25px rgba($accent, 0.1);
+    min-height: 250px; // Prevents the box from collapsing
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: $accent;
+    }
+  }
+
+  .display-content {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+
+    &.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      position: relative;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    h3 {
+      margin: 0 0 20px 0;
+      color: $accent;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+      i {
+        margin-right: 10px;
+      }
+    }
+
+    p {
+      color: $text-secondary;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin: 0;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

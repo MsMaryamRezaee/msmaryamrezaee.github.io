@@ -93,6 +93,9 @@ document.addEventListener("DOMContentLoaded", function () {
     navParticleConfig.particles.size.value = 1.5;  // Make them smaller
     particlesJS('nav-particles', navParticleConfig);
   }
+  if (document.getElementById('contact-particles')) {
+    particlesJS('contact-particles', particleConfig);
+  }
 
   
   /* 3. Reveal-on-scroll animation */
@@ -220,5 +223,47 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault(); // Stops the link from navigating anywhere
     });
   });
+
+  /* 8. Contact Page Hover Interactions */
+  const channelBtns = document.querySelectorAll('.channel-btn');
+  const displayContents = document.querySelectorAll('.display-content');
+
+  if (channelBtns.length > 0) {
+    channelBtns.forEach(btn => {
+      // Trigger on mouse hover (Desktop) and click (Mobile)
+      ['mouseenter', 'focus'].forEach(evt => {
+        btn.addEventListener(evt, () => {
+          // Remove active from all buttons and displays
+          channelBtns.forEach(b => b.classList.remove('active'));
+          displayContents.forEach(c => c.classList.remove('active'));
+
+          // Add active to current hovered button
+          btn.classList.add('active');
+
+          // Show corresponding text
+          const targetId = btn.getAttribute('data-target');
+          const targetContent = document.getElementById(targetId);
+          if (targetContent) {
+            targetContent.classList.add('active');
+          }
+        });
+      });
+
+      // Handle when the mouse leaves the entire button area
+      // Resets back to the default system message
+      const contactChannelsContainer = document.querySelector('.contact-channels');
+      if (contactChannelsContainer) {
+        contactChannelsContainer.addEventListener('mouseleave', () => {
+          channelBtns.forEach(b => b.classList.remove('active'));
+          displayContents.forEach(c => c.classList.remove('active'));
+          
+          const defaultContent = document.getElementById('info-default');
+          if (defaultContent) {
+            defaultContent.classList.add('active');
+          }
+        });
+      }
+    });
+  }
 
 }, false);
