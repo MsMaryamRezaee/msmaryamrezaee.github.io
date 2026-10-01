@@ -11,25 +11,35 @@
   width: 100%;
   box-sizing: border-box;
   z-index: 100;
-  transition: all 0.3s ease;
-  background: transparent; // Completely transparent globally
-  border: none;            // No borders globally
+  // Increased transition time slightly to make the glass fade-in super smooth
+  transition: all 0.4s ease; 
+  background: transparent; 
+  border: none;            
 
-  // Add these three lines to prevent text selection and mobile popups:
   user-select: none; 
   -webkit-user-select: none; 
   -webkit-touch-callout: none;
 
-  // Home Page State: Absolute to overlay the hero image
+  // Home Page State: Fixed to overlay the hero and follow you down
   &.nav-home {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
   }
 
-  // Subpage State: Relative to stack naturally above content
+  // Subpage State: Sticky to sit naturally above content, then lock at the top when you scroll
   &.nav-subpage {
-    position: relative;
+    position: sticky;
+    top: 0;
+  }
+
+  // The Glassmorphism state (Triggered by JavaScript)
+  &.is-scrolled {
+    background: rgba($main, 0.85); // Uses your dark background color but makes it translucent
+    backdrop-filter: blur(12px); // The magical frosted glass blur
+    -webkit-backdrop-filter: blur(12px); // Safari support
+    border-bottom: 1px solid rgba($accent, 0.15); // A sleek, subtle accent line at the bottom
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); // Adds depth so it visually floats over the page
   }
 }
 

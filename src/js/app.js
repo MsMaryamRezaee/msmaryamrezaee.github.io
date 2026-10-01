@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
   /* 1. Initialize SweetScroll */
   new SweetScroll({/* some options */});
 
+  
   /* 2. Initialize all Particle instances SAFELY */
   if (document.getElementById('hero-particles')) {
     particlesJS('hero-particles', particleConfig);
@@ -265,6 +266,21 @@ document.addEventListener("DOMContentLoaded", function () {
         activateContactPanel('info-default');
       }
     });
+  }
+
+  /* 9. Sticky Navigation Glassmorphism */
+  const navHeader = document.querySelector('.nav-header');
+  
+  if (navHeader) {
+    window.addEventListener('scroll', () => {
+      // If the user scrolls down more than 50 pixels, turn on the glass effect
+      if (window.scrollY > 50) {
+        navHeader.classList.add('is-scrolled');
+      } else {
+        // If they scroll back to the very top, make it fully transparent again
+        navHeader.classList.remove('is-scrolled');
+      }
+    }, { passive: true }); // passive: true keeps the browser scrolling buttery smooth
   }
 
 }, false);
