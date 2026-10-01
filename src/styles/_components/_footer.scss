@@ -2,18 +2,18 @@
 
 /*
  * =========================================
- * Site Footer
+ * Site Footer (Professional Grid)
  * =========================================
  */
 
 .footer-container {
-  position: relative; // Needed to contain the absolute-positioned particles
+  position: relative; 
   overflow: hidden;
-  background: $main; // Fallback if particles don't load
-  padding: 60px 20px; // 60px top/bottom, 20px left/right
+  background: $main; 
+  padding: 80px 5% 30px 5%; // More padding on top, less on bottom
   margin-top: 150px;
   width: 100%;
-  box-sizing: border-box; // Ensures padding doesn't break layout
+  box-sizing: border-box; 
 }
 
 #footer-particles {
@@ -22,89 +22,154 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1; // Behind content
+  z-index: 1; 
 }
 
 .footer-content {
   position: relative;
-  z-index: 2; // On top of particles
-  text-align: center;
-  color: $text-secondary;
-  max-width: 960px; // Match your other content
+  z-index: 2; 
+  max-width: 1200px; 
   margin: 0 auto;
 }
 
-// Cleaner, top-level selectors for your footer content
-.footer-icons {
+/* --- 3-Column Grid Layout --- */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr; // Mobile: 1 column
+  gap: 40px;
+  margin-bottom: 50px;
+
+  @media only screen and (min-width: 768px) {
+    // Desktop: 3 columns. Brand gets more space (2 fractions vs 1)
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+  }
+}
+
+/* --- Column Styling --- */
+.footer-col {
   display: flex;
-  justify-content: center;
-  text-align: center;
-  margin-bottom: 25px;
+  flex-direction: column;
 
-  .icon {
-    // Re-using the header icon style
-    text-align: center;
+  h3 {
+    margin: 0 0 15px 0;
+    padding: 0;
+    font-size: 1.5rem;
     color: $text-primary;
+    letter-spacing: 1px;
+  }
 
-    display: inline-flex;    /* Makes the circle a flex container */
-    justify-content: center; /* Centers horizontally */
-    align-items: center;     /* Centers vertically */
+  h4 {
+    margin: 0 0 20px 0;
+    padding: 0;
+    font-size: 1.1rem;
+    color: $text-primary;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
 
-    width: 20px;
-    height: 20px;
-    font-size: 20px;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 50%;
-    border: 2px solid $text-primary;
-    transition: all .7s;
+  p {
+    color: $text-secondary;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0 0 15px 0;
+    max-width: 400px;
+  }
+}
 
-    // This targets ONLY the CV file icon
-    &.fa-file-text {
-      font-size: 18px; // Slightly smaller on mobile (default is 20px)
-    }
-
-    &:hover, &:active {
-      color: $main;
-      background: $text-primary;
-    }
+/* Specific Columns */
+.brand-col {
+  .footer-location {
+    color: $text-primary;
+    font-weight: 500;
+    margin-top: 10px;
     
-    // Make them slightly smaller than the main header icons
-    @media only screen and (min-width:$cut) {
-      width: 30px; 
-      height: 30px;
-      font-size: 30px;
+    .fa {
+      color: $accent;
+      margin-right: 8px;
+    }
+  }
+}
 
-      // This keeps it smaller on desktop too
-      &.fa-file-text {
-        font-size: 27px; // Smaller than the default 30px
+.links-col {
+  .footer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    a {
+      color: $text-secondary;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+      width: fit-content; // Ensures hover trigger isn't full width
+
+      &:hover {
+        color: $accent;
+        transform: translateX(5px); // Sleek slight movement on hover
       }
     }
   }
 }
 
-.footer-location {
-  font-size: 1rem;
-  color: $text-primary;
-  margin: 0 0 25px 0;
+/* Social Icons */
+.footer-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 
-  .fa { // Style for the map-marker icon
-    margin-right: 8px;
-    color: $accent;
+  .icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    color: $text-primary;
+    border: 1px solid rgba($text-primary, 0.2);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    text-decoration: none;
+
+    &:hover {
+      color: $main;
+      background: $accent;
+      border-color: $accent;
+      transform: translateY(-3px);
+    }
   }
 }
 
-// Target just the <p> tags inside .footer-content
-.footer-content p {
-  margin: 5px 0;
-  font-size: 0.9rem;
-  line-height: 1.6;
+/* --- Bottom Bar (Copyright & Credits) --- */
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid rgba($text-primary, 0.1);
+  padding-top: 30px;
+  text-align: center;
 
-  a {
-    color: $text-primary;
-    text-decoration: none;
-    &:hover {
-      color: $accent;
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgba($text-secondary, 0.7);
+
+    a {
+      color: $text-secondary;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: $accent;
+      }
     }
   }
 }
