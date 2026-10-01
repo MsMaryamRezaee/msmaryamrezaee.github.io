@@ -39,11 +39,12 @@
     backdrop-filter: blur(12px); 
     -webkit-backdrop-filter: blur(12px); 
     
-    border: none; // Ensures no sharp lines appear
+    border: none; // Keeps the sharp line gone
 
-    // Layer 1: A tight, colored blur acting as the glowing light edge
-    // Layer 2: The wider, dark shadow pushing it off the page for depth
-    box-shadow: 0 4px 15px rgba($accent, 0.15), 0 10px 30px rgba(0, 0, 0, 0.4); 
+    // Layer 1 (inset): The soft light bleeding INWARD from the bottom edge
+    // Layer 2 (normal): The dark drop shadow OUTSIDE to keep the nav floating
+    box-shadow: inset 0 -4px 12px -2px rgba($accent, 0.25), 
+                0 10px 30px rgba(0, 0, 0, 0.4); 
   }
 }
 
