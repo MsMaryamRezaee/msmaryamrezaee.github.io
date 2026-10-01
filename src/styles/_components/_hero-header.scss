@@ -9,15 +9,21 @@
 #hero-particles.hero-header {
   background: $main;
   display: flex;
-  vertical-align: bottom;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;     /* Centers vertically */
   width: 100%;
   min-height: 100vh;
+  overflow: hidden;        /* Kills the horizontal scroll bug */
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  
   .particles-js-canvas-el {
-    width:100% !important;
-    height:100vh !important;
+    position: absolute;    /* Stops the canvas from messing with Flexbox */
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100vh !important;
   }
 }
 
@@ -25,14 +31,9 @@
   position: relative;
   z-index: 2;
   text-align: center;
-  // 1s is the duration, ease-out makes it slow down smoothly at the end
   animation: fadeInDown 1s ease-out forwards;
   color: $text-primary;
-  top: 50%;
-  left: 50%;
-  margin: 0 auto;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  
   .site-title {
     font-size: 50px;
     display: block;
@@ -43,6 +44,7 @@
       font-size: 100px;
     }
   }
+  
   .site-description {
     font-size: 20px;
     display: block;
@@ -164,12 +166,10 @@
 @keyframes fadeInDown {
   from { 
     opacity: 0; 
-    // Keep X at -50% for centering, and pull Y up by an extra 30px
-    transform: translate(-50%, -50%) translateY(-30px); 
+    transform: translateY(-30px); 
   }
   to { 
     opacity: 1; 
-    // Return to the exact centered position!
-    transform: translate(-50%, -50%); 
+    transform: translateY(0); 
   }
 }
