@@ -6,6 +6,7 @@
  * =========================================
  */
 
+
  // --- 0. Full Width Section Header ---
 .full-width-header {
   width: 100%;
@@ -29,7 +30,107 @@
   }
 }
 
-// --- 1. "Selected Highlights" Section ---
+
+// --- 1. Global Wrapper for Intro & Logo Particles ---
+.particles-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* Crucial: This effortlessly forces the particles to fill the 100px gap right below the hero header! */
+}
+
+#logo-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Puts particles behind both the text and the logo */
+}
+
+#intro, #logo-section {
+  position: relative;
+  z-index: 2; /* Lifts the content above the moving particles */
+}
+
+
+// --- 2. Intro Typewriter Section ---
+.intro-container {
+  max-width: 600px; 
+  margin: 0 auto; 
+  
+  /* The Glassmorphism Box */
+  padding: 40px;
+  border-radius: 16px;
+  background: transparent; /* No color, so it's invisible until particles float behind it */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-sizing: border-box;
+
+  @media only screen and (max-width: 550px) {
+    padding: 25px 20px; /* Tighter padding on mobile so text isn't squished */
+  }
+}
+
+#typewriter-text {
+  font-size: 1rem;
+  color: $text-secondary;
+  line-height: 1.8;
+  min-height: 100px; 
+
+  /* The Justify Magic */
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: center; 
+  
+  /* Space Distribution Fixes */
+  letter-spacing: 2px;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  overflow-wrap: break-word;
+
+  // Style for each individual word span
+  > span {
+    display: inline; 
+    position: relative;
+    top: 15px; 
+    opacity: 0;
+    transition: opacity 0.4s ease-out, top 0.4s ease-out;
+  }
+  
+  // The class our JS adds
+  > span.is-visible {
+    opacity: 1;
+    top: 0;
+  }
+}
+
+
+// --- 3. Logo Animation ---
+.logo-animation-container {
+  position: relative; 
+  z-index: 2;
+  text-align: center;
+  margin: 150px auto; 
+  
+  svg {
+    width: 300px; 
+  }
+}
+
+#logo-path {
+  stroke: $text-primary; 
+  stroke-width: 1px; 
+  fill: transparent; // No fill
+}
+
+// Class added by JS on scroll
+#logo-path.is-animating {
+  animation: draw 3s ease-in-out infinite alternate;
+}
+
+
+// --- 4. "Selected Highlights" Section ---
 #highlights {
   .highlights-grid {
     display: grid;
@@ -105,108 +206,8 @@
   }
 }
 
-// --- 2. "Current Focus" Section ---
-#focus {
-  .focus-container {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    max-width: 800px; // Narrower
-    margin: 0 auto;
-  }
 
-  .focus-item {
-    display: flex;
-    align-items: flex-start; 
-    gap: 20px;
-    background-color: lighten($main, 3%);
-    border-left: 3px solid $accent;
-    padding: 20px;
-    border-radius: 0 8px 8px 0; 
-    
-    border-top: 3px solid transparent;    // Placeholder borders
-    border-right: 3px solid transparent;
-    border-bottom: 3px solid transparent;
-    transition: all 0.4s ease-out; 
-
-    &:hover {
-      transform: translateY(-8px); // Lift
-      border-radius: 8px; // Curve all corners
-      border-left-color: $accent;
-      border-top-color: $accent;
-      border-right-color: $accent;
-      border-bottom-color: $accent;
-    }
-  }
-
-  .focus-icon {
-    font-size: 1.75rem;
-    color: $accent;
-    padding-top: 3px; 
-    min-width: 25px; 
-    text-align: center;
-  }
-
-  .focus-content {
-    h4 {
-      margin: 0 0 5px 0;
-      padding: 0;
-      font-size: 1.15rem;
-      color: $text-primary;
-    }
-    p {
-      margin: 0;
-      color: $text-secondary;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-  }
-}
-
-// --- 3. Intro Typewriter Section ---
-.intro-container {
-  max-width: 600px; 
-  margin: 0 auto; 
-}
-
-#typewriter-text {
-  font-size: 1rem;
-  color: $text-secondary;
-  line-height: 1.8;
-  min-height: 100px; 
-
-  /* The Justify Magic */
-  text-align: justify;
-  text-justify: inter-word;
-  text-align-last: center; 
-  
-  /* Space Distribution Fixes */
-  letter-spacing: 2px;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  hyphens: auto;
-  overflow-wrap: break-word; /* Emergency fallback to break words if hyphenation fails */
-
-  // Style for each individual word span
-  > span {
-    /* Changed from inline-block to inline so the browser can actually hyphenate them */
-    display: inline; 
-    position: relative;
-    
-    /* Animate 'top' instead of 'transform' since transform doesn't work on inline text */
-    top: 15px; 
-    opacity: 0;
-    transition: opacity 0.4s ease-out, top 0.4s ease-out;
-  }
-  
-  // The class our JS adds
-  > span.is-visible {
-    opacity: 1;
-    top: 0;
-  }
-}
-
-// --- 4. Skills Scroller Section ---
+// --- 5. Skills Scroller Section ---
 .skills-scroller {
   background: lighten($main, 3%);
   overflow: hidden;
@@ -291,44 +292,66 @@
   }
 }
 
-// --- 5. Logo Animation ---
-#logo-section {
-  position: relative;
-  overflow: hidden; // Clips the particles
-}
+// --- 6. "Current Focus" Section ---
+#focus {
+  .focus-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 800px; // Narrower
+    margin: 0 auto;
+  }
 
-#logo-particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1; // Behind the logo
-}
+  .focus-item {
+    display: flex;
+    align-items: flex-start; 
+    gap: 20px;
+    background-color: lighten($main, 3%);
+    border-left: 3px solid $accent;
+    padding: 20px;
+    border-radius: 0 8px 8px 0; 
+    
+    border-top: 3px solid transparent;    // Placeholder borders
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    transition: all 0.4s ease-out; 
 
-.logo-animation-container {
-  position: relative; 
-  z-index: 2;
-  text-align: center;
-  margin: 150px auto; 
-  
-  svg {
-    width: 300px; 
+    &:hover {
+      transform: translateY(-8px); // Lift
+      border-radius: 8px; // Curve all corners
+      border-left-color: $accent;
+      border-top-color: $accent;
+      border-right-color: $accent;
+      border-bottom-color: $accent;
+    }
+  }
+
+  .focus-icon {
+    font-size: 1.75rem;
+    color: $accent;
+    padding-top: 3px; 
+    min-width: 25px; 
+    text-align: center;
+  }
+
+  .focus-content {
+    h4 {
+      margin: 0 0 5px 0;
+      padding: 0;
+      font-size: 1.15rem;
+      color: $text-primary;
+    }
+    p {
+      margin: 0;
+      color: $text-secondary;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
   }
 }
 
-#logo-path {
-  stroke: $text-primary; 
-  stroke-width: 1px; 
-  fill: transparent; // No fill
-}
 
-// Class added by JS on scroll
-#logo-path.is-animating {
-  animation: draw 3s ease-in-out infinite alternate;
-}
-
-// --- 6. "Construction" Section / CTA Bar ---
+// --- 7. "Construction" Section / CTA Bar ---
 .full-width-cta {
   width: 100%;
   // Match the Highlights bar background and borders for consistency
