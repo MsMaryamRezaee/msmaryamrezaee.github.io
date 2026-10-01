@@ -165,15 +165,20 @@
 
 // --- 3. Intro Typewriter Section ---
 .intro-container {
-  text-align: center;
-  max-width: 800px; 
+  max-width: 650px; 
+  margin: 0 auto; 
 }
 
 #typewriter-text {
   font-size: 1.25rem;
   color: $text-secondary;
   line-height: 1.8;
-  min-height: 100px; // Prevent layout jump
+  min-height: 100px; 
+
+  /* The Justify Magic */
+  text-align: justify;
+  text-justify: inter-word; /* Distributes space cleanly between words */
+  text-align-last: center; /* Forces the last line of a paragraph to center instead of awkwardly stretching */
 
   // Style for each individual word span
   > span {
