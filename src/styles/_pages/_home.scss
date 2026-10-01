@@ -185,23 +185,24 @@
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
-  overflow-wrap: break-word;
+  overflow-wrap: break-word; /* Emergency fallback to break words if hyphenation fails */
 
   // Style for each individual word span
   > span {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(15px);
-    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    /* Changed from inline-block to inline so the browser can actually hyphenate them */
+    display: inline; 
+    position: relative;
     
-    /* Forces the browser to snap a long word to the next line mid-letter if it has to */
-    word-break: break-word; 
+    /* Animate 'top' instead of 'transform' since transform doesn't work on inline text */
+    top: 15px; 
+    opacity: 0;
+    transition: opacity 0.4s ease-out, top 0.4s ease-out;
   }
   
   // The class our JS adds
   > span.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    top: 0;
   }
 }
 
