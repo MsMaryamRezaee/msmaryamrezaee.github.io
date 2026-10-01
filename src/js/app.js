@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
   /* 1. Initialize SweetScroll */
   new SweetScroll({
-    offset: -200 /* Stops the scroll early to leave room for the sticky nav */
+    offset: -180 /* Stops the scroll early to leave room for the sticky nav */
   });
 
   

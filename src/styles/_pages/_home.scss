@@ -165,7 +165,7 @@
 
 // --- 3. Intro Typewriter Section ---
 .intro-container {
-  max-width: 650px; 
+  max-width: 600px; 
   margin: 0 auto; 
 }
 
@@ -177,8 +177,14 @@
 
   /* The Justify Magic */
   text-align: justify;
-  text-justify: inter-word; /* Distributes space cleanly between words */
-  text-align-last: center; /* Forces the last line of a paragraph to center instead of awkwardly stretching */
+  text-justify: inter-word;
+  text-align-last: center; 
+  
+  /* Space Distribution Fixes */
+  letter-spacing: 0.03em; /* Slight character spacing */
+  -webkit-hyphens: auto;  /* Allows the browser to hyphenate long words */
+  -ms-hyphens: auto;
+  hyphens: auto;
 
   // Style for each individual word span
   > span {
