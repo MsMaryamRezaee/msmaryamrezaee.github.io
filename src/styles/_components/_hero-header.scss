@@ -33,6 +33,9 @@
   text-align: center;
   animation: fadeInDown 1s ease-out forwards;
   color: $text-primary;
+  width: 100%;
+  padding: 0 12vw; // 12% of the screen width on both sides
+  box-sizing: border-box;
   
   .site-title {
     font-size: 50px;
@@ -141,6 +144,7 @@
   text-align: center;
   font-size: 30px;
   cursor: pointer;
+  z-index: 2;
   .icon {
     position: absolute;
     -webkit-transform-style: preserve-3d;
