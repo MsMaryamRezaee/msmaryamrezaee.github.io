@@ -53,14 +53,16 @@
 .contact-grid {
   position: relative;
   width: 100%;
-  max-width: 1100px; 
+  max-width: 650px; 
+  margin: 0 auto; // Centers this restricted column
   display: grid;
   grid-template-columns: 1fr;
   gap: 80px;
   animation: fadeIn 0.8s ease-out forwards;
 
-  @media only screen and (min-width: 768px) {
-    grid-template-columns: 1fr 1.3fr; 
+  @media only screen and (min-width: 1024px) {
+    max-width: 1100px; // Allows it to expand to full size again
+    grid-template-columns: 1fr 1.3fr; // Switches back to the 2-column split
     gap: 60px;
     align-items: flex-start; 
   }
