@@ -67,3 +67,19 @@ html {
   scrollbar-width: thin;
   scrollbar-color: $accent transparent;
 }
+
+/*
+ * =========================================
+ * Custom Text Selection
+ * =========================================
+ */
+
+::selection {
+  background-color: rgba($accent, 0.4); // A translucent, darker wash of your accent color
+  color: #ffffff; // Forces selected text to be pure white
+}
+
+::-moz-selection {
+  background-color: rgba($accent, 0.4);
+  color: #ffffff;
+}
