@@ -107,6 +107,10 @@
       position: relative;
       top: -0.1px; 
     }
+    &.fa-eye::before {
+      position: relative;
+      top: -0.1px; 
+    }
 
     &:hover {
       color: $main;

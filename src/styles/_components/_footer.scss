@@ -184,14 +184,12 @@
       // Nudges the icons up slightly to visually center it inside the circle
       &.fa-envelope::before {
         position: relative;
-        top: -0.25px; 
+        top: -0.15px; 
       }
-
       &.fa-telegram::before {
         position: relative;
-        top: -0.25px; 
+        top: -0.1px; 
       }
-
       &.fa-github-alt::before {
         position: relative;
         top: -0.25px; 
