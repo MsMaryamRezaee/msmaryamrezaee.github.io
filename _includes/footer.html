@@ -6,8 +6,8 @@
     <div class="footer-grid">
       <!-- Column 1: Brand & Tagline -->
       <div class="footer-col brand-col">
-        <h3>{{ site.username }}</h3>
-        <p>{{ site.description }}</p>
+        <h3>{{ site.user_name }}</h3>
+        <p>{{ site.short_description }}</p>
         <p class="footer-location">
           <i class="fa fa-map-marker" aria-hidden="true"></i>
           {{ site.user_location }}
@@ -39,7 +39,7 @@
 
     <!-- Bottom Bar -->
     <div class="footer-bottom">
-      <p>&copy; {{ site.time | date: "%Y" }} {{site.username}}. All rights reserved.</p>
+      <p>&copy; {{ site.time | date: "%Y" }} {{site.user_name}}. All rights reserved.</p>
       <p>
         Designed by <a href="https://github.com/{{site.github_username}}" target="_blank" rel="noopener noreferrer">Maryam Rezaee</a>.<br>
         Inspired by the <a href="https://github.com/nrandecker/particle" target="_blank" rel="noopener noreferrer">Particle Theme</a> by Nathan Randecker.

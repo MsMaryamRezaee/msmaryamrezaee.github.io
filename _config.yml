@@ -1,10 +1,10 @@
 title: Maryam Rezaee
-description: A computer science researcher specialising in LLM Interpretability and Cognitively-Inspired AI.
+short_description: A computer science researcher specialising in LLM Interpretability and Cognitively-Inspired AI.
 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://maryamrezaee.me" # the base hostname & protocol
 
-username: Maryam Rezaee
+user_name: Maryam Rezaee
 # user_title: AI Researcher
 user_location: Tehran, Iran
 
