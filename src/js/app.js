@@ -224,46 +224,60 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  /* 8. Contact Page Hover Interactions */
+  /* 8. Contact Page Hover & Lock Interactions */
   const channelBtns = document.querySelectorAll('.channel-btn');
   const displayContents = document.querySelectorAll('.display-content');
+  let lockedTargetId = null; // Memory for which panel is locked by a click
+
+  function activateContactPanel(targetId) {
+    displayContents.forEach(c => c.classList.remove('active'));
+    const targetContent = document.getElementById(targetId);
+    if (targetContent) {
+      targetContent.classList.add('active');
+    }
+  }
+
+  function activateContactButton(btnElement) {
+    channelBtns.forEach(b => b.classList.remove('active'));
+    if (btnElement) {
+      btnElement.classList.add('active');
+    }
+  }
 
   if (channelBtns.length > 0) {
     channelBtns.forEach(btn => {
-      // Trigger on mouse hover (Desktop) and click (Mobile)
-      ['mouseenter', 'focus'].forEach(evt => {
-        btn.addEventListener(evt, () => {
-          // Remove active from all buttons and displays
-          channelBtns.forEach(b => b.classList.remove('active'));
-          displayContents.forEach(c => c.classList.remove('active'));
+      const targetId = btn.getAttribute('data-target');
 
-          // Add active to current hovered button
-          btn.classList.add('active');
-
-          // Show corresponding text
-          const targetId = btn.getAttribute('data-target');
-          const targetContent = document.getElementById(targetId);
-          if (targetContent) {
-            targetContent.classList.add('active');
-          }
-        });
+      // Hover displays the panel temporarily
+      btn.addEventListener('mouseenter', () => {
+        activateContactButton(btn);
+        activateContactPanel(targetId);
       });
 
-      // Handle when the mouse leaves the entire button area
-      // Resets back to the default system message
-      const contactChannelsContainer = document.querySelector('.contact-channels');
-      if (contactChannelsContainer) {
-        contactChannelsContainer.addEventListener('mouseleave', () => {
-          channelBtns.forEach(b => b.classList.remove('active'));
-          displayContents.forEach(c => c.classList.remove('active'));
-          
-          const defaultContent = document.getElementById('info-default');
-          if (defaultContent) {
-            defaultContent.classList.add('active');
-          }
-        });
-      }
+      // Click locks the panel into memory
+      btn.addEventListener('click', () => {
+        lockedTargetId = targetId;
+        activateContactButton(btn);
+        activateContactPanel(targetId);
+      });
     });
+
+    // When the mouse leaves the entire left-side menu
+    const contactChannelsContainer = document.querySelector('.contact-channels');
+    if (contactChannelsContainer) {
+      contactChannelsContainer.addEventListener('mouseleave', () => {
+        if (lockedTargetId) {
+          // If a user clicked a button, revert to that specific locked display
+          const lockedBtn = document.querySelector(`.channel-btn[data-target="${lockedTargetId}"]`);
+          activateContactButton(lockedBtn);
+          activateContactPanel(lockedTargetId);
+        } else {
+          // If nothing was clicked yet, revert to the default ready screen
+          activateContactButton(null);
+          activateContactPanel('info-default');
+        }
+      });
+    }
   }
 
 }, false);
