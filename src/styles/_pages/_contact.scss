@@ -198,6 +198,9 @@
     // Elegant, simple fade without the messy Y-axis movement
     transition: opacity 0.5s ease; 
 
+    display: flex;
+    flex-direction: column;
+
     &.active {
       opacity: 1;
       visibility: visible;

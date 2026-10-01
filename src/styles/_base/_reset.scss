@@ -1,6 +1,11 @@
 @use '../_config/variables' as *;
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
+/* Remove default mobile tap blue highlight globally */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body, html {
   background-color: $main;
 }
