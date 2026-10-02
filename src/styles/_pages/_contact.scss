@@ -257,7 +257,7 @@
     top: 40px; left: 40px; right: 40px; bottom: 40px; 
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    transition: opacity 0.5s ease; 
     display: flex;
     flex-direction: column;
 
