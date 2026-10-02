@@ -460,7 +460,7 @@
 // --- 7. "Construction" Section / CTA Bar ---
 @keyframes progressStuck {
   0% { width: 0%; }
-  100% { width: 68%; } // The point where the system gets "stuck"
+  100% { width: 70%; } // The point where the system gets "stuck"
 }
 
 @keyframes progressLeak {
