@@ -235,11 +235,11 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.05); 
-  border-radius: 0 12px 12px 12px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
-  
-  padding: 30px;
-  min-height: 255px; 
+    border-radius: 0 12px 12px 12px;
+
+  padding: 30px 40px 40px 40px;
+  min-height: 270px; 
   overflow: hidden;
   display: flex;
   flex-direction: column;
