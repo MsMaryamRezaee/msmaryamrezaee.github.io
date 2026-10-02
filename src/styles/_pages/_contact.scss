@@ -70,6 +70,7 @@
   // Shifts the entire left column (including brackets) up by 15px on desktop
   @media only screen and (min-width: 1080px) {
     margin-top: -17px;
+    padding-bottom: 45px; // Adds 15px to the bottom to push the bottom line down away from the buttons
   }
 }
 
@@ -118,7 +119,7 @@
   text-transform: uppercase;
   font-weight: 600;
   color: $text-primary;
-  margin: 0 0 17px 10px; 
+  margin: 0 0 15px 10px; 
   height: 30px; // Locks the height so the bracket alignment is flawless
   white-space: nowrap;
 
