@@ -23,8 +23,10 @@
 
 #contact-particles {
   position: fixed; 
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  z-index: 0; 
+  top: 0; left: 0; width: 100vw; 
+  height: 100vh; /* Fallback for older browsers */
+  height: 100dvh; /* Prevents layout jumping on mobile */
+  z-index: 0;
 }
 
 /* --- 2. Main Layout --- */
@@ -32,7 +34,8 @@
   position: relative;
   z-index: 2; 
   width: 100%;
-  min-height: 80vh; 
+  min-height: 80vh; /* Fallback */
+  min-height: 80dvh; /* Prevents layout jumping on mobile */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,6 +145,9 @@
   background: rgba(lighten($main, 5%), 0.15);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  transform: translateZ(0);
+  will-change: transform, background-color, border-color;
+
   border: 1px solid rgba(255, 255, 255, 0.05); 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   
@@ -181,7 +187,7 @@
     background: rgba($accent, 0.1);
     border-color: rgba($accent, 0.3);
     border-left-color: $accent; 
-    transform: translateX(10px);
+    transform: translateX(10px) translateZ(0);
     .btn-left i { color: $accent; }
   }
 
@@ -190,7 +196,7 @@
       background: rgba($accent, 0.1);
       border-color: rgba($accent, 0.3);
       border-left-color: $accent; 
-      transform: translateX(10px);
+      transform: translateX(10px) translateZ(0);
       .btn-left i { color: $accent; }
     }
   }
@@ -234,6 +240,8 @@
   background: rgba(lighten($main, 5%), 0.15);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  transform: translateZ(0);
+
   border: 1px solid rgba(255, 255, 255, 0.05); 
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
   border-radius: 0 12px 12px 12px;
@@ -249,7 +257,7 @@
     top: 40px; left: 40px; right: 40px; bottom: 40px; 
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s ease; 
+    transition: opacity 0.5s ease, visibility 0.5s ease;
     display: flex;
     flex-direction: column;
 
