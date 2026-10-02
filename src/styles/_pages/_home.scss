@@ -92,17 +92,17 @@
 
   // Style for each individual word span
   > span {
-    display: inline; 
+    display: inline-block;
     position: relative;
-    top: 15px; 
+    transform: translateY(15px); // ADDED: Replaces top: 15px
     opacity: 0;
-    transition: opacity 0.4s ease-out, top 0.4s ease-out;
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out; // CHANGED
   }
   
   // The class our JS adds
   > span.is-visible {
     opacity: 1;
-    top: 0;
+    transform: translateY(0);
   }
 }
 
@@ -144,16 +144,17 @@
     }
   }
 
-  .highlight-card {
-    background: lighten($main, 3%); // Matches the Contact display screen
+ .highlight-card {
+    background: lighten($main, 3%);
     border: none;
     border-top: 4px solid rgba($accent, 0.4); 
     border-radius: 0 0 12px 12px; 
     padding: 35px 40px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); // Matches Contact page shadow
-    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    will-change: transform, box-shadow; 
     position: relative;
     overflow: hidden;
 
@@ -237,7 +238,7 @@
         border-radius: 4px; // Squared-off technical aesthetic
         font-size: 0.75rem;
         letter-spacing: 1px;
-        transition: all 0.3s ease;
+        transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
 
         &:hover {
           border-color: $accent;
@@ -301,6 +302,7 @@
     display: inline-block; 
     animation: scroll-left 40s linear infinite;
     transform: translateZ(0);
+    will-change: transform;
   }
 
   .skill-icon {
@@ -370,7 +372,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    will-change: transform, box-shadow;
     overflow: hidden;
 
     // The Accent Bar at the top (starts faded, lights up on hover)
@@ -382,7 +385,7 @@
       width: 100%;
       height: 3px;
       background: rgba($accent, 0.1);
-      transition: all 0.4s ease;
+      transition: background-color 0.4s ease;
     }
 
     &:hover {
@@ -413,7 +416,7 @@
       i {
         font-size: 1.5rem;
         color: rgba($text-secondary, 0.5);
-        transition: all 0.4s ease;
+        transition: transform 0.4s ease, color 0.4s ease;
       }
     }
 
@@ -459,8 +462,8 @@
 
 // --- 7. "Construction" Section / CTA Bar ---
 @keyframes progressStuck {
-  0% { width: 0%; }
-  100% { width: 56%; } // The point where the system gets "stuck"
+  0% { transform: scaleX(0); } 
+  100% { transform: scaleX(1); } 
 }
 
 @keyframes progressLeak {
@@ -536,6 +539,10 @@
     
     .progress-bar {
       height: 100%;
+      width: 56%; 
+      transform-origin: left;
+      will-change: transform;
+      
       border-radius: 3px;
       background-color: $accent;
       
@@ -549,7 +556,6 @@
       );
       background-size: 40px 100%;
       
-      // Dual-animation: Fill up and get stuck, while continuously leaking color
       animation: 
         progressStuck 4s cubic-bezier(0.1, 0.7, 0.1, 1) 1.2s both,
         progressLeak 1.5s linear infinite;
