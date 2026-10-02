@@ -348,150 +348,105 @@
 }
 
 // --- 6. "Current Focus" Section ---
-@keyframes pulseRing {
-  0% { transform: scale(0.8); opacity: 0.5; }
-  100% { transform: scale(2.5); opacity: 0; }
+@keyframes blinkStatus {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
 }
 
 #focus {
   .focus-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 850px; 
+    margin: 0 auto;
+  }
+
+  .focus-module {
+    background: lighten($main, 2%);
+    border: 1px solid rgba($accent, 0.15);
+    border-radius: 8px;
+    padding: 25px 35px;
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    max-width: 850px;
-    margin: 0 auto;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    overflow: hidden;
 
-    // The vertical connecting trace line
+    // The Accent Bar at the top (starts faded, lights up on hover)
     &::before {
       content: '';
       position: absolute;
-      left: 11px; // Centered exactly behind the 24px indicator
-      top: 30px;
-      bottom: 30px;
-      width: 2px;
-      background: rgba($accent, 0.15);
-      z-index: 0;
-
-      @media only screen and (max-width: 600px) {
-        display: none; // Hide on mobile where indicator vanishes
-      }
-    }
-  }
-
-  .focus-item {
-    display: flex;
-    align-items: center; 
-    gap: 30px;
-    position: relative;
-    z-index: 1;
-
-    @media only screen and (max-width: 600px) {
-      gap: 15px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba($accent, 0.1);
+      transition: all 0.4s ease;
     }
 
-    // Parent hover effects trigger all inner elements simultaneously
     &:hover {
-      .focus-card {
-        transform: translateX(10px); // Slides right like the contact buttons
-        background: rgba($accent, 0.05);
-        border-color: rgba($accent, 0.3);
-        border-left-color: $accent;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      transform: translateY(-8px); // The requested vertical lift
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); // Deep shadow on lift
+      border-color: rgba($accent, 0.3);
+      
+      &::before {
+        background: $accent; 
       }
-      .pulse-dot {
-        background: $main;
-        border-color: $accent;
-        box-shadow: 0 0 12px rgba($accent, 0.8);
-        
-        &::after {
-          animation: pulseRing 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-        }
-      }
-      .focus-icon {
+
+      .module-icon i {
         color: $accent;
+        transform: scale(1.1);
       }
     }
   }
 
-  .focus-indicator {
+  .module-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    width: 24px;
-    flex-shrink: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed rgba($text-primary, 0.15); // Tech-style divider
+    padding-bottom: 15px;
 
-    @media only screen and (max-width: 600px) {
-      display: none; // Drop the timeline on mobile to maximize card space
-    }
-
-    .pulse-dot {
-      width: 12px;
-      height: 12px;
-      background: rgba($accent, 0.5);
-      border: 2px solid $main;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-      position: relative;
-      z-index: 2;
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: -4px;
-        left: -4px;
-        right: -4px;
-        bottom: -4px;
-        border-radius: 50%;
-        border: 1px solid $accent;
-        opacity: 0; // Hidden until hovered
+    .module-icon {
+      i {
+        font-size: 1.5rem;
+        color: rgba($text-secondary, 0.5);
+        transition: all 0.4s ease;
       }
     }
-  }
 
-  .focus-card {
-    flex-grow: 1;
-    display: flex;
-    align-items: flex-start;
-    gap: 25px;
-    background: lighten($main, 3%); // Matches display screen
-    border: 1px solid rgba($accent, 0.15);
-    border-left: 4px solid rgba($accent, 0.15); // Default inactive state
-    padding: 25px 30px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-
-    @media only screen and (max-width: 600px) {
-      flex-direction: column;
-      gap: 15px;
-      padding: 20px;
-      border-left: 4px solid rgba($accent, 0.4); // Force visibility on mobile
-    }
-  }
-
-  .focus-icon {
-    font-size: 1.8rem;
-    color: rgba($text-secondary, 0.6);
-    min-width: 35px;
-    text-align: center;
-    transition: color 0.3s ease;
-    margin-top: 2px; // Optical alignment with the uppercase h4
-
-    @media only screen and (max-width: 600px) {
-      margin-top: 0;
-    }
-  }
-
-  .focus-content {
-    h4 {
-      margin: 0 0 10px 0;
-      padding: 0;
-      font-size: 1.15rem;
-      color: $text-primary;
+    .module-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      color: $accent;
       text-transform: uppercase;
       letter-spacing: 2px;
       font-weight: 600;
+
+      .status-indicator {
+        width: 8px;
+        height: 8px;
+        background-color: $accent;
+        border-radius: 1px; // Square dot for terminal aesthetic
+        animation: blinkStatus 2s infinite; // Live process effect
+      }
     }
+  }
+
+  .module-body {
+    h4 {
+      margin: 0 0 10px 0;
+      padding: 0;
+      font-size: 1.2rem;
+      color: $text-primary;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
     p {
       margin: 0;
       color: $text-secondary;
