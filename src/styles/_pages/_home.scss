@@ -458,97 +458,132 @@
 
 
 // --- 7. "Construction" Section / CTA Bar ---
+@keyframes progressStuck {
+  0% { width: 0%; }
+  100% { width: 68%; } // The point where the system gets "stuck"
+}
+
+@keyframes progressLeak {
+  from { background-position: 0 0; }
+  to { background-position: 40px 0; }
+}
+
 .full-width-cta {
   width: 100%;
-  // Match the Highlights bar background and borders for consistency
   background-color: lighten($main, 2%); 
   border-top: 1px solid rgba($accent, 0.15);
   border-bottom: 1px solid rgba($accent, 0.15);
-  
-  padding: 50px 0;
-  margin-top: 170px; // Space from the section above
-  margin-bottom: 0;  // It sits right above the footer usually
+  padding: 60px 0; 
+  margin-top: 150px; 
+  margin-bottom: 0; 
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2); // Adds internal depth to the band
 
   .cta-grid {
-    // Reset the default page-section margins inside here
     margin: 0 auto; 
-    
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 30px;
+    gap: 40px;
 
-    // On Desktop, make it side-by-side
     @media only screen and (min-width: 768px) {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      text-align: left;
     }
   }
 
   .cta-text {
-    flex: 1; // Takes up available space
-    max-width: 600px;
+    flex: 1; 
+    max-width: 650px;
 
-    h3 {
-      margin: 0 0 15px 0;
+    .cta-title {
+      margin: 0 0 20px 0;
       padding: 0;
-      font-size: 1.4rem;
+      font-size: 1.15rem;
       color: $text-primary;
-      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
       
       .accent-icon {
         color: $accent;
-        margin-right: 10px;
+        margin-right: 12px;
+        font-size: 1.25rem;
       }
     }
 
     p {
-      margin: 15px 0 0 0;
-      font-size: 1rem;
+      margin: 0;
+      font-size: 0.95rem;
       color: $text-secondary;
-      line-height: 1.6;
+      line-height: 1.7;
+
+      strong {
+        color: $text-primary;
+        font-weight: 600;
+      }
     }
   }
 
   // Visual "Loading" Bar decoration
   .progress-bar-container {
     width: 100%;
-    height: 4px;
-    background: lighten($main, 8%);
-    border-radius: 2px;
+    height: 6px;
+    background: rgba($text-primary, 0.05); // Dark track background
+    border-radius: 3px;
+    margin: 0 0 20px 0;
     overflow: hidden;
+    border: 1px solid rgba($text-primary, 0.05);
     
     .progress-bar {
       height: 100%;
-      width: 60%; // Represents "Under Construction"
-      background: $accent;
-      // Optional: Add a subtle stripe pattern
-      background-image: linear-gradient(
-        45deg,rgba(255,255,255,.15) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255,255,255,.15) 50%,
-        rgba(255,255,255,.15) 75%,
-        transparent 75%,
-        transparent
+      border-radius: 3px;
+      background-color: $accent;
+      
+      // The leaking/processing striped effect
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.15) 10px,
+        rgba(255, 255, 255, 0.15) 20px
       );
-      background-size: 1rem 1rem;
+      background-size: 40px 100%;
+      
+      // Dual-animation: Fill up and get stuck, while continuously leaking color
+      animation: 
+        progressStuck 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards,
+        progressLeak 1.5s linear infinite;
     }
   }
 
   // The Button Area
   .cta-action {
-    flex-shrink: 0; // Don't let the button shrink
+    flex-shrink: 0;
+    width: 100%; // Default to full width for mobile screens
+
+    @media only screen and (min-width: 768px) {
+      width: auto; // Wrap nicely around content on desktop
+    }
     
     .large-button {
-      font-size: 1.1rem;
-      padding: 12px 25px;
-      border-width: 2px; // Slightly thicker border
+      display: block; // Allows the button to fill the 100% width on mobile
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 1.05rem;
+      padding: 15px 30px;
+      border-width: 2px; 
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+      
+      @media only screen and (min-width: 768px) {
+        display: inline-block;
+        width: auto;
+      }
       
       i {
-        margin-right: 8px;
+        margin-right: 10px;
       }
     }
   }
