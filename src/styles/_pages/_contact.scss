@@ -50,7 +50,7 @@
   gap: 80px;
   animation: fadeIn 0.8s ease-out forwards;
 
-  @media only screen and (min-width: 1024px) {
+  @media only screen and (min-width: 1080px) {
     max-width: 1100px; 
     grid-template-columns: 1fr 1.3fr; 
     gap: 60px;
@@ -66,6 +66,11 @@
   gap: 15px;
   padding-left: 30px; 
   padding-bottom: 30px; // Room for the bottom circuit line to shoot under
+
+  // Shifts the entire left column (including brackets) up by 15px on desktop
+  @media only screen and (min-width: 1080px) {
+    margin-top: -15px;
+  }
 }
 
 .circuit-bracket-left {
