@@ -116,8 +116,9 @@
   text-transform: uppercase;
   font-weight: 600;
   color: $text-primary;
-  height: 30px; // Locks height for perfect 15px center alignment
-  margin: 0 0 30px 0; 
+  height: 30px;
+  line-height: 30px; // vertically centers the text
+  margin: 0 0 30px 10px; 
   white-space: nowrap;
 
   // The bridge line filling the rest of the left column
@@ -135,7 +136,7 @@
   justify-content: space-between; 
   align-items: center;
   
-  // PROPER GLASSMORPHISM 
+  // GLASSMORPHISM 
   background: rgba(255, 255, 255, 0.03); 
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
