@@ -2,45 +2,35 @@
 
 /*
  * =========================================
- * Page-Specific: Contact
+ * Page-Specific: Contact (Open Circuit UI)
  * =========================================
  */
 
 /* --- 1. Global Page Overrides --- */
-// (Note: We are already inside the .page-contact scope here because of main.scss)
-
-// Removes backgrounds/borders from nav and footer
 .nav-header.nav-subpage, .footer-container {
   background: transparent !important;
   border: none !important;
 }
   
-// Hides the separate header/footer particles so they don't overlap
 #nav-particles, #footer-particles {
   display: none !important;
 }
 
-// Closes the massive gap between the content and the footer
 .footer-container {
   margin-top: 150px !important; 
   padding-top: 20px !important; 
 }
 
-// ONE unified particle system for the entire page
 #contact-particles {
   position: fixed; 
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0; // Sits at the very back of the entire window
-//   pointer-events: none;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0; 
 }
 
 /* --- 2. Main Layout --- */
 .contact-wrapper {
   position: relative;
-  z-index: 2; // Keeps the main content above the fixed particles
+  z-index: 2; 
   width: 100%;
   min-height: 80vh; 
   display: flex;
@@ -54,44 +44,67 @@
   position: relative;
   width: 100%;
   max-width: 650px; 
-  margin: 0 auto; // Centers this restricted column
+  margin: 0 auto; 
   display: grid;
   grid-template-columns: 1fr;
   gap: 80px;
   animation: fadeIn 0.8s ease-out forwards;
 
   @media only screen and (min-width: 1024px) {
-    max-width: 1100px; // Allows it to expand to full size again
-    grid-template-columns: 1fr 1.3fr; // Switches back to the 2-column split
+    max-width: 1100px; 
+    grid-template-columns: 1fr 1.3fr; 
     gap: 60px;
     align-items: flex-start; 
   }
 }
 
-/* --- 3. Left Side: Connecting Lines --- */
+/* --- 3. Left Side: Channels & Left Bracket --- */
 .contact-channels {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding-left: 30px; // Makes room for the vertical drop line
+  padding-left: 30px; 
+  padding-bottom: 30px; // Room for the bottom circuit line to shoot under
+}
 
-  // The curved line that drops down the left side
+.circuit-bracket-left {
+  position: absolute;
+  left: 0;
+  top: 15px; // Aligns perfectly with the title text
+  bottom: 20px; 
+  width: 15px;
+  border-left: 2px solid $line;
+  border-top: 2px solid $line;
+  border-bottom: 2px solid $line;
+  border-radius: 12px 0 0 12px;
+  z-index: -1;
+
+  // The line shooting right, under the buttons
+  &::after {
+    content: '';
+    position: absolute;
+    left: 13px;
+    bottom: -2px;
+    width: 120px;
+    height: 2px;
+    background: $line;
+  }
+
+  // The glowing termination node
   &::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 30px; // Aligns perfectly with the horizontal line
-    bottom: 0; // Aligns exactly with the bottom edge of the last button
-    width: 15px;
-    border-left: 2px solid rgba($accent, 0.4);
-    border-top: 2px solid rgba($accent, 0.4);
-    border-top-left-radius: 12px;
-    z-index: -1;
+    left: 133px; // End of the line
+    bottom: -5px; // Centered on the line
+    width: 8px; 
+    height: 8px;
+    background: $accent;
+    box-shadow: 0 0 12px rgba($accent, 0.8);
+    border-radius: 2px;
   }
 }
 
-/* The redesigned title */
 .contact-title {
   display: flex;
   align-items: center;
@@ -100,28 +113,33 @@
   text-transform: uppercase;
   font-weight: 600;
   color: $text-primary;
-  // A positive margin leaves a perfect gap between the curve line and the text
   margin: 0 0 30px 10px; 
+  height: 30px; // Locks the height so the bracket alignment is flawless
   white-space: nowrap;
 
-  // The line extending to the right
+  // The bridge line shooting right
   &::after {
     content: '';
     flex: 1; 
     height: 2px;
-    background: rgba($accent, 0.4);
+    background: $line; // Solid color prevents overlap artifacts
     margin-left: 20px; 
   }
 }
 
-/* Interactive Buttons */
 .channel-btn {
   display: flex;
-  justify-content: space-between; // Pushes left and right sides apart
+  justify-content: space-between; 
   align-items: center;
-  background: lighten($main, 3%);
-  border: 1px solid rgba($accent, 0.15); 
-  border-left: 4px solid rgba($accent, 0.15); 
+  
+  // GLASSMORPHISM CORE
+  background: rgba(lighten($main, 5%), 0.15); 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05); 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  
+  border-left: 4px solid rgba($accent, 0.2); 
   margin-left: 10px;
   padding: 18px 25px;
   border-radius: 6px;
@@ -131,11 +149,7 @@
   font-weight: 500;
   transition: all 0.3s ease;
   cursor: pointer;
-
-  // Prevents text highlighting on the buttons
   user-select: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
 
   .btn-left {
     display: flex;
@@ -156,66 +170,93 @@
     text-transform: uppercase;
   }
 
-  // The active state controlled by JavaScript
+  // Active / Hover State
   &.active {
-    background: rgba($accent, 0.05);
+    background: rgba($accent, 0.1);
     border-color: rgba($accent, 0.3);
     border-left-color: $accent; 
     transform: translateX(10px);
-    
-    .btn-left i {
-      color: $accent;
-    }
+    .btn-left i { color: $accent; }
   }
 
-  // Tells the browser to ONLY apply hover effects on devices with a real mouse cursor.
-  // This completely eliminates the "sticky hover" bug on phones and tablets!
   @media (hover: hover) {
     &:hover {
-      background: rgba($accent, 0.05);
+      background: rgba($accent, 0.1);
       border-color: rgba($accent, 0.3);
       border-left-color: $accent; 
       transform: translateX(10px);
-      
-      .btn-left i {
-        color: $accent;
-      }
+      .btn-left i { color: $accent; }
     }
   }
 }
 
-/* --- 4. Right Side: Display Screen --- */
+/* --- 4. Right Side: Display Screen & Right Bracket --- */
 .contact-display {
-  height: 100%;
+  padding-top: 15px; // Drops the right column exactly to the title's line height
+  position: relative;
   display: flex;
+}
 
-  .display-screen {
-    position: relative;
-    width: 100%;
-    background: lighten($main, 3%); 
-    border: none;
-    border-top: 4px solid $accent; 
-    border-radius: 0 0 12px 12px; 
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
-    min-height: 250px; 
-    overflow: hidden;
-    // Turns the screen into a flex container to allow internal stretching
-    display: flex;
-    flex-direction: column;
+.circuit-bracket-right {
+  position: absolute;
+  top: 15px; 
+  left: 0; right: 0; bottom: 40px; 
+  border-top: 2px solid $line;
+  border-right: 2px solid $line;
+  border-top-right-radius: 12px;
+  pointer-events: none;
+  z-index: 10;
+
+  // The glowing termination node
+  &::before {
+    content: '';
+    position: absolute;
+    right: -5px; 
+    bottom: 0;
+    width: 8px; height: 8px;
+    background: $accent;
+    box-shadow: 0 0 12px rgba($accent, 0.8);
+    border-radius: 2px;
   }
+
+  // The Gap Bridge (Only on Desktop, overlaps seamlessly with left side)
+  @media only screen and (min-width: 1024px) {
+    &::after {
+      content: '';
+      position: absolute;
+      right: 100%; // Starts at the left edge of the column, shoots left
+      top: -2px;
+      width: 100vw; 
+      height: 2px;
+      background: $line;
+    }
+  }
+}
+
+.display-screen {
+  position: relative;
+  width: 100%;
+  
+  // GLASSMORPHISM CORE
+  background: rgba(lighten($main, 5%), 0.15); 
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05); 
+  border-radius: 12px; 
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
+  
+  padding: 40px;
+  min-height: 250px; 
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   .display-content {
     position: absolute;
-    top: 40px;
-    left: 40px;
-    right: 40px;
-    bottom: 40px; // Anchors the bottom so inactive states mirror the padding
+    top: 40px; left: 40px; right: 40px; bottom: 40px; 
     opacity: 0;
     visibility: hidden;
-    // Elegant, simple fade without the messy Y-axis movement
     transition: opacity 0.5s ease; 
-
     display: flex;
     flex-direction: column;
 
@@ -223,18 +264,16 @@
       opacity: 1;
       visibility: visible;
       position: relative;
-      top: 0;
-      left: 0;
-      right: 0;
-      flex: 1; // Expands to fill all available vertical space in the screen
+      top: 0; left: 0; right: 0;
+      flex: 1; 
     }
 
     h3 {
       display: flex;
       justify-content: space-between;
-      align-items: baseline; // Aligns the bottoms of the two different font sizes
+      align-items: baseline; 
       margin: 0 0 20px 0;
-      border-bottom: 1px solid rgba($accent, 0.15);
+      border-bottom: 1px dashed rgba($accent, 0.25);
       padding-bottom: 10px;
 
       .title-primary {
@@ -242,10 +281,7 @@
         font-size: 1.25rem;
         text-transform: uppercase;
         letter-spacing: 2px;
-
-        i {
-          margin-right: 10px;
-        }
+        i { margin-right: 10px; }
       }
 
       .title-secondary {
@@ -264,15 +300,13 @@
       margin: 0 0 30px 0;
     }
 
-    // Pushes the action button down, makes it full width, and spaces the text
     .action-link {
-      display: block; // Forces it to span the container
+      display: block; 
       width: 100%;
-      text-align: center; // Centers the text inside the full-width button
-      // Forces the button to the absolute bottom of the flex container!
+      text-align: center; 
       margin-top: auto;
-      letter-spacing: 1px; // Adds the spaced-out character design
-      box-sizing: border-box; // Ensures padding doesn't overflow the box
+      letter-spacing: 1px; 
+      box-sizing: border-box; 
     }
   }
 }
