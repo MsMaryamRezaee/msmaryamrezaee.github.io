@@ -135,42 +135,74 @@
 #highlights {
   .highlights-grid {
     display: grid;
-    grid-template-columns: 1fr; // 1 column on mobile
-    gap: 25px;
+    grid-template-columns: 1fr; 
+    gap: 40px;
     
-    // 2 columns on tablet AND desktop (perfect for 4 items)
-    @media only screen and (min-width: 600px) {
+    // Switch to 2 columns on tablets and desktop
+    @media only screen and (min-width: 768px) {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
   .highlight-card {
-    border: 1px solid lighten($main, 10%);
-    border-radius: 8px;
-    padding: 25px;
+    background: lighten($main, 3%); // Matches the Contact display screen
+    border: none;
+    border-top: 4px solid rgba($accent, 0.4); 
+    border-radius: 0 0 12px 12px; 
+    padding: 35px 40px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); // Matches Contact page shadow
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
 
-    background: 
-      radial-gradient(ellipse at center, rgba($main, 0.15) 0%, transparent 70%),
-      lighten($main, 5%);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-out;
-
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 20px rgba($accent, 0.15);
-      background: 
-        radial-gradient(ellipse at center, rgba($accent, 0.05) 0%, transparent 70%),
-        lighten($main, 5%);
+    // Subtle tech guideline in the background
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 30px;
+      width: 1px;
+      height: 100%;
+      background: rgba($accent, 0.08);
+      z-index: 0;
     }
 
-    .highlight-type {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      color: $accent;
-      font-weight: 600;
-      margin-bottom: 8px;
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      border-top-color: $accent; 
+    }
+
+    // Elevate content above the background guideline
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .highlight-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba($accent, 0.15);
+      padding-bottom: 10px;
+
+      .highlight-type {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        color: rgba($text-secondary, 0.7);
+        letter-spacing: 2px;
+        display: flex;
+        align-items: center;
+
+        i {
+          color: $accent;
+          margin-right: 10px;
+          font-size: 0.95rem;
+        }
+      }
     }
 
     .highlight-title {
@@ -179,30 +211,53 @@
       margin: 0 0 15px 0;
       padding: 0;
       line-height: 1.4;
+      font-weight: 600;
     }
 
     .highlight-desc {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: $text-secondary;
-      margin: 0 0 20px 0;
-      flex-grow: 1; // Fills space, pushes button down
+      margin: 0 0 25px 0;
+      line-height: 1.7;
+      flex-grow: 1;
     }
 
     .highlight-tags {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
       span {
         display: inline-block;
-        background-color: lighten($main, 10%);
-        color: $text-secondary;
-        padding: 4px 10px;
-        border-radius: 15px;
+        background: transparent;
+        color: rgba($text-primary, 0.85);
+        border: 1px solid rgba($accent, 0.25);
+        padding: 5px 12px;
+        border-radius: 4px; // Squared-off technical aesthetic
         font-size: 0.75rem;
-        margin: 3px 2px;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          border-color: $accent;
+          color: $accent;
+          background: rgba($accent, 0.05);
+        }
       }
     }
-    
-    .action-link {
-      margin-top: auto; // Pushes the button to the bottom
+
+    .highlight-footer {
+      margin-top: auto; 
+
+      .action-link {
+        display: block; // Forces full width like Contact CTA
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        box-sizing: border-box;
+        letter-spacing: 1px;
+      }
     }
   }
 }
