@@ -460,7 +460,7 @@
 // --- 7. "Construction" Section / CTA Bar ---
 @keyframes progressStuck {
   0% { width: 0%; }
-  100% { width: 70%; } // The point where the system gets "stuck"
+  100% { width: 56%; } // The point where the system gets "stuck"
 }
 
 @keyframes progressLeak {
@@ -476,7 +476,6 @@
   padding: 60px 0; 
   margin-top: 150px; 
   margin-bottom: 0; 
-  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2); // Adds internal depth to the band
 
   .cta-grid {
     margin: 0 auto; 
