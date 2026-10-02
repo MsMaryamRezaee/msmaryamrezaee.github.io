@@ -87,7 +87,7 @@
     left: 13px;
     bottom: -2px;
     width: 120px;
-    height: 2px;
+    height: 1.5px;
     background: $line;
   }
 
@@ -121,7 +121,7 @@
   &::after {
     content: '';
     flex: 1; 
-    height: 1px;
+    height: 1.5px;
     background: $line; // Solid color prevents overlap artifacts
     margin-left: 20px; 
   }
@@ -133,7 +133,8 @@
   align-items: center;
   
   // GLASSMORPHISM CORE
-  background: transparent; 
+  // background: transparent; 
+  background: rgba(lighten($main, 5%), 0.15);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.05); 
@@ -227,7 +228,7 @@
       right: 100%; // Starts at the left edge of the column, shoots left
       top: -2px;
       width: 100vw; 
-      height: 2px;
+      height: 1.5px;
       background: $line;
     }
   }
@@ -238,7 +239,8 @@
   width: 100%;
   
   // GLASSMORPHISM CORE
-  background: transparent; 
+  // background: transparent; 
+  background: rgba(lighten($main, 5%), 0.15);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.05); 
