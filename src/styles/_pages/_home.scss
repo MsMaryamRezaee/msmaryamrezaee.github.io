@@ -551,7 +551,7 @@
       
       // Dual-animation: Fill up and get stuck, while continuously leaking color
       animation: 
-        progressStuck 2.5s cubic-bezier(0.1, 0.7, 0.1, 1) forwards,
+        progressStuck 4s cubic-bezier(0.1, 0.7, 0.1, 1) 1.2s both,
         progressLeak 1.5s linear infinite;
     }
   }
