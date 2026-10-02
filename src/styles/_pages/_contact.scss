@@ -54,6 +54,7 @@
     max-width: 1100px; 
     grid-template-columns: 1fr 1.3fr; 
     gap: 60px;
+    // CRITICAL: Forces both columns to start at exactly the same Y-coordinate
     align-items: flex-start; 
   }
 }
@@ -64,16 +65,18 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding-left: 30px; 
-  padding-bottom: 30px; // Room for the bottom circuit line to shoot under
+  // 40px left padding allows the bracket to draw without touching the text
+  padding-left: 40px; 
+  padding-bottom: 20px; 
 }
 
 .circuit-bracket-left {
   position: absolute;
   left: 0;
-  top: 15px; // Aligns perfectly with the title text
-  bottom: 20px; 
-  width: 15px;
+  // mathematically locks to the vertical center of the 30px title
+  top: 15px; 
+  bottom: 0; 
+  width: 20px;
   border-left: 2px solid $line;
   border-top: 2px solid $line;
   border-bottom: 2px solid $line;
@@ -84,8 +87,8 @@
   &::after {
     content: '';
     position: absolute;
-    left: 13px;
-    bottom: -2px;
+    left: 18px; // Starts seamlessly at the end of the 20px width
+    bottom: -2px; // Overlaps bottom border
     width: 120px;
     height: 2px;
     background: $line;
@@ -95,8 +98,8 @@
   &::before {
     content: '';
     position: absolute;
-    left: 133px; // End of the line
-    bottom: -5px; // Centered on the line
+    left: 138px; // 18 + 120
+    bottom: -5px; 
     width: 8px; 
     height: 8px;
     background: $accent;
@@ -113,16 +116,16 @@
   text-transform: uppercase;
   font-weight: 600;
   color: $text-primary;
-  margin: 0 0 30px 10px; 
-  height: 30px; // Locks the height so the bracket alignment is flawless
+  height: 30px; // Locks height for perfect 15px center alignment
+  margin: 0 0 30px 0; 
   white-space: nowrap;
 
-  // The bridge line shooting right
+  // The bridge line filling the rest of the left column
   &::after {
     content: '';
     flex: 1; 
     height: 2px;
-    background: $line; // Solid color prevents overlap artifacts
+    background: $line; 
     margin-left: 20px; 
   }
 }
@@ -132,14 +135,13 @@
   justify-content: space-between; 
   align-items: center;
   
-  // GLASSMORPHISM CORE
-  background: rgba(lighten($main, 5%), 0.15); 
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  // PROPER GLASSMORPHISM 
+  background: rgba(255, 255, 255, 0.03); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05); 
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  
   border-left: 4px solid rgba($accent, 0.2); 
+  
   margin-left: 10px;
   padding: 18px 25px;
   border-radius: 6px;
@@ -170,9 +172,8 @@
     text-transform: uppercase;
   }
 
-  // Active / Hover State
   &.active {
-    background: rgba($accent, 0.1);
+    background: rgba(255, 255, 255, 0.08); // Brighter on active
     border-color: rgba($accent, 0.3);
     border-left-color: $accent; 
     transform: translateX(10px);
@@ -181,7 +182,7 @@
 
   @media (hover: hover) {
     &:hover {
-      background: rgba($accent, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border-color: rgba($accent, 0.3);
       border-left-color: $accent; 
       transform: translateX(10px);
@@ -192,22 +193,38 @@
 
 /* --- 4. Right Side: Display Screen & Right Bracket --- */
 .contact-display {
-  padding-top: 15px; // Drops the right column exactly to the title's line height
+  // Pushes the display box down exactly 15px so it meets the title center
+  padding-top: 15px; 
   position: relative;
   display: flex;
 }
 
 .circuit-bracket-right {
   position: absolute;
-  top: 15px; 
-  left: 0; right: 0; bottom: 40px; 
+  top: 15px; // Matches the padding-top perfectly
+  left: 0; 
+  right: -20px; 
+  bottom: 40px; 
   border-top: 2px solid $line;
   border-right: 2px solid $line;
   border-top-right-radius: 12px;
   pointer-events: none;
   z-index: 10;
 
-  // The glowing termination node
+  // The Exact 60px Gap Bridge 
+  @media only screen and (min-width: 1024px) {
+    &::after {
+      content: '';
+      position: absolute;
+      right: 100%; // Shoots exactly from the left edge of the column
+      top: -2px; 
+      width: 60px; // Exactly bridges the 60px grid gap
+      height: 2px;
+      background: $line;
+    }
+  }
+
+  // Node at bottom right
   &::before {
     content: '';
     position: absolute;
@@ -218,27 +235,14 @@
     box-shadow: 0 0 12px rgba($accent, 0.8);
     border-radius: 2px;
   }
-
-  // The Gap Bridge (Only on Desktop, overlaps seamlessly with left side)
-  @media only screen and (min-width: 1024px) {
-    &::after {
-      content: '';
-      position: absolute;
-      right: 100%; // Starts at the left edge of the column, shoots left
-      top: -2px;
-      width: 100vw; 
-      height: 2px;
-      background: $line;
-    }
-  }
 }
 
 .display-screen {
   position: relative;
   width: 100%;
   
-  // GLASSMORPHISM CORE
-  background: rgba(lighten($main, 5%), 0.15); 
+  // PROPER GLASSMORPHISM
+  background: rgba(255, 255, 255, 0.03); 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.05); 
@@ -247,7 +251,6 @@
   
   padding: 40px;
   min-height: 250px; 
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 
