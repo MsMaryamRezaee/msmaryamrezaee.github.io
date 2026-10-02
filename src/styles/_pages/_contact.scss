@@ -69,14 +69,14 @@
 
   // Shifts the entire left column (including brackets) up by 15px on desktop
   @media only screen and (min-width: 1080px) {
-    margin-top: -15px;
+    margin-top: -16.5px;
   }
 }
 
 .circuit-bracket-left {
   position: absolute;
   left: 0;
-  top: 30px; // Aligns perfectly with the title text
+  top: 31.5px; // Aligns perfectly with the title text
   bottom: 0px; 
   width: 15px;
   border-left: 2px solid $line;
