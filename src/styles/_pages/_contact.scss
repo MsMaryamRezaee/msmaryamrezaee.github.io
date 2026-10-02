@@ -127,8 +127,7 @@
   &::after {
     content: '';
     flex: 1; 
-    bottom: -1.5px;
-    height: 1.5px;
+    height: 2px;
     background: $line; // Solid color prevents overlap artifacts
     margin-left: 20px; 
   }
