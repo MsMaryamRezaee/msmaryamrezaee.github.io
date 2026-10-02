@@ -65,12 +65,11 @@
   flex-direction: column;
   gap: 15px;
   padding-left: 30px; 
-  padding-bottom: 30px; // Room for the bottom circuit line to shoot under
+  padding-bottom: 40px; // Room for the bottom circuit line to shoot under
 
   // Shifts the entire left column (including brackets) up by 15px on desktop
   @media only screen and (min-width: 1080px) {
     margin-top: -17.5px;
-    padding-bottom: 40px; // Adds to the bottom to push the bottom line down away from the buttons
   }
 }
 
@@ -127,7 +126,7 @@
   &::after {
     content: '';
     flex: 1; 
-    height: 1.5px;
+    height: 1.6px;
     background: $line; // Solid color prevents overlap artifacts
     margin-left: 20px; 
   }
