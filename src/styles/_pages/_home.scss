@@ -61,7 +61,7 @@
   /* The Glassmorphism Box */
   padding: 40px;
   border-radius: 16px;
-  background: rgba(0, 0, 0, 0.15); 
+  background: transparent; 
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); 
   border: 1px solid rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(8px);
@@ -113,7 +113,7 @@
   position: relative; 
   z-index: 2;
   text-align: center;
-  margin: 80px auto 120px auto;
+  margin: 120px auto 150px auto;
   
   svg {
     width: 300px; 
