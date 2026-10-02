@@ -85,7 +85,7 @@
     content: '';
     position: absolute;
     left: 13px;
-    bottom: -2px;
+    bottom: -1.5px;
     width: 120px;
     height: 1.5px;
     background: $line;
@@ -218,19 +218,6 @@
     background: $accent;
     box-shadow: 0 0 12px rgba($accent, 0.8);
     border-radius: 2px;
-  }
-
-  // The Gap Bridge (Only on Desktop, overlaps seamlessly with left side)
-  @media only screen and (min-width: 1024px) {
-    &::after {
-      content: '';
-      position: absolute;
-      right: 100%; // Starts at the left edge of the column, shoots left
-      top: -2px;
-      width: 100vw; 
-      height: 1.5px;
-      background: $line;
-    }
   }
 }
 
