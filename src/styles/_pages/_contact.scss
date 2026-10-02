@@ -231,12 +231,11 @@
   width: 100%;
   
   // GLASSMORPHISM CORE
-  // background: transparent; 
   background: rgba(lighten($main, 5%), 0.15);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.05); 
-  border-radius: 12px; 
+  border-radius: 0 12px 12px 12px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
   
   padding: 30px;
