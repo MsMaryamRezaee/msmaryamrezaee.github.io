@@ -48,7 +48,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 80px;
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.8s ease-out;
 
   @media only screen and (min-width: 1080px) {
     max-width: 1100px; 
@@ -127,6 +127,7 @@
   &::after {
     content: '';
     flex: 1; 
+    bottom: -0.5px;
     height: 1.5px;
     background: $line; // Solid color prevents overlap artifacts
     margin-left: 20px; 
@@ -308,5 +309,5 @@
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: none; }
 }
