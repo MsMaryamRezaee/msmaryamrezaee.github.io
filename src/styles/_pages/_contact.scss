@@ -50,7 +50,7 @@
   margin: 0 auto; 
   display: grid;
   grid-template-columns: 1fr;
-  gap: 45px;
+  gap: 20px;
   animation: fadeIn 0.8s ease-out;
 
   @media only screen and (min-width: 1095px) {
@@ -92,7 +92,7 @@
   @media only screen and (max-width: 1094px) {
     border-bottom: none;
     border-radius: 12px 0 0 0;
-    bottom: -65px; // Flawlessly crosses the gap + 15px display padding
+    bottom: -40px; // Flawlessly crosses the gap + 15px display padding
   }
 
   // The line shooting right, under the buttons
