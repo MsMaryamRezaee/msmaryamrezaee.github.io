@@ -114,8 +114,7 @@
 }
 
 .contact-title {
-  display: grid; /* Switched to grid to bypass the Flexbox browser bug */
-  grid-template-columns: max-content max-content 1fr; /* Defines 3 strict cells */
+  display: flex;
   align-items: center;
   font-size: 1.15rem; 
   letter-spacing: 4px;
@@ -123,29 +122,30 @@
   font-weight: 600;
   color: $text-primary;
   margin: 0 0 15px 10px; 
-  height: 30px; // Locks the height so the bracket alignment is flawless
+  height: 30px; 
   white-space: nowrap;
   
-  // The glowing node (Forced into Column 2)
+  // 1. The glowing node (Forced to position 1: right after the text)
   &::before {
     content: '';
-    grid-column: 2; // Snaps immediately to the right of the text
+    order: 1; 
     margin-left: 20px;
     width: 8px;
     height: 8px;
     background: $accent;
     box-shadow: 0 0 12px rgba($accent, 0.8);
     border-radius: 2px;
+    flex-shrink: 0;
   }
 
-  // The bridge line shooting right
+  // 2. The bridge line (Forced to position 2: right after the node)
   &::after {
     content: '';
-    grid-column: 3; // Snaps immediately to the right of the node
+    order: 2; 
+    flex: 1; /* Grows to fill the rest of the space */
     height: 1.6px;
     background: $line; 
     margin-left: 0; // Connects perfectly flush to the node
-  }
 
   // DESKTOP: Shoots the line 30px into the 60px gap
     @media only screen and (min-width: 1095px) {
@@ -154,8 +154,9 @@
 
   // MOBILE: Stops slightly short so the curved drop-down line can take over
     @media only screen and (max-width: 1094px) {
-      margin-right: 12px;
+      margin-right: -12px;
     }
+  }
 }
 
 .channel-btn {
