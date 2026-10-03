@@ -73,7 +73,7 @@
 
   // MOBILE: Caps the abrupt end of the title line with a glowing node
   &::after {
-    @media only screen and (max-width: 1074px) {
+    @media only screen and (max-width: 1074.98px) {
       content: '';
       position: absolute;
       right: -4px; // Perfectly centers the 8px node over the right edge
@@ -105,7 +105,7 @@
   z-index: -1;
 
   // MOBILE FIX: Strips the bottom curve and drops straight down to the display box
-  @media only screen and (max-width: 1074px) {
+  @media only screen and (max-width: 1074.98px) {
     border-bottom: none;
     border-radius: 12px 0 0 0;
     bottom: -20px; // Flawlessly crosses the gap + 15px display padding
@@ -126,7 +126,7 @@
     }
 
     // MOBILE: Removed entirely since the main bracket now handles the drop directly
-    @media only screen and (max-width: 1074px) {
+    @media only screen and (max-width: 1074.98px) {
       display: none;
     }
   }
@@ -143,7 +143,7 @@
     box-shadow: 0 0 12px rgba($accent, 0.8);
     border-radius: 2px;
 
-    @media only screen and (max-width: 1074px) {
+    @media only screen and (max-width: 1074.98px) {
       display: none; 
     }
   }

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Contact
-description: Ways to find me. Do reach out if you’re interested in collaborating.
+description: A scattering of ways to find me; do reach out if you’re interested in collaborating :)
 ---
 
 <div class="contact-wrapper">
