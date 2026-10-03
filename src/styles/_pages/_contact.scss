@@ -114,7 +114,8 @@
 }
 
 .contact-title {
-  display: flex;
+  display: grid; /* Switched to grid to bypass the Flexbox browser bug */
+  grid-template-columns: max-content max-content 1fr; /* Defines 3 strict cells */
   align-items: center;
   font-size: 1.15rem; 
   letter-spacing: 4px;
@@ -124,10 +125,11 @@
   margin: 0 0 15px 10px; 
   height: 30px; // Locks the height so the bracket alignment is flawless
   white-space: nowrap;
-
+  
+  // The glowing node (Forced into Column 2)
   &::before {
     content: '';
-    order: 1; // Forces it to the right of the text
+    grid-column: 2; // Snaps immediately to the right of the text
     margin-left: 20px;
     width: 8px;
     height: 8px;
@@ -139,10 +141,10 @@
   // The bridge line shooting right
   &::after {
     content: '';
-    flex: 1; 
+    grid-column: 3; // Snaps immediately to the right of the node
     height: 1.6px;
-    background: $line; // Solid color prevents overlap artifacts
-    margin-left: 20px; 
+    background: $line; 
+    margin-left: 0; // Connects perfectly flush to the node
   }
 
   // DESKTOP: Shoots the line 30px into the 60px gap
