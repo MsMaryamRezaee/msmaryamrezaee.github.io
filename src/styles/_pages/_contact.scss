@@ -50,13 +50,13 @@
   margin: 0 auto; 
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 0px;
   animation: fadeIn 0.8s ease-out;
 
-  @media only screen and (min-width: 1095px) {
+  @media only screen and (min-width: 1075px) {
     max-width: 1100px; 
     grid-template-columns: 1fr 1.3fr; 
-    gap: 60px;
+    gap: 40px;
     align-items: flex-start; 
   }
 }
@@ -71,7 +71,7 @@
   padding-bottom: 40px; // Room for the bottom circuit line to shoot under
 
   // Shifts the entire left column (including brackets) up by 15px on desktop
-  @media only screen and (min-width: 1095px) {
+  @media only screen and (min-width: 1075px) {
     margin-top: -17.5px;
   }
 }
@@ -89,10 +89,10 @@
   z-index: -1;
 
   // MOBILE FIX: Strips the bottom curve and drops straight down to the display box
-  @media only screen and (max-width: 1094px) {
+  @media only screen and (max-width: 1074px) {
     border-bottom: none;
     border-radius: 12px 0 0 0;
-    bottom: -40px; // Flawlessly crosses the gap + 15px display padding
+    bottom: -20px; // Flawlessly crosses the gap + 15px display padding
   }
 
   // The line shooting right, under the buttons
@@ -101,7 +101,7 @@
     position: absolute;
 
     // DESKTOP: Just a straight horizontal line
-    @media only screen and (min-width: 1095px) {
+    @media only screen and (min-width: 1075px) {
       left: 13px;
       bottom: -1.5px;
       width: 120px;
@@ -110,7 +110,7 @@
     }
 
     // MOBILE: Removed entirely since the main bracket now handles the drop directly
-    @media only screen and (max-width: 1094px) {
+    @media only screen and (max-width: 1074px) {
       display: none;
     }
   }
@@ -127,7 +127,7 @@
     box-shadow: 0 0 12px rgba($accent, 0.8);
     border-radius: 2px;
 
-    @media only screen and (max-width: 1094px) {
+    @media only screen and (max-width: 1074px) {
       display: none; 
     }
   }
@@ -168,7 +168,7 @@
     margin-left: 0; // Connects perfectly flush to the node
 
   // DESKTOP: Shoots the line into the gap
-    @media only screen and (min-width: 1095px) {
+    @media only screen and (min-width: 1075px) {
       margin-right: -60px; 
     }
   }
