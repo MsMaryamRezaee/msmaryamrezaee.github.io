@@ -4,60 +4,33 @@
  * =========================================
  */
 
+
 // --- 1. Pulse (for scroll-down chevron) ---
-@-webkit-keyframes pulse {
-  from {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-    filter: alpha(opacity=40);
-    opacity: .4;
-    top: 0;
+// Stripped ancient IE8 code and swapped CPU-heavy 'top' for GPU-accelerated 'translateY'
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translateY(0);
   }
   50% {
-    -ms-filter: none;
-    -webkit-filter: none;
-    filter: none;
     opacity: 1;
-    top: -10px;
-  }
-  to {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-    filter: alpha(opacity=40);
-    opacity: .4;
-    top: 0;
+    transform: translateY(-10px);
   }
 }
 
-@keyframes pulse {
-  from {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-    filter: alpha(opacity=40);
-    opacity: .4;
-    top: 0
-  }
-  50% {
-    -ms-filter: none;
-    -webkit-filter: none;
-    filter: none;
-    opacity: 1;
-    top: -10px
-  }
-  to {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-    filter: alpha(opacity=40);
-    opacity: .4;
-    top: 0
-  }
-}
 
 // --- 2. Fade-in-on-scroll ---
 .js-reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  /* Pre-allocates GPU memory to prevent scrolling micro-stutters */
+  will-change: opacity, transform; 
 
   &.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    /* Releases the GPU layer lock after fading in */
+    transform: none; 
   }
 }
 
@@ -65,12 +38,14 @@
 // --- 3. Skills Scroller ---
 @keyframes scroll-left {
   0% {
-    transform: translateX(0);
+    /* Translate3d forces strict hardware acceleration for perfectly smooth infinite scrolling */
+    transform: translate3d(0, 0, 0); 
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
+
 
 // --- 4. Logo Draw ---
 @keyframes draw {
