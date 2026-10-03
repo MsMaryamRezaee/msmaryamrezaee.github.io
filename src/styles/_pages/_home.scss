@@ -483,7 +483,15 @@
   border-bottom: 1px solid rgba($accent, 0.15);
   padding: 50px 0 40px 0;
   margin-top: 250px; 
-  margin-bottom: 0; 
+  margin-bottom: 0;
+
+  &.is-visible .progress-bar {
+    animation: progressStuck 4s cubic-bezier(0.1, 0.7, 0.1, 1) 0.4s both;
+    
+    &::after {
+      animation: progressShimmer 1.5s infinite;
+    }
+  }
   
   @media only screen and (min-width: 768px) {
     padding: 60px 0;
@@ -533,14 +541,6 @@
       strong {
         color: $text-primary;
         font-weight: 600;
-      }
-    }
-
-    &.is-visible .progress-bar {
-      animation: progressStuck 4s cubic-bezier(0.1, 0.7, 0.1, 1) 0.4s both;
-      
-      &::after {
-        animation: progressShimmer 1.5s infinite;
       }
     }
   }
