@@ -133,6 +133,11 @@
     background: $line; // Solid color prevents overlap artifacts
     margin-left: 20px; 
   }
+
+  // DESKTOP: Shoots the line 30px into the 60px gap
+    @media only screen and (min-width: 1080px) {
+      margin-right: -30px; 
+    }
 }
 
 .channel-btn {
@@ -218,6 +223,11 @@
   border-top-right-radius: 12px;
   pointer-events: none;
   z-index: 10;
+
+  // DESKTOP: Extends top border 30px left into the gap
+  @media only screen and (min-width: 1080px) {
+    left: -30px; 
+  }
 
   // The glowing termination node
   &::before {
