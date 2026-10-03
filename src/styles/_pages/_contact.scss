@@ -76,7 +76,7 @@
     @media only screen and (max-width: 1074.98px) {
       content: '';
       position: absolute;
-      right: -8px; // Perfectly centers the 8px node over the right edge
+      right: 0; // Perfectly centers the 8px node over the right edge
       top: 29px; // Centers vertically on the title line (32.5px center - 4px radius)
       width: 8px;
       height: 8px;
