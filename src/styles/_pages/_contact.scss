@@ -76,7 +76,7 @@
       content: '';
       position: absolute;
       right: -4px; // Perfectly centers the 8px node over the right edge
-      top: 28.5px; // Centers vertically on the title line (32.5px center - 4px radius)
+      top: 29px; // Centers vertically on the title line (32.5px center - 4px radius)
       width: 8px;
       height: 8px;
       background: $accent;
@@ -190,7 +190,7 @@
       border-top: 1.6px solid $line;
       border-right: 2px solid $line;
       border-top-right-radius: 12px;
-      margin-right: -42px; // 42px perfectly overlays the 2px left border of the display box
+      margin-right: -41.5px; // Overlays the 2px left border of the display box
       align-self: flex-start;
       margin-top: 14.2px; // Precisely anchors the top border to the exact vertical center of the title
     }
