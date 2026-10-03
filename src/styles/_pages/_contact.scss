@@ -50,7 +50,7 @@
   margin: 0 auto; 
   display: grid;
   grid-template-columns: 1fr;
-  gap: 50px;
+  gap: 45px;
   animation: fadeIn 0.8s ease-out;
 
   @media only screen and (min-width: 1095px) {
@@ -104,9 +104,9 @@
 
     // MOBILE: Plummets straight down the left axis to connect to the display box border
     @media only screen and (max-width: 1094px) {
-      left: -2px; // Aligns perfectly over its own left border
-      bottom: -65px; // Crosses the exact 80px gap + 15px padding math
-      width: 2px;
+      left: -1.5px; // Aligns perfectly over its own left border
+      bottom: -65px; // Crosses the gap + 15px padding math
+      width: 1.5px;
       height: 95px;
       background: $line;
     }
@@ -177,7 +177,6 @@
   align-items: center;
   
   // GLASSMORPHISM CORE
-  // background: transparent; 
   background: rgba(lighten($main, 5%), 0.15);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -248,7 +247,7 @@
 .circuit-bracket-right {
   position: absolute;
   top: 15px; 
-  left: 0; right: 0; bottom: 40px; 
+  left: 0; right: 0; bottom: 0; 
   border-left: 2px solid $line;
   border-bottom: 2px solid $line;
   border-bottom-left-radius: 12px;
