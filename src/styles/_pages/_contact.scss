@@ -50,7 +50,7 @@
   margin: 0 auto; 
   display: grid;
   grid-template-columns: 1fr;
-  gap: 80px;
+  gap: 50px;
   animation: fadeIn 0.8s ease-out;
 
   @media only screen and (min-width: 1095px) {
@@ -69,22 +69,6 @@
   gap: 15px;
   padding-left: 30px; 
   padding-bottom: 40px; // Room for the bottom circuit line to shoot under
-
-  // MOBILE RIGHT BRIDGE: Wraps the title line smoothly down to the display bracket
-  &::after {
-    @media only screen and (max-width: 1094px) {
-      content: '';
-      position: absolute;
-      top: 14.2px; // Aligns mathematically perfectly with the 1.6px title line
-      right: 0;
-      bottom: -95px; // Crosses the 80px gap + 15px padding to hit the display bracket
-      width: 12px;
-      border-top: 1.6px solid $line;
-      border-right: 2px solid $line;
-      border-top-right-radius: 12px;
-      z-index: -1;
-    }
-  }
 
   // Shifts the entire left column (including brackets) up by 15px on desktop
   @media only screen and (min-width: 1095px) {
@@ -108,24 +92,23 @@
   &::after {
     content: '';
     position: absolute;
-    left: 13px;
 
-    // DESKTOP: Just a straight horizontal line (your original design)
+    // DESKTOP: Just a straight horizontal line
     @media only screen and (min-width: 1095px) {
+      left: 13px;
       bottom: -1.5px;
       width: 120px;
       height: 1.5px;
       background: $line;
     }
 
-    // MOBILE: Curves down and crosses the gap to become the display bracket
+    // MOBILE: Plummets straight down the left axis to connect to the display box border
     @media only screen and (max-width: 1094px) {
-      bottom: -95px; 
-      width: 118px; 
+      left: -2px; // Aligns perfectly over its own left border
+      bottom: -65px; // Crosses the exact 80px gap + 15px padding math
+      width: 2px;
       height: 95px;
-      border-top: 1.5px solid $line;
-      border-right: 2px solid $line;
-      border-top-right-radius: 12px;
+      background: $line;
     }
   }
 
@@ -184,11 +167,6 @@
   // DESKTOP: Shoots the line 30px into the 60px gap
     @media only screen and (min-width: 1095px) {
       margin-right: -31px; 
-    }
-
-  // MOBILE: Stops slightly short so the curved drop-down line can take over
-    @media only screen and (max-width: 1094px) {
-      margin-right: -12px;
     }
   }
 }
@@ -270,10 +248,10 @@
 .circuit-bracket-right {
   position: absolute;
   top: 15px; 
-  left: 0; right: 0; bottom: 185px; 
-  border-top: 2px solid $line;
-  border-right: 2px solid $line;
-  border-top-right-radius: 12px;
+  left: 0; right: 0; bottom: 40px; 
+  border-left: 2px solid $line;
+  border-bottom: 2px solid $line;
+  border-bottom-left-radius: 12px;
   pointer-events: none;
   z-index: 10;
 
@@ -286,8 +264,8 @@
   &::before {
     content: '';
     position: absolute;
-    right: -5px; 
-    bottom: 0;
+    right: -5px; // Flushed to the far right edge of the bottom border
+    bottom: -5px; // Centered precisely over the bottom border
     width: 8px; height: 8px;
     background: $accent;
     box-shadow: 0 0 12px rgba($accent, 0.8);
