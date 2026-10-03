@@ -136,20 +136,18 @@
 }
 
 .scroll-down-arrow {
-  color: $text-primary;
   position: absolute;
   bottom: 25px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
+  left: 50%;
+  transform: translateX(-50%); /* Centers the link exactly, keeping the clickable area tight */
+  text-decoration: none; /*  Strips the default browser link underline */
+  color: $text-primary;
   z-index: 2;
+  cursor: pointer;
 
   .icon {
     font-size: 30px;
-    display: inline-block;
-    padding: 20px;
+    display: block; /* Essential for the translateY animation to work */
     fill: $text-primary;
     animation: pulse 1.3s infinite;
     will-change: transform;
