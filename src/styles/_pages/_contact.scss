@@ -70,6 +70,21 @@
   padding-left: 30px; 
   padding-bottom: 40px; // Room for the bottom circuit line to shoot under
 
+  // MOBILE FIX: Caps the abrupt end of the title line with a glowing node
+  &::after {
+    @media only screen and (max-width: 1074px) {
+      content: '';
+      position: absolute;
+      right: -4px; // Perfectly centers the 8px node over the right edge
+      top: 11px; // Centers vertically on the title line (15px center - 4px radius)
+      width: 8px;
+      height: 8px;
+      background: $accent;
+      box-shadow: 0 0 12px rgba($accent, 0.8);
+      border-radius: 2px;
+    }
+  }
+  
   // Shifts the entire left column (including brackets) up by 15px on desktop
   @media only screen and (min-width: 1075px) {
     margin-top: -17.5px;
@@ -165,11 +180,19 @@
     flex: 1; /* Grows to fill the rest of the space */
     height: 1.6px;
     background: $line; 
-    margin-left: 0; // Connects perfectly flush to the node
+    margin-left: 0; 
+    box-sizing: border-box; // Ensures our 20px height calculation below is absolute
 
-  // DESKTOP: Shoots the line into the gap
+    // DESKTOP FIX: Crosses the gap, curves, and drops down 20px
     @media only screen and (min-width: 1075px) {
-      margin-right: -40px; 
+      background: transparent; // Erases the flat block line
+      height: 20px;
+      border-top: 1.6px solid $line;
+      border-right: 2px solid $line;
+      border-top-right-radius: 12px;
+      margin-right: -42px; // 42px perfectly overlays the 2px left border of the display box
+      align-self: flex-start;
+      margin-top: 14.2px; // Precisely anchors the top border to the exact vertical center of the title
     }
   }
 }
@@ -256,6 +279,11 @@
   border-bottom-left-radius: 12px;
   pointer-events: none;
   z-index: 10;
+
+  // DESKTOP FIX: Starts 19.2px lower to flawlessly catch the curve dropping from above
+  @media only screen and (min-width: 1075px) {
+    top: 34.2px; 
+  }
 
   // The glowing termination node
   &::before {
