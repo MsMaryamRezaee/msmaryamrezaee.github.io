@@ -88,6 +88,13 @@
   border-radius: 12px 0 0 12px;
   z-index: -1;
 
+  // MOBILE FIX: Strips the bottom curve and drops straight down to the display box
+  @media only screen and (max-width: 1094px) {
+    border-bottom: none;
+    border-radius: 12px 0 0 0;
+    bottom: -65px; // Flawlessly crosses the gap + 15px display padding
+  }
+
   // The line shooting right, under the buttons
   &::after {
     content: '';
@@ -102,13 +109,9 @@
       background: $line;
     }
 
-    // MOBILE: Plummets straight down the left axis to connect to the display box border
+    // MOBILE: Removed entirely since the main bracket now handles the drop directly
     @media only screen and (max-width: 1094px) {
-      left: -1.5px; // Aligns perfectly over its own left border
-      bottom: -65px; // Crosses the gap + 15px padding math
-      width: 1.5px;
-      height: 95px;
-      background: $line;
+      display: none;
     }
   }
 
@@ -164,9 +167,9 @@
     background: $line; 
     margin-left: 0; // Connects perfectly flush to the node
 
-  // DESKTOP: Shoots the line 30px into the 60px gap
+  // DESKTOP: Shoots the line into the gap
     @media only screen and (min-width: 1095px) {
-      margin-right: -31px; 
+      margin-right: -60px; 
     }
   }
 }
@@ -247,17 +250,12 @@
 .circuit-bracket-right {
   position: absolute;
   top: 15px; 
-  left: 0; right: 0; bottom: 0; 
+  left: 0; right: 40px; bottom: 0; 
   border-left: 2px solid $line;
   border-bottom: 2px solid $line;
   border-bottom-left-radius: 12px;
   pointer-events: none;
   z-index: 10;
-
-  // DESKTOP: Extends top border 30px left into the gap
-  @media only screen and (min-width: 1095px) {
-    left: -31px; 
-  }
 
   // The glowing termination node
   &::before {
