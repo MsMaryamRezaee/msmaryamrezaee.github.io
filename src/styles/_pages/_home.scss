@@ -66,8 +66,8 @@
 }
 
 .logo-animation-container {
-  pointer-events: auto; 
-  width: fit-content; // Restricts the clickable area strictly to the logo itself
+  pointer-events: none; 
+  width: fit-content; 
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
