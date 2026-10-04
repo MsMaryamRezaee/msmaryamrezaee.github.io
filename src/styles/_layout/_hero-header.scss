@@ -37,12 +37,9 @@
   padding: 0 12vw; // 12% of the screen width on both sides
   box-sizing: border-box;
   margin-top: -8vh;
-  pointer-events: none; // Lets clicks pass through the massive invisible full-width box
-
-  // Target the tightly-wrapped inline elements specifically instead of their wide containers
-  h1 span, .header-icons a {
-    pointer-events: auto; 
-  }
+  
+  // Makes the entire text container completely click-through
+  pointer-events: none; 
   
   .site-title {
     font-size: 50px;
@@ -68,23 +65,19 @@
   }
 }
 
-.header-links {
-  margin: 10px;
-  .link {
-    color: $text-primary;
-    text-decoration: none;
-    font-size: 15px;
-    margin: 10px;
-    @media only screen and (min-width:$cut){
-      font-size: 20px;
-    }
-  }
-}
-
 .header-icons {
   display: flex;
   justify-content: center;
   text-align: center;
+  
+  // Re-enables clicking exclusively for the links, shrink-wrapping the boundary
+  a {
+    pointer-events: auto; 
+    margin: 5px; 
+    display: inline-flex; 
+    border-radius: 50%; 
+  }
+  
   .icon {
     text-align: center;
     color: $text-primary;
@@ -97,7 +90,7 @@
     height: 20px;
     font-size: 20px;
     padding: 10px;
-    margin: 5px;
+    margin: 0; // Removed margin so the  tag hugs the visible border perfectly
     border-radius: 50%;
     border: 2px solid $text-primary;
     transition: all .7s;
@@ -127,13 +120,12 @@
       background: $text-primary;
     }
     
-    // Laptop/Desktop Sizes (Slightly smaller than before)
+    // Laptop/Desktop Sizes
     @media only screen and (min-width:$cut) {
       width: 28px;
       height: 28px;
       font-size: 28px;
 
-      // Keeps the CV icon proportionally smaller on desktop too
       &.fa-file-text {
         font-size: 24px;
       }
@@ -145,8 +137,8 @@
   position: absolute;
   bottom: 25px;
   left: 50%;
-  transform: translateX(-50%); /* Centers the link exactly, keeping the clickable area tight */
-  text-decoration: none; /*  Strips the default browser link underline */
+  transform: translateX(-50%); /* Centers the link exactly */
+  text-decoration: none; 
   color: $text-primary;
   z-index: 2;
   cursor: pointer;
