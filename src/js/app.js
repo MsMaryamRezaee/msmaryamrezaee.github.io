@@ -88,6 +88,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   if (document.getElementById('logo-particles')) {
     particlesJS('logo-particles', particleConfig);
+    // Force particles.js to instantly recalculate canvas dimensions once layout settles
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 50);
   }
   if (document.getElementById('nav-particles')) {
     // Clone the config to make specific nav bar adjustments
