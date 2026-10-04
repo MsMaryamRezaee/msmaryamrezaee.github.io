@@ -37,7 +37,7 @@
   padding: 0 12vw; // 12% of the screen width on both sides
   box-sizing: border-box;
   margin-top: -8vh;
-  
+
   // Makes the entire text container completely click-through
   pointer-events: none; 
   
@@ -76,6 +76,7 @@
     margin: 5px; 
     display: inline-flex; 
     border-radius: 50%; 
+    text-decoration: none; // Strips the default browser link underline
   }
   
   .icon {
