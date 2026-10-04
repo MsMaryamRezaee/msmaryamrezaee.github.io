@@ -45,11 +45,22 @@
   width: 100%;
   height: 100%;
   z-index: 1; /* Puts particles behind both the text and the logo */
+  
+  // Force the canvas to behave as a block to prevent vertical baseline offsets
+  .particles-js-canvas-el {
+    display: block;
+  }
 }
 
 #intro, #logo-section {
   position: relative;
   z-index: 2; /* Lifts the content above the moving particles */
+  pointer-events: none; /* Lets clicks fall right through the invisible full-width wrapper */
+}
+
+// Re-enables clicks, hovering, and text selection ONLY on the actual visible boxes
+.intro-container, .logo-animation-container {
+  pointer-events: auto; 
 }
 
 
