@@ -39,8 +39,9 @@
   margin-top: -8vh;
   pointer-events: none; // Lets clicks pass through the massive invisible full-width box
 
-  h1, .header-icons {
-    pointer-events: auto; // Re-enables text selection on the title and clicking on the icon links
+  // Target the tightly-wrapped inline elements specifically instead of their wide containers
+  h1 span, .header-icons a {
+    pointer-events: auto; 
   }
   
   .site-title {
