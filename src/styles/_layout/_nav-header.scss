@@ -141,6 +141,11 @@
       .fa-angle-down {
         transform: rotate(180deg);
       }
+
+      // Keeps the underline 100% wide as long as the mouse is anywhere inside the dropdown container
+      &::after {
+        width: 100%;
+      }
     }
 
     // Invisible bridge to keep hover menu open when moving mouse down
