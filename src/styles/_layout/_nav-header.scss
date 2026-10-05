@@ -119,8 +119,7 @@
       transition: width 0.3s ease;
     }
 
-    // Force underline width to 100% on active
-    &:hover::after, &.active::after { 
+    &:hover::after { 
       width: 100%;
     }
   }
@@ -200,17 +199,6 @@
   // 3. THE ACTIVE-STATE DIMMING LOGIC
   // When the user's mouse enters ANYWHERE in the .nav-links container...
   &:hover {
-    
-    // Dim active top-level links if they aren't the ones being hovered
-    & > a.active:not(:hover) {
-      color: $text-primary;
-    }
-
-    // Dim active dropdown triggers UNLESS their specific dropdown is open/being hovered
-    .nav-dropdown:not(:hover) .dropdown-trigger.active {
-      color: $text-primary;
-    }
-
     // Dim active dropdown items if they aren't being directly hovered
     // (Uses \(text-secondary for a soft grey highlight and\)main for the dark text inside it)
     .dropdown-content a.active:not(:hover) {
