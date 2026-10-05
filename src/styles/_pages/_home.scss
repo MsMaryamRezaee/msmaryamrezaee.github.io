@@ -518,8 +518,8 @@
   margin-top: 250px; 
   margin-bottom: 0;
 
-  // Target the inner grid that now has the .js-reveal (.is-visible) class
-  .cta-grid.is-visible .progress-bar {
+  // Target the text block that has the .js-reveal (.is-visible) class
+  .cta-text.is-visible .progress-bar {
     animation: progressStuck 4s cubic-bezier(0.1, 0.7, 0.1, 1) 0.4s both;
     
     &::after {
