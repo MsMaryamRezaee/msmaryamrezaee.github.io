@@ -9,19 +9,19 @@
     </a>
 
     <nav class="nav-links">
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
+      <a href="/about" class="{% if page.url contains '/about' %}active{% endif %}">About</a>
+      <a href="/contact" class="{% if page.url contains '/contact' %}active{% endif %}">Contact</a>
       <a href="/cv" target="_blank" rel="noopener noreferrer">CV</a>
 
       <div class="nav-dropdown">
-        <span class="dropdown-trigger">
+        <span class="dropdown-trigger {% if page.url contains '/experience' or page.url contains '/research' or page.url contains '/projects' or page.url contains '/talks' %}active{% endif %}">
           Academia <i class="fa-solid fa-angle-down" aria-hidden="true"></i>
         </span>
         <div class="dropdown-content">
-          <a href="/experience" class="wip-link" data-tooltip="System Updating...">Experience</a>
-          <a href="/research" class="wip-link" data-tooltip="System Updating...">Research</a>
-          <a href="/projects" class="wip-link" data-tooltip="System Updating...">Projects</a>
-          <a href="/talks" class="wip-link" data-tooltip="System Updating...">Talks</a>
+          <a href="/experience" class="wip-link {% if page.url contains '/experience' %}active{% endif %}" data-tooltip="System Updating...">Experience</a>
+          <a href="/research" class="wip-link {% if page.url contains '/research' %}active{% endif %}" data-tooltip="System Updating...">Research</a>
+          <a href="/projects" class="wip-link {% if page.url contains '/projects' %}active{% endif %}" data-tooltip="System Updating...">Projects</a>
+          <a href="/talks" class="wip-link {% if page.url contains '/talks' %}active{% endif %}" data-tooltip="System Updating...">Talks</a>
         </div>
       </div>
 

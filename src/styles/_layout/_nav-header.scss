@@ -98,7 +98,8 @@
     align-items: center;
     transition: color 0.3s ease;
 
-    &:hover {
+    // Make active state look like hover
+    &:hover, &.active { 
       color: $accent;
     }
   }
@@ -118,7 +119,8 @@
       transition: width 0.3s ease;
     }
 
-    &:hover::after {
+    // Force underline width to 100% on active
+    &:hover::after, &.active::after { 
       width: 100%;
     }
   }
@@ -176,8 +178,11 @@
         color: $text-secondary;
         display: block;
         background-image: none;
+        // Transitions to make the dimming effect super smooth
+        transition: background-color 0.3s ease, color 0.3s ease; 
                 
-        &:hover {
+        // Active dropdown item styles
+        &:hover, &.active { 
           color: $main;
           background: $accent;
         }
@@ -189,6 +194,28 @@
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
+    }
+  }
+
+  // 3. THE ACTIVE-STATE DIMMING LOGIC
+  // When the user's mouse enters ANYWHERE in the .nav-links container...
+  &:hover {
+    
+    // Dim active top-level links if they aren't the ones being hovered
+    & > a.active:not(:hover) {
+      color: $text-primary;
+    }
+
+    // Dim active dropdown triggers UNLESS their specific dropdown is open/being hovered
+    .nav-dropdown:not(:hover) .dropdown-trigger.active {
+      color: $text-primary;
+    }
+
+    // Dim active dropdown items if they aren't being directly hovered
+    // (Uses \(text-secondary for a soft grey highlight and\)main for the dark text inside it)
+    .dropdown-content a.active:not(:hover) {
+      background: $text-secondary; 
+      color: $main; 
     }
   }
 }
