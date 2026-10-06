@@ -20,6 +20,11 @@ body {
   font-weight: 300;
 }
 
+/* Soften the contrast for bold text */
+b, strong {
+  font-weight: 600;
+}
+
 article, aside, figcaption, figure, footer, header, nav, section {
   display: block;
 }
