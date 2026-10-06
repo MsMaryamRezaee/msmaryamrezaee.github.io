@@ -92,8 +92,9 @@
     color: $text-primary;
     text-decoration: none;
     cursor: pointer;
+    padding-top: 5px;
     padding-bottom: 5px;
-    font-weight: 400; /* Decreased from 500 to 400 (Regular) */
+    font-weight: 400; 
     display: inline-flex; 
     align-items: center;
     transition: color 0.3s ease;
@@ -229,7 +230,7 @@
     color: $main;
     padding: 6px 12px;
     font-size: 0.75rem;
-    font-weight: 400; 
+    font-weight: 500; 
     border-radius: 4px;
     white-space: nowrap;
     opacity: 0;
