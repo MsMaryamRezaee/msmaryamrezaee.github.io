@@ -8,9 +8,12 @@
 
 .action-link {
   font-family: 'Space Grotesk', sans-serif;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
   margin: 10px 0px;
-  padding: 5px 10px;
+  padding: 10px 15px;
   color: $accent;
   background-color: transparent;
   border: 1px solid $accent;
@@ -22,6 +25,7 @@
   transition: color 0.3s ease-out,
     background-color 0.3s ease-out,
     border-color 0.3s ease-out;
+    
   &:hover {
     background-color: $accent;
     border-color: $accent;
@@ -30,6 +34,7 @@
       background-color 0.3s ease-in,
       border-color 0.3s ease-in;
   }
+  
   &:active {
     background-color: $accent;
     border-color: $accent;

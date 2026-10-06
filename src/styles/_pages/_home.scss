@@ -292,7 +292,7 @@
       margin-top: auto; 
 
       .action-link {
-        display: block; // Forces full width like Contact CTA
+        display: flex;
         width: 100%;
         text-align: center;
         margin: 0;
@@ -636,7 +636,7 @@
     }
     
     .large-button {
-      display: block; // Allows the button to fill the 100% width on mobile
+      display: flex;
       width: 100%;
       box-sizing: border-box;
       font-size: 1.05rem;
@@ -647,7 +647,7 @@
       font-weight: 500;
       
       @media only screen and (min-width: 768px) {
-        display: inline-block;
+        display: inline-flex;
         width: auto;
       }
       
