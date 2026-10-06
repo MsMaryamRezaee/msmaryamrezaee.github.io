@@ -52,7 +52,7 @@ description: A scattering of ways to find me; do reach out if you’re intereste
             <span class="title-primary">E-Mail</span>
             <span class="title-secondary">Professional Chat</span>
           </h3>
-          <p>My preferred channel for professional inquiries and discussions. Inbox is frequently monitored; however, since this route is for long-form communication, it may take me a bit of time to respond properly.</p>
+          <p>My preferred channel for professional inquiries and discussions. Inbox is frequently monitored; however, since this route is for long-form comms, it may take me a bit of time to respond properly.</p>
           <a href="mailto:{{site.email}}" class="action-link" target="_blank" rel="noopener noreferrer">{{site.email}}</a>
         </div>
 
