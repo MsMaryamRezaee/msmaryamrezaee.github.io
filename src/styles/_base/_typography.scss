@@ -6,6 +6,13 @@ h1, h2, h3, h4, strong {
   line-height: 1.25;
   color: $text-primary;
 }
+
+/* Apply Space Grotesk to all headings and specific title classes */
+h1, h2, h3, h4, h5, h6, 
+.site-title, .section-title, .cta-title, .contact-title, .title-primary, .highlight-title {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
 h1 {
   font-size: 2.5rem;
 }

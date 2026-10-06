@@ -1,5 +1,5 @@
 @use '../_config/variables' as *;
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 /* Remove default mobile tap blue highlight globally */
 * {
@@ -16,7 +16,7 @@ body {
   font-size: 100%;
   line-height: 1.5;
   color: $text-secondary;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 article, aside, figcaption, figure, footer, header, nav, section {
