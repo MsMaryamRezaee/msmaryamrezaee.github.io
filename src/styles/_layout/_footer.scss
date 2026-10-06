@@ -102,6 +102,7 @@
   // Targets the short description but leaves the location text alone
   p:not(.footer-location) {
     font-family: 'Space Grotesk', sans-serif;
+    font-weight: 300; /* Sets the font to Light */
   }
 
   .footer-location {
