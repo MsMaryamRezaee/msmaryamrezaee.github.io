@@ -7,11 +7,11 @@
  */
 
 .nav-header {
+  font-family: 'Space Grotesk', sans-serif; /* Applied to everything in nav */
   padding: 25px 5%;
   width: 100%;
   box-sizing: border-box;
   z-index: 100;
-  // Increased transition time slightly to make the glass fade-in super smooth
   transition: all 0.4s ease; 
   background: transparent; 
   border: none;            
@@ -218,10 +218,10 @@
   position: relative;
   
   &::before {
+    font-family: 'Space Grotesk', sans-serif; /* Applied to tooltips */
     content: attr(data-tooltip);
     position: absolute;
-    // Box is moved down 1 pixel (from 8px to 7px) to force an overlap
-    bottom: calc(100% + 7px); 
+    bottom: calc(100% + 7px);
     left: 50%;
     transform: translateX(-50%);
     background: $accent;
