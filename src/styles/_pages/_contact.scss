@@ -220,7 +220,8 @@
   color: $text-primary;
   text-decoration: none;
   font-size: 1.05rem;
-  font-weight: 500;
+  font-weight: 400;
+  letter-spacing: 0.5px;
   transition: all 0.3s ease;
   cursor: pointer;
   user-select: none;
@@ -240,6 +241,7 @@
   .btn-right {
     font-size: 0.8rem;
     color: rgba($text-secondary, 0.6);
+    font-weight: 300;
     letter-spacing: 2px;
     text-transform: uppercase;
   }
