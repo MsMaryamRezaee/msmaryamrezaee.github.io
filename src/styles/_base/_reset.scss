@@ -1,5 +1,5 @@
 @use '../_config/variables' as *;
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 /* Remove default mobile tap blue highlight globally */
 * {
@@ -17,6 +17,8 @@ body {
   line-height: 1.5;
   color: $text-secondary;
   font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.5px;
 }
 
 article, aside, figcaption, figure, footer, header, nav, section {
