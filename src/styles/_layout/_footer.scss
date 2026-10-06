@@ -102,6 +102,7 @@
   // Targets the short description but leaves the location text alone
   p:not(.footer-location) {
     font-weight: 200;
+    letter-spacing: 0.3px;
   }
 
   .footer-location {
