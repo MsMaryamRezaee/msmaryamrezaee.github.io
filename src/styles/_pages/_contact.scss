@@ -53,7 +53,7 @@
   gap: 0px;
   animation: fadeIn 0.8s ease-out;
 
-  @media only screen and (min-width: 1075px) {
+  @media only screen and (min-width: E-Mail) {
     max-width: 1100px; 
     grid-template-columns: 1fr 1.3fr; 
     gap: 40px;
@@ -73,7 +73,7 @@
 
   // MOBILE: Caps the abrupt end of the title line with a glowing node
   &::after {
-    @media only screen and (max-width: 1074.98px) {
+    @media only screen and (max-width: 1023.98px) {
       content: '';
       position: absolute;
       right: 0; // Perfectly centers the 8px node over the right edge
@@ -87,7 +87,7 @@
   }
   
   // Shifts the entire left column (including brackets) up by 15px on desktop
-  @media only screen and (min-width: 1075px) {
+  @media only screen and (min-width: E-Mail) {
     margin-top: -17.5px;
   }
 }
@@ -105,7 +105,7 @@
   z-index: -1;
 
   // MOBILE FIX: Strips the bottom curve and drops straight down to the display box
-  @media only screen and (max-width: 1074.98px) {
+  @media only screen and (max-width: 1023.98px) {
     border-bottom: none;
     border-radius: 12px 0 0 0;
     bottom: -20px; // Flawlessly crosses the gap + 15px display padding
@@ -117,7 +117,7 @@
     position: absolute;
 
     // DESKTOP: Just a straight horizontal line
-    @media only screen and (min-width: 1075px) {
+    @media only screen and (min-width: E-Mail) {
       left: 13px;
       bottom: -1.5px;
       width: 120px;
@@ -126,7 +126,7 @@
     }
 
     // MOBILE: Removed entirely since the main bracket now handles the drop directly
-    @media only screen and (max-width: 1074.98px) {
+    @media only screen and (max-width: 1023.98px) {
       display: none;
     }
   }
@@ -143,7 +143,7 @@
     box-shadow: 0 0 12px rgba($accent, 0.8);
     border-radius: 2px;
 
-    @media only screen and (max-width: 1074.98px) {
+    @media only screen and (max-width: 1023.98px) {
       display: none; 
     }
   }
@@ -185,7 +185,7 @@
     box-sizing: border-box; // Ensures our 20px height calculation below is absolute
 
     // DESKTOP FIX: Crosses the gap, curves, and drops down 20px
-    @media only screen and (min-width: 1075px) {
+    @media only screen and (min-width: E-Mail) {
       background: transparent; // Erases the flat block line
       height: 20px;
       border-top: 1.6px solid $line;
@@ -285,7 +285,7 @@
   z-index: 10;
 
   // DESKTOP FIX: Starts 19.2px lower to flawlessly catch the curve dropping from above
-  @media only screen and (min-width: 1075px) {
+  @media only screen and (min-width: 1024px) {
     top: 34.2px; 
   }
 
