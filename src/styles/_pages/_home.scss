@@ -250,6 +250,8 @@
       padding: 0;
       line-height: 1.4;
       font-weight: 600;
+      text-align: justify;
+      text-justify: inter-word;
     }
 
     .highlight-desc {
@@ -258,6 +260,9 @@
       margin: 0 0 25px 0;
       line-height: 1.7;
       flex-grow: 1;
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
     }
 
     .highlight-tags {
@@ -493,6 +498,9 @@
       color: $text-secondary;
       font-size: 0.95rem;
       line-height: 1.7;
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
     }
   }
 }
@@ -572,6 +580,9 @@
       font-size: 0.95rem;
       color: $text-secondary;
       line-height: 1.7;
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
 
       strong {
         color: $text-primary;
