@@ -79,7 +79,7 @@
   // 3. The glowing node capping the end
   .circuit-node {
     position: absolute;
-    right: 66px; // Anchored perfectly to the new 70px tip (70px - 4px for true center)
+    right: 68px; // Anchored perfectly to the new 70px tip (70px - 2px for true center)
     bottom: -3.6px; // Mathematically centered vertically over the bottom border
     width: 8px;
     height: 8px;
@@ -266,7 +266,7 @@
     }
     &::after {
       bottom: auto; left: auto; top: 50%;
-      right: calc(100% + 7px); 
+      right: calc(100% + 4px); 
       transform: translateY(-50%);
       border-width: 5px 0 5px 5px !important; // Reverses the triangle to point right
       border-color: transparent transparent transparent $accent !important;
