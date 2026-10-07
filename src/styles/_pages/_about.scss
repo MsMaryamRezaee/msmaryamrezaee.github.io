@@ -11,7 +11,7 @@
     
   .page-section.about-container {
     margin-top: 70px; // Mobile spacing
-    margin-bottom: 100px;
+    margin-bottom: 0;
     
     @media only screen and (min-width: 900px) {
       margin-top: 50px; // Tighter laptop spacing
