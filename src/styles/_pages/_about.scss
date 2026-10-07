@@ -3,7 +3,7 @@
 
 /*
  * =========================================
- * Page-Specific: About (Glassmorphism Redesign)
+ * Page-Specific: About
  * =========================================
  */
 
@@ -13,7 +13,7 @@
     margin-top: 70px; // Mobile spacing
     margin-bottom: 100px;
     
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 900px) {
       margin-top: 50px; // Tighter laptop spacing
     }
   }
@@ -115,14 +115,13 @@
     gap: 50px;
     align-items: center;
 
-    // CRITICAL BUGFIX 1: 
     // Release the GPU lock from .js-reveal once the animation is done.
     // If this is not released, Safari/Chrome will permanently disable the backdrop-filter inside it!
     &.is-visible {
       will-change: auto !important; 
     }
 
-    @media only screen and (min-width: 800px) {
+    @media only screen and (min-width: 900px) {
       flex-direction: row;
       align-items: stretch;
     }
@@ -179,7 +178,6 @@
       color: $accent;
       font-size: 1.3rem;
       letter-spacing: 2px;
-      text-transform: uppercase;
       margin-bottom: 25px;
     }
 
@@ -203,8 +201,16 @@
     flex: 2;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; // Keeps it centered on mobile
     width: 100%;
+
+    @media only screen and (min-width: 900px) {
+      align-items: flex-start; // Aligns the photo to the top on laptops
+      
+      // Optional: Since your text container has 40px padding and the frame has 12px padding,
+      // this 28px margin perfectly aligns the top border of the frame with the top of your <h2> text!
+      margin-top: 28px; 
+    }
   }
 
   /* --- 4. The Photo --- */
@@ -217,7 +223,7 @@
     align-items: center;
   }
 
-  // Unstable hologram/glitch effects for the tech frame
+  // Base frame instability
   @keyframes frame-glitch-tr {
     0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
     10% { filter: drop-shadow(-2px 2px 0px rgba($text-primary, 0.6)); transform: translate(1px, -1px); }
@@ -244,6 +250,70 @@
     95% { filter: drop-shadow(-2px 0 0px rgba($text-primary, 0.6)); transform: translate(1px, 0); }
   }
 
+  // Thin hyper-fast data sparks
+  @keyframes spark-h {
+    0%, 10% { opacity: 0; top: 0; bottom: auto; left: 10%; width: 10px; }
+    11% { opacity: 1; }
+    13% { opacity: 1; top: 0; bottom: auto; left: 60%; width: 25px; }
+    14%, 30% { opacity: 0; }
+    31% { opacity: 1; top: auto; bottom: 0; left: 80%; width: 15px; }
+    33% { opacity: 1; top: auto; bottom: 0; left: 20%; width: 5px; }
+    34%, 50% { opacity: 0; }
+    51% { opacity: 1; top: 30%; bottom: auto; left: 15%; width: 20px; }
+    52% { opacity: 1; top: 32%; bottom: auto; left: 45%; width: 8px; } 
+    54%, 75% { opacity: 0; }
+    76% { opacity: 1; top: 0; bottom: auto; left: 75%; width: 12px; }
+    78% { opacity: 1; top: 0; bottom: auto; left: 95%; width: 4px; }
+    79%, 100% { opacity: 0; }
+  }
+
+  @keyframes spark-v {
+    0%, 20% { opacity: 0; left: auto; right: 0; top: 80%; height: 12px; }
+    21% { opacity: 1; }
+    23% { opacity: 1; left: auto; right: 0; top: 20%; height: 25px; }
+    24%, 45% { opacity: 0; }
+    46% { opacity: 1; left: 0; right: auto; top: 15%; height: 15px; }
+    48% { opacity: 1; left: 0; right: auto; top: 65%; height: 6px; }
+    49%, 65% { opacity: 0; }
+    66% { opacity: 1; left: 65%; right: auto; top: 75%; height: 18px; }
+    67% { opacity: 1; left: 63%; right: auto; top: 45%; height: 5px; } 
+    69%, 85% { opacity: 0; }
+    86% { opacity: 1; left: auto; right: 0; top: 10%; height: 10px; }
+    88% { opacity: 1; left: auto; right: 0; top: 0%; height: 3px; }
+    89%, 100% { opacity: 0; }
+  }
+
+  // --- Flying Constellation Stars (1-10) ---
+  @keyframes c-drift-1 { 0%, 5% { transform: translate(0,0); opacity: 0; } 10%, 25% { opacity: 1; } 30%, 100% { transform: translate(-20px, -35px); opacity: 0; } }
+  @keyframes c-tail-1 { 0%, 5% { width: 0; } 30%, 100% { width: 40px; } }
+
+  @keyframes c-drift-2 { 0%, 20% { transform: translate(0,0); opacity: 0; } 25%, 45% { opacity: 1; } 50%, 100% { transform: translate(-45px, 20px); opacity: 0; } }
+  @keyframes c-tail-2 { 0%, 20% { width: 0; } 50%, 100% { width: 50px; } }
+
+  @keyframes c-drift-3 { 0%, 40% { transform: translate(0,0); opacity: 0; } 45%, 65% { opacity: 1; } 70%, 100% { transform: translate(30px, 40px); opacity: 0; } }
+  @keyframes c-tail-3 { 0%, 40% { width: 0; } 70%, 100% { width: 50px; } }
+
+  @keyframes c-drift-4 { 0%, 60% { transform: translate(0,0); opacity: 0; } 65%, 85% { opacity: 1; } 90%, 100% { transform: translate(35px, -35px); opacity: 0; } }
+  @keyframes c-tail-4 { 0%, 60% { width: 0; } 90%, 100% { width: 50px; } }
+
+  @keyframes c-drift-5 { 0%, 10% { transform: translate(0,0); opacity: 0; } 15%, 35% { opacity: 1; } 40%, 100% { transform: translate(40px, -15px); opacity: 0; } }
+  @keyframes c-tail-5 { 0%, 10% { width: 0; } 40%, 100% { width: 45px; } }
+
+  @keyframes c-drift-6 { 0%, 15% { transform: translate(0,0); opacity: 0; } 20%, 40% { opacity: 1; } 45%, 100% { transform: translate(-30px, 25px); opacity: 0; } }
+  @keyframes c-tail-6 { 0%, 15% { width: 0; } 45%, 100% { width: 35px; } }
+
+  @keyframes c-drift-7 { 0%, 30% { transform: translate(0,0); opacity: 0; } 35%, 55% { opacity: 1; } 60%, 100% { transform: translate(-40px, -40px); opacity: 0; } }
+  @keyframes c-tail-7 { 0%, 30% { width: 0; } 60%, 100% { width: 55px; } }
+
+  @keyframes c-drift-8 { 0%, 8% { transform: translate(0,0); opacity: 0; } 13%, 33% { opacity: 1; } 38%, 100% { transform: translate(25px, -20px); opacity: 0; } }
+  @keyframes c-tail-8 { 0%, 8% { width: 0; } 38%, 100% { width: 40px; } }
+
+  @keyframes c-drift-9 { 0%, 45% { transform: translate(0,0); opacity: 0; } 50%, 70% { opacity: 1; } 75%, 100% { transform: translate(5px, 45px); opacity: 0; } }
+  @keyframes c-tail-9 { 0%, 45% { width: 0; } 75%, 100% { width: 45px; } }
+
+  @keyframes c-drift-10 { 0%, 55% { transform: translate(0,0); opacity: 0; } 60%, 80% { opacity: 1; } 85%, 100% { transform: translate(-10px, -35px); opacity: 0; } }
+  @keyframes c-tail-10 { 0%, 55% { width: 0; } 85%, 100% { width: 40px; } }
+
   .photo-frame {
     position: relative;
     z-index: 1;
@@ -253,82 +323,122 @@
     &::before, &::after {
       content: '';
       position: absolute;
-      width: 40px; // Base incomplete size
+      width: 40px; 
       height: 40px;
-      border: 2px solid transparent; // Keeps the 12px curves perfect without diagonal corner cuts
+      border: 2px solid transparent; 
       border-radius: 12px;
       box-sizing: border-box;
       z-index: 2;
       pointer-events: none;
       
-      // REVERT ANIMATION (Mouse Leave)
-      // Width delays its collapse until height is almost done collapsing, smoothly tracing the L-shape backwards.
+      // REVERT ANIMATION
       transition: height 0.3s cubic-bezier(0.5, 0, 0.1, 1),
                   width 0.3s cubic-bezier(0.5, 0, 0.1, 1) 0.15s,
                   border-color 0.4s ease,
                   filter 0.4s ease;
     }
 
-    // Top-Right Bracket
-    &::before {
-      top: 0;
-      right: 0;
-      border-top-color: $line;
-      border-right-color: $line;
+    &::before { top: 0; right: 0; border-top-color: $line; border-right-color: $line; }
+    &::after { bottom: 0; left: 0; border-bottom-color: $line; border-left-color: $line; }
+
+    .tech-glitch-sparks {
+      position: absolute;
+      inset: 0;
+      z-index: 4; 
+      pointer-events: none;
+      border-radius: 12px;
+      opacity: 0; 
+      transition: opacity 0.2s ease;
+      
+      &::before, &::after {
+        content: ''; position: absolute; background: #fff;
+        box-shadow: 0 0 6px $accent, 0 0 12px $accent;
+        border-radius: 2px; opacity: 0;
+      }
+
+      &::before { height: 1.5px; width: 0; }
+      &::after { width: 1.5px; height: 0; }
     }
 
-    // Bottom-Left Bracket
-    &::after {
-      bottom: 0;
-      left: 0;
-      border-bottom-color: $line;
-      border-left-color: $line;
+    // Expanded Constellation setup
+    .constellation-drift {
+      position: absolute;
+      inset: 0;
+      z-index: 5; 
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+
+      .drift-star {
+        position: absolute;
+        width: 3px; height: 3px;
+        background: #fff; border-radius: 50%;
+        box-shadow: 0 0 6px $accent, 0 0 12px $accent;
+        opacity: 0; 
+        
+        &::after {
+          content: ''; position: absolute;
+          top: 1px; left: 1px; height: 1px;
+          background: linear-gradient(to right, $accent, transparent);
+          transform-origin: 0 0; 
+          box-shadow: 0 0 4px rgba($accent, 0.4);
+        }
+      }
+
+      // Scattering 10 positions and correctly calculating reverse angles for the tails
+      .ds-1 { top: 0%; left: 25%; &::after { transform: rotate(60deg); } }
+      .ds-2 { top: 60%; right: 0; &::after { transform: rotate(-25deg); } }
+      .ds-3 { bottom: 0; left: 50%; &::after { transform: rotate(-130deg); } }
+      .ds-4 { top: 40%; left: 0; &::after { transform: rotate(135deg); } }
+      .ds-5 { top: 0; right: 15%; &::after { transform: rotate(160deg); } }
+      .ds-6 { top: 70%; left: 0; &::after { transform: rotate(-40deg); } }
+      .ds-7 { bottom: 20%; left: 0; &::after { transform: rotate(45deg); } }
+      .ds-8 { top: 20%; right: 0; &::after { transform: rotate(135deg); } }
+      .ds-9 { top: 0; left: 50%; &::after { transform: rotate(-85deg); } }
+      .ds-10 { bottom: 0; left: 80%; &::after { transform: rotate(70deg); } }
     }
 
     img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      filter: grayscale(30%) contrast(1.1);
-      transition: filter 0.5s ease;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-      position: relative;
-      z-index: 1;
+      display: block; width: 100%; height: auto; border-radius: 8px;
+      filter: grayscale(30%) contrast(1.1); transition: filter 0.5s ease;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4); position: relative; z-index: 1;
     }
 
     // THE HOVER SEQUENCE
     &:hover {
       &::before, &::after {
-        width: 100%;
-        height: 100%;
-        
-        // FILL-OUT ANIMATION (Mouse Enter)
-        // Width shoots across first, then height follows. This forces a dynamic, 
-        // staggered "circuit-drawing" assembly rather than a boring diagonal expand.
+        width: 100%; height: 100%;
         transition: width 0.25s cubic-bezier(0.2, 1, 0.3, 1),
                     height 0.25s cubic-bezier(0.2, 1, 0.3, 1) 0.15s,
-                    border-color 0.3s ease,
-                    filter 0.3s ease;
+                    border-color 0.3s ease, filter 0.3s ease;
       }
 
-      &::before {
-        border-top-color: $accent;
-        border-right-color: $accent;
-        // Triggers the unstable, jittering glitch effect immediately upon hover
-        animation: frame-glitch-tr 0.4s infinite linear;
+      &::before { border-top-color: $accent; border-right-color: $accent; animation: frame-glitch-tr 0.4s infinite linear; }
+      &::after { border-bottom-color: $accent; border-left-color: $accent; animation: frame-glitch-bl 0.4s infinite linear; animation-delay: 0.1s; }
+      
+      .tech-glitch-sparks {
+        opacity: 1; transition: opacity 0.1s ease 0.25s; 
+        &::before { animation: spark-h 2.2s infinite linear; }
+        &::after { animation: spark-v 2.7s infinite linear; }
       }
 
-      &::after {
-        border-bottom-color: $accent;
-        border-left-color: $accent;
-        animation: frame-glitch-bl 0.4s infinite linear;
-        animation-delay: 0.1s; // Desyncs the bottom-left jitter from the top-right
+      .constellation-drift {
+        opacity: 1; transition: opacity 0.1s ease 0.25s; 
+        
+        // Asynchronous loop durations and negative delays create a pseudo-random particle system
+        .ds-1 { animation: c-drift-1 3.5s infinite linear -0.5s; } .ds-1::after { animation: c-tail-1 3.5s infinite linear -0.5s; }
+        .ds-2 { animation: c-drift-2 4.2s infinite linear -1.2s; } .ds-2::after { animation: c-tail-2 4.2s infinite linear -1.2s; }
+        .ds-3 { animation: c-drift-3 2.9s infinite linear -0.8s; } .ds-3::after { animation: c-tail-3 2.9s infinite linear -0.8s; }
+        .ds-4 { animation: c-drift-4 4.7s infinite linear -2.1s; } .ds-4::after { animation: c-tail-4 4.7s infinite linear -2.1s; }
+        .ds-5 { animation: c-drift-5 3.1s infinite linear -0.3s; } .ds-5::after { animation: c-tail-5 3.1s infinite linear -0.3s; }
+        .ds-6 { animation: c-drift-6 5.3s infinite linear -3.0s; } .ds-6::after { animation: c-tail-6 5.3s infinite linear -3.0s; }
+        .ds-7 { animation: c-drift-7 3.8s infinite linear -1.5s; } .ds-7::after { animation: c-tail-7 3.8s infinite linear -1.5s; }
+        .ds-8 { animation: c-drift-8 4.5s infinite linear -0.9s; } .ds-8::after { animation: c-tail-8 4.5s infinite linear -0.9s; }
+        .ds-9 { animation: c-drift-9 5.0s infinite linear -2.5s; } .ds-9::after { animation: c-tail-9 5.0s infinite linear -2.5s; }
+        .ds-10 { animation: c-drift-10 3.3s infinite linear -1.8s; } .ds-10::after { animation: c-tail-10 3.3s infinite linear -1.8s; }
       }
       
-      img {
-        filter: grayscale(0%) contrast(1.1);
-      }
+      img { filter: grayscale(0%) contrast(1.1); }
     }
   }
 
@@ -388,7 +498,7 @@
     padding: 40px;
     gap: 30px;
 
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 900px) {
       flex-direction: row;
       align-items: center;
     }
@@ -404,8 +514,7 @@
       margin: 0 0 10px 0;
       color: $text-primary;
       font-size: 1.15rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     p {
@@ -421,7 +530,7 @@
     height: 1px;
     background: rgba($accent, 0.2);
 
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 900px) {
       width: 1px;
       height: 120px;
       background: rgba($accent, 0.2);
@@ -447,7 +556,6 @@
     font-family: 'Space Grotesk', sans-serif;
     font-size: 0.85rem;
     letter-spacing: 1px;
-    text-transform: uppercase;
     transition: all 0.3s ease;
     width: fit-content;
 
