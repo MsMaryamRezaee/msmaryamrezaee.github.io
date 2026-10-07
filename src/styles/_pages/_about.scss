@@ -187,8 +187,8 @@
     p {
       color: $text-secondary;
       font-size: 0.8rem;
-      line-height: 1.8;
-      margin-bottom: 20px;
+      line-height: 1.65; // Tighter line-height (was 1.8)
+      margin-bottom: 12px; // Decreased spacing (was 20px)
       
       text-align: justify;
       text-justify: inter-word;
@@ -196,6 +196,18 @@
 
       &:last-child {
         margin-bottom: 0;
+      }
+
+      // --- New Typography Styles ---
+      strong, b {
+        color: $text-primary; // Makes bold text pop forward
+        font-weight: 400;
+      }
+      
+      .text-accent {
+        // Lightened slightly so the dark violet remains highly legible on the dark background
+        color: color.adjust($accent-secondary, $lightness: 25%); 
+        font-weight: 600;
       }
     }
   }
