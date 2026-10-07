@@ -20,7 +20,11 @@
 
   /* --- 1. Circuit Title --- */
   .about-header {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+
+    @media only screen and (min-width: 900px) {
+      margin-bottom: 50px;
+    }
   }
 
   .about-title {
@@ -112,17 +116,16 @@
   .about-hero {
     display: flex;
     flex-direction: column-reverse; 
-    gap: 50px;
+    gap: 60px;
     align-items: center;
 
-    // Release the GPU lock from .js-reveal once the animation is done.
-    // If this is not released, Safari/Chrome will permanently disable the backdrop-filter inside it!
     &.is-visible {
       will-change: auto !important; 
     }
 
     @media only screen and (min-width: 900px) {
       flex-direction: row;
+      gap: 50px;
       align-items: stretch;
     }
   }
