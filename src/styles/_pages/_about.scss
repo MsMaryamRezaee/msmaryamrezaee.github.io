@@ -60,13 +60,12 @@
     transform: translateY(7px); // Pushes the container down so the top line sits in true vertical center
 
     // 1. The main straight line extending right
-    // We use border-top here so it has the exact same sub-pixel weight as the U-turn box.
     &::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
-      right: 15px; // Tucks completely under the U-turn box so there is absolutely zero seam
+      right: 15px; // Tucks completely under the U-turn box
       border-top: 1.6px solid $line;
     }
 
@@ -75,29 +74,30 @@
       content: '';
       position: absolute;
       top: 0;
-      right: 0; // The right boundary stays exactly where it was
-      width: 70px; // Extended by 20px leftwards
+      right: 0; 
+      // Dynamically bounds the U-turn so it NEVER overflows its container 
+      // when the screen gets ultra-narrow.
+      width: min(70px, 100%); 
       height: 100%;
-      
-      // Applying the same border-top here ensures it seamlessly joins the connecting line
       border-top: 1.6px solid $line;
       border-right: 1.6px solid $line;
       border-bottom: 1.6px solid $line;
-      border-radius: 0 12px 12px 0; // Perfect curves on the right corners
+      border-radius: 0 12px 12px 0; 
       box-sizing: border-box;
     }
 
     // 3. The glowing node capping the end
     .circuit-node {
       position: absolute;
-      right: 68px; // Anchored perfectly to the new 70px tip (70px - 2px for true center)
-      bottom: -3.6px; // Mathematically centered vertically over the bottom border
+      // Mathematically locks the node to the dynamic tip of the U-turn
+      right: calc(min(70px, 100%) - 2px); 
+      bottom: -3.6px; 
       width: 8px;
       height: 8px;
       background: $accent;
       box-shadow: 0 0 12px rgba($accent, 0.8);
       border-radius: 2px;
-      z-index: 2; // Renders the node cleanly on top of the line
+      z-index: 2; 
     }
   }
 
@@ -203,7 +203,7 @@
         color: $text-primary; // Makes bold text pop forward
         font-weight: 400;
       }
-      
+
       .text-accent {
         // Lightened slightly so the dark violet remains highly legible on the dark background
         color: color.adjust($accent-secondary, $lightness: 25%); 
@@ -534,7 +534,7 @@
     justify-content: flex-start;
 
     h3 {
-      margin: 0 0 10px 0;
+      margin: -22px 0 10px 0; 
       color: $text-primary;
       font-size: 1.15rem;
       letter-spacing: 2px;
@@ -547,9 +547,9 @@
       line-height: 1.6;
     }
 
-    // TABLET LAYOUT (650px - 899px)
+    // TABLET LAYOUT
     // Turns the block into a grid where text is on the left and buttons stack on the right
-    @media only screen and (min-width: 650px) and (max-width: 899.98px) {
+    @media only screen and (min-width: 670px) and (max-width: 899.98px) {
       display: grid;
       grid-template-columns: 1fr auto;
       grid-template-rows: auto auto;
@@ -559,13 +559,13 @@
       h3 {
         grid-column: 1;
         grid-row: 1;
-        margin-bottom: 5px;
+        margin: -15px 0 -10px 0; 
       }
 
       p {
         grid-column: 1;
         grid-row: 2;
-        margin-bottom: 0;
+        margin: -20px 0 0 0; 
       }
 
       .btn-group {
@@ -603,7 +603,14 @@
     // --- Symmetrical Stacking for Narrow Laptops ---
     // Forces both columns to stack vertically between 900px and 1150px,
     // avoiding the awkward phase where one side wraps and the other doesn't.
-    @media only screen and (min-width: 900px) and (max-width: 1170px) {
+    @media only screen and (min-width: 900px) and (max-width: 1120px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    // --- Symmetrical Stacking for Mobile (500px and lower) ---
+    // Forces the buttons to stack vertically instead of wrapping awkwardly on small screens.
+    @media only screen and (max-width: 490px) {
       flex-direction: column;
       align-items: stretch;
     }
@@ -613,7 +620,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 20px;
+    padding: 12px 10px;
     background: rgba($accent, 0.05);
     border: 1px solid rgba($accent, 0.3);
     border-radius: 8px;
