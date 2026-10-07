@@ -14,7 +14,7 @@
     margin-bottom: 0;
     
     @media only screen and (min-width: 900px) {
-      margin-top: 50px; // Tighter laptop spacing
+      margin-top: 70px; // laptop spacing
     }
   }
 
@@ -179,14 +179,14 @@
     h2 {
       margin-top: 0;
       color: $accent;
-      font-size: 1.3rem;
+      font-size: 1.15rem;
       letter-spacing: 2px;
       margin-bottom: 25px;
     }
 
     p {
       color: $text-secondary;
-      font-size: 1.05rem;
+      font-size: 0.8rem;
       line-height: 1.8;
       margin-bottom: 20px;
       
@@ -530,7 +530,7 @@
 
     p {
       color: $text-secondary;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       margin: 0 0 25px 0;
       line-height: 1.6;
     }
