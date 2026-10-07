@@ -20,7 +20,9 @@ description: Me.
   <div class="about-hero js-reveal">
     
     <div class="bio-wrapper">
-      <div id="bio-particles"></div>
+      <div class="bio-particles-clip">
+        <div id="bio-particles"></div>
+      </div>
       <div class="about-bio glass-panel">
         <h2>Maryam at your service :)</h2>
         <p>
@@ -46,24 +48,6 @@ description: Me.
       </div>
     </div>
 
-  </div>
-
-  <div class="about-visuals">
-    <div class="photo-wrapper">
-      <!-- Starry Particles Behind Image -->
-      <div id="photo-particles"></div>
-      
-        <div class="photo-frame">
-          <img src="/assets/img/Profile.jpg" alt="Maryam Rezaee" />
-        </div>
-        
-        <!-- Language Tags -->
-        <div class="language-tags">
-          <span class="lang-tag tooltip-left" data-tooltip="Persian: Native/Bilingual"><span class="lang-id">FA</span> <span class="lang-level">NATIVE</span></span>
-          <span class="lang-tag tooltip-left" data-tooltip="English: Full Proficiency"><span class="lang-id">EN</span> <span class="lang-level">PROFICIENT</span></span>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- CTA CARDS -->

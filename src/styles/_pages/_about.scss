@@ -7,7 +7,7 @@
  */
 
 .page-section.about-container {
-  margin-top: 80px; // Mobile spacing
+  margin-top: 70px; // Mobile spacing
   margin-bottom: 100px;
   
   @media only screen and (min-width: 768px) {
@@ -118,29 +118,37 @@
   }
 }
 
-// The new wrapper that confines the particles behind the glass
+// The new wrapper that casts the shadow WITHOUT clipping it
 .bio-wrapper {
   flex: 3;
   position: relative;
   border-radius: 12px;
-  overflow: hidden; 
-  transform: translateZ(0); // Hardware acceleration to fix Safari overflow leaks
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); // Shadow moved to the outermost container!
+}
+
+// The inner container that strictly clips the particles
+.bio-particles-clip {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 0;
 }
 
 #bio-particles {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 0;
-  pointer-events: none; // Lets the user click through to the text if needed
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; 
 }
 
 .about-bio {
   position: relative;
   z-index: 1;
   padding: 40px;
-  height: 100%; // Stretches the glass to fill the wrapper perfectly
+  height: 100%; 
   box-sizing: border-box;
-
+  box-shadow: none !important; // Turns off the duplicate shadow from .glass-panel so it doesn't double up
+  
   h2 {
     margin-top: 0;
     color: $accent;
@@ -261,6 +269,8 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, border-color 0.3s ease;
   cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
 
   &:hover {
     transform: translateX(-5px);
