@@ -20,17 +20,18 @@ description: Me.
   <div class="about-hero js-reveal">
     
     <div class="bio-wrapper">
-      <div class="bio-particles-clip">
+      <!-- This shared container forces the browser to blur the canvas correctly -->
+      <div class="bio-content-clip">
         <div id="bio-particles"></div>
+        <div class="about-bio glass-panel">
+          <h2>Maryam at your service :)</h2>
+          <p>
+            I am a researcher navigating the chaotic intersection of LLM Interpretability and Cognitively-Inspired AI. I don’t just want models to generate text; I want to understand and control how they do it. In other words, my goal is to tame the “black box” by integrating human-like structure and symbolic reasoning into NNs, making them into more than just statistically fluent machines.
+          </p>
+          <p>
+            My journey has taken me from theoretical narrative algorithms to rigorous concept-based interpretability. Currently, I am expanding my focus towards Neurosymbolic architectures, aiming to build systems that don’t just predict the next token, but reason in a way that is verifiable, explainable, and aligned with human thought.
+          </p>
       </div>
-      <div class="about-bio glass-panel">
-        <h2>Maryam at your service :)</h2>
-        <p>
-          I am a researcher navigating the chaotic intersection of LLM Interpretability and Cognitively-Inspired AI. I don’t just want models to generate text; I want to understand and control how they do it. In other words, my goal is to tame the “black box” by integrating human-like structure and symbolic reasoning into NNs, making them into more than just statistically fluent machines.
-        </p>
-        <p>
-          My journey has taken me from theoretical narrative algorithms to rigorous concept-based interpretability. Currently, I am expanding my focus towards Neurosymbolic architectures, aiming to build systems that don’t just predict the next token, but reason in a way that is verifiable, explainable, and aligned with human thought.
-        </p>
       </div>
     </div>
     
