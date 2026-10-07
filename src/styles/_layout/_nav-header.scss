@@ -214,86 +214,10 @@
   }
 }
 
-// --- Universal Tooltips ---
-/* Must move to /_components later since it's reusable */
-[data-tooltip] {
-  position: relative;
-  
-  &::before {
-    font-family: 'IBM Plex Mono', monospace; /* Changed to IBM Plex Mono */
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: calc(100% + 10px); 
-    left: 50%;
-    transform: translateX(-50%);
-    background: $accent;
-    color: $main;
-    padding: 6px 12px;
-    font-size: 0.75rem;
-    font-weight: 550; 
-    border-radius: 4px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    z-index: 100;
-    pointer-events: none;
-  }
-
-  &::after {
-    content: '' !important;
-    position: absolute;
-    bottom: calc(100% + 3px); 
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 5px 5px 0 5px !important;
-    border-style: solid !important;
-    border-color: $accent transparent transparent transparent !important;
-    display: block !important;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    z-index: 100;
-    pointer-events: none;
-  }
-
-  &:hover::before,
-  &:hover::after {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
 // --- Under Construction Links (WIP) ---
 .wip-link {
   cursor: not-allowed !important;
   opacity: 0.6;
-}
-
-// --- Dropdown Specific Tooltips (Left-Side) ---
-// Moves tooltips to the left so the 0.6 opacity doesn't overlap text
-.dropdown-content [data-tooltip] {
-  &::before {
-    bottom: auto;
-    left: auto;
-    top: 50%;
-    // Box sits just outside the left edge of the dropdown item
-    right: calc(100% + 10px); 
-    transform: translateY(-50%); // Centers it perfectly vertically
-  }
-
-  &::after {
-    bottom: auto;
-    left: auto;
-    top: 50%;
-    // Arrow perfectly bridges the gap with a 1px overlap
-    right: calc(100% + 4px); 
-    transform: translateY(-50%);
-    
-    // Changes the triangle to point to the RIGHT
-    border-width: 5px 0 5px 5px !important;
-    border-color: transparent transparent transparent $accent !important;
-  }
 }
 
 @media only screen and (max-width: 768px) {

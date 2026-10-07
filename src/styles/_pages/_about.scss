@@ -257,22 +257,6 @@
   transition: transform 0.3s ease, border-color 0.3s ease;
   cursor: default;
 
-  // OVERRIDE: Shift the tooltip to the Left Side 
-  &[data-tooltip] {
-    &::before {
-      bottom: auto; left: auto; top: 50%;
-      right: calc(100% + 12px); 
-      transform: translateY(-50%);
-    }
-    &::after {
-      bottom: auto; left: auto; top: 50%;
-      right: calc(100% + 4px); 
-      transform: translateY(-50%);
-      border-width: 5px 0 5px 5px !important; // Reverses the triangle to point right
-      border-color: transparent transparent transparent $accent !important;
-    }
-  }
-
   &:hover {
     transform: translateX(-5px);
     border-color: $accent;

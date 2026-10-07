@@ -1,0 +1,105 @@
+@use '../_config/variables' as *;
+
+/*
+ * =========================================
+ * Universal Tooltips Component
+ * =========================================
+ */
+
+[data-tooltip] {
+  position: relative;
+  
+  // The Text Rectangle
+  &::before {
+    font-family: 'IBM Plex Mono', monospace;
+    content: attr(data-tooltip);
+    position: absolute;
+    background: $accent;
+    color: $main;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    font-weight: 550; 
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1000; 
+    pointer-events: none;
+  }
+
+  // The Triangle
+  &::after {
+    content: '' !important;
+    position: absolute;
+    border-style: solid !important;
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  &:hover::before,
+  &:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* -----------------------------------------
+   * 1. Default (Top) Tooltip
+   * ----------------------------------------- */
+  &::before {
+    bottom: calc(100% + 11px); // 3px gap to triangle + 5px triangle + 3px gap to element
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &::after {
+    bottom: calc(100% + 3px); 
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0 5px !important; // Triangle points down
+    border-color: $accent transparent transparent transparent !important;
+  }
+
+  /* -----------------------------------------
+   * 2. Right-Side Tooltip (.tooltip-right)
+   * ----------------------------------------- */
+  &.tooltip-right {
+    &::before {
+      bottom: auto; 
+      left: calc(100% + 11px); 
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &::after {
+      bottom: auto; 
+      left: calc(100% + 3px); 
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 5px 5px 5px 0 !important; // Triangle points left
+      border-color: transparent $accent transparent transparent !important;
+    }
+  }
+
+  /* -----------------------------------------
+   * 3. Left-Side Tooltip (.tooltip-left)
+   * ----------------------------------------- */
+  &.tooltip-left {
+    &::before {
+      bottom: auto; left: auto;
+      right: calc(100% + 11px); 
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &::after {
+      bottom: auto; left: auto;
+      right: calc(100% + 3px); 
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 5px 0 5px 5px !important; // Triangle points right
+      border-color: transparent transparent transparent $accent !important;
+    }
+  }
+}

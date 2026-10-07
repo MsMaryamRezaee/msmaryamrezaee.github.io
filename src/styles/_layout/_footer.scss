@@ -132,30 +132,6 @@
         transform: translateX(5px);
       }
     }
-
-    // --- Footer Nav Specific Tooltips (Right-Side) ---
-    [data-tooltip] {
-      &::before {
-        bottom: auto;
-        left: auto;
-        top: 50%;
-        left: calc(100% + 10px); 
-        transform: translateY(-50%); 
-      }
-
-      &::after {
-        bottom: auto;
-        left: auto;
-        top: 50%;
-        // Arrow starts at 7px and is 5px wide, ending at 12px. Overlaps the box at 11px.
-        left: calc(100% + 7px); 
-        transform: translateY(-50%);
-        
-        // Changes the triangle to point to the LEFT
-        border-width: 5px 5px 5px 0 !important;
-        border-color: transparent $accent transparent transparent !important;
-      }
-    }
   }
 }
 
