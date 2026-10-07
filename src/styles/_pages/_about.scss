@@ -108,9 +108,16 @@
 /* --- 3. Hero Section (Bio & Photo) --- */
 .about-hero {
   display: flex;
-  flex-direction: column-reverse; // Photo stacks on top for mobile
+  flex-direction: column-reverse; 
   gap: 50px;
   align-items: center;
+
+  // CRITICAL BUGFIX 1: 
+  // Release the GPU lock from .js-reveal once the animation is done.
+  // If this is not released, Safari/Chrome will permanently disable the backdrop-filter inside it!
+  &.is-visible {
+    will-change: auto !important; 
+  }
 
   @media only screen and (min-width: 800px) {
     flex-direction: row;
@@ -118,42 +125,51 @@
   }
 }
 
-// 1. Outermost wrapper: Safely casts the shadow without clipping it
+// The outer container. Casts the shadow without clipping it.
 .bio-wrapper {
   flex: 3;
   position: relative;
   border-radius: 12px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
+  z-index: 1; // Establishes a strict localized stacking context
 }
 
-// 2. The Shared Clipping Context: Forces canvas and glass to render together
-.bio-content-clip {
-  position: relative;
-  height: 100%;
+// The inner container. Strictly clips the particles so they don't leak.
+.bio-particles-clip {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
   border-radius: 12px;
-  overflow: hidden; // Traps the particles
-  transform: translateZ(0); // The Magic Bullet: Forces a unified GPU layer so the blur CANNOT fail
+  overflow: hidden;
+  z-index: 1; // Sits on the bottom layer of the wrapper
+  
+  // CRITICAL BUGFIX 2: 
+  // Forces the particle canvas into its own dedicated GPU hardware layer. 
+  // Without this, the browser flattens the canvas with the glass panel 
+  // and physically cannot blur it.
+  transform: translateZ(0); 
 }
 
-// 3. The Canvas
 #bio-particles {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
   pointer-events: none; 
-  z-index: 0;
 }
 
-// 4. The Text Box
+// The glass panel. Sits on top and blurs the particle layer below it.
 .about-bio {
   position: relative;
-  z-index: 1;
+  z-index: 2; // Strictly on top of the particles
   padding: 40px;
   height: 100%; 
   box-sizing: border-box;
   
-  // Overrides the .glass-panel defaults so it doesn't double-cast shadows or shatter the GPU layer
+  // Turn off the duplicate shadow inherited from .glass-panel
   box-shadow: none !important; 
-  transform: none !important; 
+  
+  // Re-affirm the hardware lock and blur explicitly to override any remaining browser bugs
+  transform: translateZ(0) !important; 
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
   
   h2 {
     margin-top: 0;
