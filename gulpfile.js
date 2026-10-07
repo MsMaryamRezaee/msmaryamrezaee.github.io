@@ -51,7 +51,7 @@ gulp.task('sass', function() {
     .pipe(sass())
     .pipe(concat('main.css'))
     .pipe(csso())
-	.pipe(gulp.dest('assets/css/'))
+    .pipe(gulp.dest('assets/css/'))
 });
 
 /**

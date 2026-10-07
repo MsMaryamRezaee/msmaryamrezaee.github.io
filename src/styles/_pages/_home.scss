@@ -1,4 +1,5 @@
 @use '../_config/variables' as *;
+@use "sass:color";
 
 /*
  * =========================================
@@ -6,654 +7,657 @@
  * =========================================
  */
 
-
- // --- 0. Full Width Section Header ---
-.full-width-header {
-  width: 100%;
-  // A very subtle background difference to separate sections
-  background-color: lighten($main, 2%); 
+.page-home {
   
-  // Thin "Tech" borders using a transparent version of your accent
-  border-top: 1px solid rgba($accent, 0.15);
-  border-bottom: 1px solid rgba($accent, 0.15);
-  
-  padding: 40px 0;
-  margin-bottom: 100px; // Push the grid down a bit
-  margin-top: 0px;
-  
-  // Override the default .page-section margin inside this bar
-  .page-section {
-    margin: 0 auto;
-    h1 {
-      margin: 0;
-    }
-  }
-}
-
-
-// --- 1. Global Wrapper for Intro & Logo Particles ---
-.particles-wrapper {
-  position: relative;
-  width: 100%;
-  overflow: hidden; /* Crucial: This effortlessly forces the particles to fill the 100px gap right below the hero header! */
-}
-
-#logo-particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1; /* Puts particles behind both the text and the logo */
-  pointer-events: auto; /* Ensures the canvas catches the clicks that fall through the empty space */
-
-  .particles-js-canvas-el {
-    display: block;
-    width: 100% !important;
-    height: 100% !important;
-  }
-}
-
-#intro, #logo-section {
-  position: relative;
-  z-index: 2; /* Lifts the content above the moving particles */
-  pointer-events: none; /* Lets clicks fall right through the invisible full-width wrappers */
-}
-
-// Re-enables interactions ONLY on the actual visible boxes
-.intro-container {
-  pointer-events: auto; 
-}
-
-.logo-animation-container {
-  pointer-events: none; 
-  width: fit-content; 
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-// --- 2. Intro Typewriter Section ---
-.intro-container {
-  max-width: 650px; 
-  margin: 0 auto; 
-  
-  /* The Glassmorphism Box */
-  padding: 40px;
-  border-radius: 16px;
-  background: transparent; 
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transform: translateZ(0);
-  box-sizing: border-box;
-
-  @media only screen and (max-width: 550px) {
-    padding: 30px; /* Tighter padding on mobile so text isn't squished */
-  }
-}
-
-#typewriter-text {
-  font-size: 1rem;
-  color: $text-secondary;
-  line-height: 1.8;
-  min-height: 100px; 
-
-  /* The Justify Magic */
-  text-align: justify;
-  text-justify: inter-word;
-  text-align-last: center; 
-  
-  /* Space Distribution Fixes */
-  letter-spacing: 2px;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  hyphens: auto;
-  overflow-wrap: break-word;
-
-  // Style for each individual word span
-  > span {
-    display: inline; // Crucial for allowing natural text flow and word-breaking
-    position: relative;
-    top: 15px; // 'transform' doesn't work on 'inline' elements, so we use 'top'
-    opacity: 0;
-    transition: opacity 0.4s ease-out, top 0.4s ease-out; // Animate 'top' instead of transform
-  }
-  
-  // The class our JS adds
-  > span.is-visible {
-    opacity: 1;
-    top: 0; // Resets the position to complete the slide-up
-  }
-}
-
-
-// --- 3. Logo Animation ---
-.logo-animation-container {
-  position: relative; 
-  z-index: 2;
-  text-align: center;
-  margin: 150px auto 200px auto;
-  
-  svg {
-    width: 300px; 
-  }
-}
-
-#logo-path {
-  stroke: $text-primary; 
-  stroke-width: 1px; 
-  fill: transparent; // No fill
-}
-
-// Class added by JS on scroll
-#logo-path.is-animating {
-  animation: draw 3s ease-in-out infinite alternate;
-}
-
-
-// --- 4. "Selected Highlights" Section ---
-#highlights {
-  .highlights-grid {
-    display: grid;
-    grid-template-columns: 1fr; 
-    gap: 40px;
+  // --- 0. Full Width Section Header ---
+  .full-width-header {
+    width: 100%;
+    // A very subtle background difference to separate sections
+    background-color: color.adjust($main, $lightness: 2%); 
     
-    // Switch to 2 columns on tablets and desktop
-    @media only screen and (min-width: 768px) {
-      grid-template-columns: repeat(2, 1fr);
+    // Thin "Tech" borders using a transparent version of your accent
+    border-top: 1px solid rgba($accent, 0.15);
+    border-bottom: 1px solid rgba($accent, 0.15);
+    
+    padding: 40px 0;
+    margin-bottom: 100px; // Push the grid down a bit
+    margin-top: 0px;
+    
+    // Override the default .page-section margin inside this bar
+    .page-section {
+      margin: 0 auto;
+      h1 {
+        margin: 0;
+      }
     }
   }
 
-  .highlight-card {
-    background: lighten($main, 3%);
-    border: none;
-    border-top: 4px solid rgba($accent, 0.4); 
-    border-radius: 0 0 12px 12px; 
-    padding: 35px 40px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
-    
-    // BASE TRANSITION: Applies to hover-out AND the initial .js-reveal entrance
-    // Must explicitly include opacity and transform here so .js-reveal doesn't get overridden
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.4s ease, border-color 0.4s ease;
-    will-change: transform, box-shadow, opacity; 
-    position: relative;
 
-    // Invisible bridge sticking out the bottom to stop hover jitter
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -15px; // Matches the lift distance
-      left: 0;
-      width: 100%;
-      height: 15px;
+  // --- 1. Global Wrapper for Intro & Logo Particles ---
+  .particles-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* Crucial: This effortlessly forces the particles to fill the 100px gap right below the hero header! */
+  }
+
+  #logo-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Puts particles behind both the text and the logo */
+    pointer-events: auto; /* Ensures the canvas catches the clicks that fall through the empty space */
+
+    .particles-js-canvas-el {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
+  #intro, #logo-section {
+    position: relative;
+    z-index: 2; /* Lifts the content above the moving particles */
+    pointer-events: none; /* Lets clicks fall right through the invisible full-width wrappers */
+  }
+
+  // Re-enables interactions ONLY on the actual visible boxes
+  .intro-container {
+    pointer-events: auto; 
+  }
+
+  .logo-animation-container {
+    pointer-events: none; 
+    width: fit-content; 
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  // --- 2. Intro Typewriter Section ---
+  .intro-container {
+    max-width: 650px; 
+    margin: 0 auto; 
+    
+    /* The Glassmorphism Box */
+    padding: 40px;
+    border-radius: 16px;
+    background: transparent; 
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transform: translateZ(0);
+    box-sizing: border-box;
+
+    @media only screen and (max-width: 550px) {
+      padding: 30px; /* Tighter padding on mobile so text isn't squished */
+    }
+  }
+
+  #typewriter-text {
+    font-size: 1rem;
+    color: $text-secondary;
+    line-height: 1.8;
+    min-height: 100px; 
+
+    /* The Justify Magic */
+    text-align: justify;
+    text-justify: inter-word;
+    text-align-last: center; 
+    
+    /* Space Distribution Fixes */
+    letter-spacing: 2px;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    overflow-wrap: break-word;
+
+    // Style for each individual word span
+    > span {
+      display: inline; // Crucial for allowing natural text flow and word-breaking
+      position: relative;
+      top: 15px; // 'transform' doesn't work on 'inline' elements, so we use 'top'
+      opacity: 0;
+      transition: opacity 0.4s ease-out, top 0.4s ease-out; // Animate 'top' instead of transform
+    }
+    
+    // The class our JS adds
+    > span.is-visible {
+      opacity: 1;
+      top: 0; // Resets the position to complete the slide-up
+    }
+  }
+
+
+  // --- 3. Logo Animation ---
+  .logo-animation-container {
+    position: relative; 
+    z-index: 2;
+    text-align: center;
+    margin: 150px auto 200px auto;
+    
+    svg {
+      width: 300px; 
+    }
+  }
+
+  #logo-path {
+    stroke: $text-primary; 
+    stroke-width: 1px; 
+    fill: transparent; // No fill
+  }
+
+  // Class added by JS on scroll
+  #logo-path.is-animating {
+    animation: draw 3s ease-in-out infinite alternate;
+  }
+
+
+  // --- 4. "Selected Highlights" Section ---
+  #highlights {
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: 1fr; 
+      gap: 40px;
+      
+      // Switch to 2 columns on tablets and desktop
+      @media only screen and (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
-    // Subtle tech guideline in the background
+    .highlight-card {
+      background-color: color.adjust($main, $lightness: 3%);
+      border: none;
+      border-top: 4px solid rgba($accent, 0.4); 
+      border-radius: 0 0 12px 12px; 
+      padding: 35px 40px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+      
+      // BASE TRANSITION: Applies to hover-out AND the initial .js-reveal entrance
+      // Must explicitly include opacity and transform here so .js-reveal doesn't get overridden
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.4s ease, border-color 0.4s ease;
+      will-change: transform, box-shadow, opacity; 
+      position: relative;
+
+      // Invisible bridge sticking out the bottom to stop hover jitter
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -15px; // Matches the lift distance
+        left: 0;
+        width: 100%;
+        height: 15px;
+      }
+
+      // Subtle tech guideline in the background
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 30px;
+        width: 1px;
+        height: 100%;
+        background: rgba($accent, 0.08);
+        z-index: 0;
+      }
+
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        border-top-color: $accent; 
+        
+        // HOVER TRANSITION: Faster transform response purely for mouse interaction
+        transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+      }
+
+      // Elevate content above the background guideline
+      > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .highlight-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba($accent, 0.15);
+        padding-bottom: 10px;
+
+        .highlight-type {
+          font-size: 0.85rem;
+          text-transform: uppercase;
+          color: rgba($text-secondary, 0.7);
+          letter-spacing: 2px;
+          display: flex;
+          align-items: center;
+
+          i {
+            color: $accent;
+            margin-right: 10px;
+            font-size: 0.95rem;
+          }
+        }
+      }
+
+      .highlight-title {
+        font-size: 1.25rem;
+        color: $text-primary;
+        margin: 0 0 15px 0;
+        padding: 0;
+        line-height: 1.4;
+        font-weight: 600;
+      }
+
+      .highlight-desc {
+        font-size: 0.95rem;
+        color: $text-secondary;
+        margin: 0 0 25px 0;
+        line-height: 1.7;
+        flex-grow: 1;
+        text-align: justify;
+        text-justify: inter-word;
+        hyphens: auto;
+      }
+
+      .highlight-tags {
+        margin-bottom: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        span {
+          display: inline-block;
+          background: transparent;
+          color: rgba($text-primary, 0.85);
+          border: 1px solid rgba($accent, 0.25);
+          padding: 5px 12px;
+          border-radius: 4px; // Squared-off technical aesthetic
+          font-size: 0.75rem;
+          letter-spacing: 1px;
+          transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+
+          &:hover {
+            border-color: $accent;
+            color: $accent;
+            background: rgba($accent, 0.05);
+          }
+        }
+      }
+
+      .highlight-footer {
+        margin-top: auto; 
+
+        .action-link {
+          display: flex;
+          width: 100%;
+          text-align: center;
+          margin: 0;
+          box-sizing: border-box;
+          letter-spacing: 1px;
+        }
+      }
+    }
+  }
+
+
+  // --- 5. Skills Scroller Section ---
+  .skills-scroller {
+    background-color: color.adjust($main, $lightness: 3%);
+    overflow: hidden;
+    padding: 40px 0;
+    margin-top: 2em; // Space after the "Core Technologies" title
+    white-space: nowrap;
+    position: relative;
+    
+    // Left fade overlay
     &::before {
       content: '';
       position: absolute;
       top: 0;
-      left: 30px;
-      width: 1px;
+      left: 0;
+      width: 15%; 
       height: 100%;
-      background: rgba($accent, 0.08);
-      z-index: 0;
-    }
-
-    &:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-      border-top-color: $accent; 
-      
-      // HOVER TRANSITION: Faster transform response purely for mouse interaction
-      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-    }
-
-    // Elevate content above the background guideline
-    > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .highlight-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 20px;
-      border-bottom: 1px solid rgba($accent, 0.15);
-      padding-bottom: 10px;
-
-      .highlight-type {
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        color: rgba($text-secondary, 0.7);
-        letter-spacing: 2px;
-        display: flex;
-        align-items: center;
-
-        i {
-          color: $accent;
-          margin-right: 10px;
-          font-size: 0.95rem;
-        }
-      }
-    }
-
-    .highlight-title {
-      font-size: 1.25rem;
-      color: $text-primary;
-      margin: 0 0 15px 0;
-      padding: 0;
-      line-height: 1.4;
-      font-weight: 600;
-    }
-
-    .highlight-desc {
-      font-size: 0.95rem;
-      color: $text-secondary;
-      margin: 0 0 25px 0;
-      line-height: 1.7;
-      flex-grow: 1;
-      text-align: justify;
-      text-justify: inter-word;
-      hyphens: auto;
-    }
-
-    .highlight-tags {
-      margin-bottom: 30px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-
-      span {
-        display: inline-block;
-        background: transparent;
-        color: rgba($text-primary, 0.85);
-        border: 1px solid rgba($accent, 0.25);
-        padding: 5px 12px;
-        border-radius: 4px; // Squared-off technical aesthetic
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-        transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
-
-        &:hover {
-          border-color: $accent;
-          color: $accent;
-          background: rgba($accent, 0.05);
-        }
-      }
-    }
-
-    .highlight-footer {
-      margin-top: auto; 
-
-      .action-link {
-        display: flex;
-        width: 100%;
-        text-align: center;
-        margin: 0;
-        box-sizing: border-box;
-        letter-spacing: 1px;
-      }
-    }
-  }
-}
-
-
-// --- 5. Skills Scroller Section ---
-.skills-scroller {
-  background: lighten($main, 3%);
-  overflow: hidden;
-  padding: 40px 0;
-  margin-top: 2em; // Space after the "Core Technologies" title
-  white-space: nowrap;
-  position: relative;
-  
-  // Left fade overlay
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 15%; 
-    height: 100%;
-    background: linear-gradient(to right, $main, transparent);
-    z-index: 2; 
-  }
-  
-  // Right fade overlay
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 15%;
-    height: 100%;
-    background: linear-gradient(to left, $main, transparent);
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .skills-track {
-    display: inline-block; 
-    animation: scroll-left 40s linear infinite;
-    transform: translateZ(0);
-    will-change: transform;
-  }
-
-  .skill-icon {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 150px; 
-    margin: 0 20px;
-    color: $text-secondary;
-    transition: color 0.3s ease;
-
-    > i {
-      font-size: 4rem;
-      color: $text-primary;
-      
-      // Standardize icon box
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 5rem;
-      width: 5rem;
-
-      // Force correct font-family
-      &[class^="devicon-"] {
-        font-family: "devicon";
-      }
-      &[class*="si-"] {
-        font-family: "Simple Icons";
-      }
+      background: linear-gradient(to right, $main, transparent);
+      z-index: 2; 
     }
     
-    span {
-      font-size: 0.9rem;
-      margin-top: 10px;
-    }
-
-    &:hover {
-      color: $accent; // Highlight text
-      i {
-        color: $accent; // Highlight icon
-      }
-    }
-  }
-}
-
-
-// --- 6. "Current Focus" Section ---
-@keyframes blinkStatus {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
-}
-
-#focus {
-  .focus-container {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    max-width: 850px; 
-    margin: 0 auto;
-  }
-
-  .focus-module {
-    background: lighten($main, 2%);
-    border: 1px solid rgba($accent, 0.15);
-    border-top: 3px solid rgba($accent, 0.15);
-    border-radius: 8px;
-    padding: 25px 35px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    
-    // BASE TRANSITION: Include opacity and transform for .js-reveal entrance and hover-out
-    transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    will-change: transform, box-shadow, opacity;
-    
-    // Invisible bridge sticking out the bottom to stop hover jitter
+    // Right fade overlay
     &::after {
       content: '';
       position: absolute;
-      bottom: -15px; 
-      left: 0;
-      width: 100%;
-      height: 15px;
-    }
-
-    &:hover {
-      transform: translateY(-8px); 
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
-      border-color: rgba($accent, 0.3);
-      border-top-color: $accent;
-      
-      // HOVER TRANSITION: Faster response for mouse interaction
-      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-      
-      .module-icon i {
-        color: $accent;
-        transform: scale(1.1);
-      }
-    }
-  }
-
-  .module-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px dashed rgba($text-primary, 0.15); // Tech-style divider
-    padding-bottom: 15px;
-
-    .module-icon {
-      i {
-        font-size: 1.5rem;
-        color: rgba($text-secondary, 0.5);
-        transition: transform 0.4s ease, color 0.4s ease;
-      }
-    }
-
-    .module-status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.75rem;
-      color: $accent;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: 600;
-
-      .status-indicator {
-        width: 8px;
-        height: 8px;
-        background-color: $accent;
-        border-radius: 1px; // Square dot for terminal aesthetic
-        animation: blinkStatus 2s infinite; // Live process effect
-      }
-    }
-  }
-
-  .module-body {
-    h4 {
-      margin: 0 0 10px 0;
-      padding: 0;
-      font-size: 1.2rem;
-      color: $text-primary;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    p {
-      margin: 0;
-      color: $text-secondary;
-      font-size: 0.95rem;
-      line-height: 1.7;
-      text-align: justify;
-      text-justify: inter-word;
-      hyphens: auto;
-    }
-  }
-}
-
-
-// --- 7. "Construction" Section / CTA Bar ---
-@keyframes progressStuck {
-  0% { transform: scaleX(0); } 
-  100% { transform: scaleX(1); } 
-}
-
-@keyframes progressShimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.full-width-cta {
-  width: 100%;
-  background-color: lighten($main, 2%); 
-  border-top: 1px solid rgba($accent, 0.15);
-  border-bottom: 1px solid rgba($accent, 0.15);
-  padding: 50px 0 40px 0;
-  margin-top: 250px; 
-  margin-bottom: 0;
-
-  // Target the text block that has the .js-reveal (.is-visible) class
-  .cta-text.is-visible .progress-bar {
-    animation: progressStuck 4s cubic-bezier(0.1, 0.7, 0.1, 1) 0.4s both;
-    
-    &::after {
-      animation: progressShimmer 1.5s infinite;
-    }
-  }
-  
-  @media only screen and (min-width: 768px) {
-    padding: 60px 0;
-  }
-
-  .cta-grid {
-    margin: 0 auto; 
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    width: 80%;
-
-    @media only screen and (min-width: 768px) {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      gap: 40px;
-    }
-  }
-
-  .cta-text {
-    flex: 1; 
-    max-width: 650px;
-
-    .cta-title {
-      margin: 0 0 20px 0;
-      padding: 0;
-      font-size: 1.15rem;
-      color: $text-primary;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      display: flex;
-      align-items: center;
-      
-      .accent-icon {
-        color: $accent;
-        margin-right: 12px;
-        font-size: 1.25rem;
-      }
-    }
-
-    p {
-      margin: 0;
-      font-size: 0.95rem;
-      color: $text-secondary;
-      line-height: 1.7;
-      text-align: justify;
-      text-justify: inter-word;
-      hyphens: auto;
-
-      strong {
-        color: $text-primary;
-        font-weight: 600;
-      }
-    }
-  }
-
-  // Visual "Loading" Bar decoration
-  .progress-bar-container {
-    width: 100%;
-    height: 6px;
-    background: rgba($text-primary, 0.05); // Dark track background
-    border-radius: 3px;
-    margin: 0 0 30px 0;
-    overflow: hidden;
-    border: 1px solid rgba($text-primary, 0.05);
-    
-    .progress-bar {
+      top: 0;
+      right: 0;
+      width: 15%;
       height: 100%;
-      width: 65%; 
-      transform-origin: left; 
-      will-change: transform; 
-      border-radius: 3px;
-      background-color: $accent;
-      transform: scaleX(0); 
-      position: relative;
-      overflow: hidden;
+      background: linear-gradient(to left, $main, transparent);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .skills-track {
+      display: inline-block; 
+      animation: scroll-left 40s linear infinite;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+
+    .skill-icon {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 150px; 
+      margin: 0 20px;
+      color: $text-secondary;
+      transition: color 0.3s ease;
+
+      > i {
+        font-size: 4rem;
+        color: $text-primary;
+        
+        // Standardize icon box
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 5rem;
+        width: 5rem;
+
+        // Force correct font-family
+        &[class^="devicon-"] {
+          font-family: "devicon";
+        }
+        &[class*="si-"] {
+          font-family: "Simple Icons";
+        }
+      }
       
-      // GPU-accelerated smooth glare
+      span {
+        font-size: 0.9rem;
+        margin-top: 10px;
+      }
+
+      &:hover {
+        color: $accent; // Highlight text
+        i {
+          color: $accent; // Highlight icon
+        }
+      }
+    }
+  }
+
+
+  // --- 6. "Current Focus" Section ---
+  @keyframes blinkStatus {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  #focus {
+    .focus-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 850px; 
+      margin: 0 auto;
+    }
+
+    .focus-module {
+      background-color: color.adjust($main, $lightness: 2%);
+      border: 1px solid rgba($accent, 0.15);
+      border-top: 3px solid rgba($accent, 0.15);
+      border-radius: 8px;
+      padding: 25px 35px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      
+      // BASE TRANSITION: Include opacity and transform for .js-reveal entrance and hover-out
+      transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      will-change: transform, box-shadow, opacity;
+      
+      // Invisible bridge sticking out the bottom to stop hover jitter
       &::after {
         content: '';
         position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.4), // The center glow
-          transparent
-        );
-        transform: translateX(-100%); // Starts off-screen to the left
+        bottom: -15px; 
+        left: 0;
+        width: 100%;
+        height: 15px;
+      }
+
+      &:hover {
+        transform: translateY(-8px); 
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
+        border-color: rgba($accent, 0.3);
+        border-top-color: $accent;
+        
+        // HOVER TRANSITION: Faster response for mouse interaction
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        
+        .module-icon i {
+          color: $accent;
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .module-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px dashed rgba($text-primary, 0.15); // Tech-style divider
+      padding-bottom: 15px;
+
+      .module-icon {
+        i {
+          font-size: 1.5rem;
+          color: rgba($text-secondary, 0.5);
+          transition: transform 0.4s ease, color 0.4s ease;
+        }
+      }
+
+      .module-status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.75rem;
+        color: $accent;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+
+        .status-indicator {
+          width: 8px;
+          height: 8px;
+          background-color: $accent;
+          border-radius: 1px; // Square dot for terminal aesthetic
+          animation: blinkStatus 2s infinite; // Live process effect
+        }
+      }
+    }
+
+    .module-body {
+      h4 {
+        margin: 0 0 10px 0;
+        padding: 0;
+        font-size: 1.2rem;
+        color: $text-primary;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      p {
+        margin: 0;
+        color: $text-secondary;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        text-align: justify;
+        text-justify: inter-word;
+        hyphens: auto;
       }
     }
   }
 
-  // The Button Area
-  .cta-action {
-    flex-shrink: 0;
-    width: 100%; // Default to full width for mobile screens
 
-    @media only screen and (min-width: 768px) {
-      width: auto; // Wrap nicely around content on desktop
+  // --- 7. "Construction" Section / CTA Bar ---
+  @keyframes progressStuck {
+    0% { transform: scaleX(0); } 
+    100% { transform: scaleX(1); } 
+  }
+
+  @keyframes progressShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .full-width-cta {
+    width: 100%;
+    background-color: color.adjust($main, $lightness: 2%); 
+    border-top: 1px solid rgba($accent, 0.15);
+    border-bottom: 1px solid rgba($accent, 0.15);
+    padding: 50px 0 40px 0;
+    margin-top: 250px; 
+    margin-bottom: 0;
+
+    // Target the text block that has the .js-reveal (.is-visible) class
+    .cta-text.is-visible .progress-bar {
+      animation: progressStuck 4s cubic-bezier(0.1, 0.7, 0.1, 1) 0.4s both;
+      
+      &::after {
+        animation: progressShimmer 1.5s infinite;
+      }
     }
     
-    .large-button {
+    @media only screen and (min-width: 768px) {
+      padding: 60px 0;
+    }
+
+    .cta-grid {
+      margin: 0 auto; 
       display: flex;
-      width: 100%;
-      box-sizing: border-box;
-      font-size: 1.05rem;
-      padding: 15px 30px;
-      border-width: 2px; 
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 500;
-      
+      flex-direction: column;
+      gap: 25px;
+      width: 80%;
+
       @media only screen and (min-width: 768px) {
-        display: inline-flex;
-        width: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 40px;
+      }
+    }
+
+    .cta-text {
+      flex: 1; 
+      max-width: 650px;
+
+      .cta-title {
+        margin: 0 0 20px 0;
+        padding: 0;
+        font-size: 1.15rem;
+        color: $text-primary;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        display: flex;
+        align-items: center;
+        
+        .accent-icon {
+          color: $accent;
+          margin-right: 12px;
+          font-size: 1.25rem;
+        }
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: $text-secondary;
+        line-height: 1.7;
+        text-align: justify;
+        text-justify: inter-word;
+        hyphens: auto;
+
+        strong {
+          color: $text-primary;
+          font-weight: 600;
+        }
+      }
+    }
+
+    // Visual "Loading" Bar decoration
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background: rgba($text-primary, 0.05); // Dark track background
+      border-radius: 3px;
+      margin: 0 0 30px 0;
+      overflow: hidden;
+      border: 1px solid rgba($text-primary, 0.05);
+      
+      .progress-bar {
+        height: 100%;
+        width: 65%; 
+        transform-origin: left; 
+        will-change: transform; 
+        border-radius: 3px;
+        background-color: $accent;
+        transform: scaleX(0); 
+        position: relative;
+        overflow: hidden;
+        
+        // GPU-accelerated smooth glare
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4), // The center glow
+            transparent
+          );
+          transform: translateX(-100%); // Starts off-screen to the left
+        }
+      }
+    }
+
+    // The Button Area
+    .cta-action {
+      flex-shrink: 0;
+      width: 100%; // Default to full width for mobile screens
+
+      @media only screen and (min-width: 768px) {
+        width: auto; // Wrap nicely around content on desktop
       }
       
-      i {
-        margin-right: 10px;
+      .large-button {
+        display: flex;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 1.05rem;
+        padding: 15px 30px;
+        border-width: 2px; 
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 500;
+        
+        @media only screen and (min-width: 768px) {
+          display: inline-flex;
+          width: auto;
+        }
+        
+        i {
+          margin-right: 10px;
+        }
       }
     }
   }
+
 }

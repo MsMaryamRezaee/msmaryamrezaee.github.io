@@ -1,4 +1,5 @@
 @use '../_config/variables' as *;
+@use "sass:color";
 
 /*
  * =========================================
@@ -6,390 +7,394 @@
  * =========================================
  */
 
-/* --- 1. Global Page Overrides --- */
-.nav-header.nav-subpage, .footer-container {
-  background: transparent !important;
-  border: none !important;
-}
-  
-#nav-particles, #footer-particles {
-  display: none !important;
-}
+.page-contact {
 
-.footer-container {
-  margin-top: 150px !important; 
-  padding-top: 20px !important; 
-}
-
-#contact-particles {
-  position: fixed; 
-  top: 0; left: 0; width: 100vw; 
-  height: 100vh; /* Fallback for older browsers */
-  height: 100dvh; /* Prevents layout jumping on mobile */
-  z-index: 0;
-}
-
-/* --- 2. Main Layout --- */
-.contact-wrapper {
-  position: relative;
-  z-index: 2; 
-  width: 100%;
-  min-height: 80vh; 
-  min-height: 80dvh; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 50px 5% 20px 5%;
-  box-sizing: border-box;
-
-  @media only screen and (min-width: 1024px) {
-    padding-top: 80px;
+  /* --- 1. Global Page Overrides --- */
+  .nav-header.nav-subpage, .footer-container {
+    background: transparent !important;
+    border: none !important;
   }
-}
-
-.contact-grid {
-  position: relative;
-  width: 100%;
-  max-width: 650px; 
-  margin: 0 auto; 
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0px;
-  animation: fadeIn 0.8s ease-out;
-
-  @media only screen and (min-width: 1024px) {
-    max-width: 1100px; 
-    grid-template-columns: 1fr 1.3fr; 
-    gap: 40px;
-    align-items: flex-start; 
+    
+  #nav-particles, #footer-particles {
+    display: none !important;
   }
-}
 
-/* --- 3. Left Side: Channels & Left Bracket --- */
-.contact-channels {
-  position: relative;
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding-left: 30px; 
-  padding-bottom: 40px; // Room for the bottom circuit line to shoot under
+  .footer-container {
+    margin-top: 150px !important; 
+    padding-top: 20px !important; 
+  }
 
-  // MOBILE: Caps the abrupt end of the title line with a glowing node
-  &::after {
+  #contact-particles {
+    position: fixed; 
+    top: 0; left: 0; width: 100vw; 
+    height: 100vh; /* Fallback for older browsers */
+    height: 100dvh; /* Prevents layout jumping on mobile */
+    z-index: 0;
+  }
+
+  /* --- 2. Main Layout --- */
+  .contact-wrapper {
+    position: relative;
+    z-index: 2; 
+    width: 100%;
+    min-height: 80vh; 
+    min-height: 80dvh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 5% 20px 5%;
+    box-sizing: border-box;
+
+    @media only screen and (min-width: 1024px) {
+      padding-top: 80px;
+    }
+  }
+
+  .contact-grid {
+    position: relative;
+    width: 100%;
+    max-width: 650px; 
+    margin: 0 auto; 
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0px;
+    animation: fadeIn 0.8s ease-out;
+
+    @media only screen and (min-width: 1024px) {
+      max-width: 1100px; 
+      grid-template-columns: 1fr 1.3fr; 
+      gap: 40px;
+      align-items: flex-start; 
+    }
+  }
+
+  /* --- 3. Left Side: Channels & Left Bracket --- */
+  .contact-channels {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 30px; 
+    padding-bottom: 40px; // Room for the bottom circuit line to shoot under
+
+    // MOBILE: Caps the abrupt end of the title line with a glowing node
+    &::after {
+      @media only screen and (max-width: 1023.98px) {
+        content: '';
+        position: absolute;
+        right: 0; // Perfectly centers the 8px node over the right edge
+        top: 29px; // Centers vertically on the title line (32.5px center - 4px radius)
+        width: 8px;
+        height: 8px;
+        background: $accent;
+        box-shadow: 0 0 12px rgba($accent, 0.8);
+        border-radius: 2px;
+      }
+    }
+    
+    // Shifts the entire left column (including brackets) up by 15px on desktop
+    @media only screen and (min-width: 1024px) {
+      margin-top: -17.5px;
+    }
+  }
+
+  .circuit-bracket-left {
+    position: absolute;
+    left: 0;
+    top: 32.5px; // Aligns perfectly with the title text
+    bottom: 0px; 
+    width: 15px;
+    border-left: 2px solid $line;
+    border-top: 2px solid $line;
+    border-bottom: 2px solid $line;
+    border-radius: 12px 0 0 12px;
+    z-index: -1;
+
+    // MOBILE FIX: Strips the bottom curve and drops straight down to the display box
     @media only screen and (max-width: 1023.98px) {
+      border-bottom: none;
+      border-radius: 12px 0 0 0;
+      bottom: -20px; // Flawlessly crosses the gap + 15px display padding
+    }
+
+    // The line shooting right, under the buttons
+    &::after {
       content: '';
       position: absolute;
-      right: 0; // Perfectly centers the 8px node over the right edge
-      top: 29px; // Centers vertically on the title line (32.5px center - 4px radius)
+
+      // DESKTOP: Just a straight horizontal line
+      @media only screen and (min-width: 1024px) {
+        left: 13px;
+        bottom: -1.5px;
+        width: 120px;
+        height: 1.5px;
+        background: $line;
+      }
+
+      // MOBILE: Removed entirely since the main bracket now handles the drop directly
+      @media only screen and (max-width: 1023.98px) {
+        display: none;
+      }
+    }
+
+    // The glowing termination node
+    &::before {
+      content: '';
+      position: absolute;
+      left: 133px; // End of the line
+      bottom: -5px; // Centered on the line
+      width: 8px; 
+      height: 8px;
+      background: $accent;
+      box-shadow: 0 0 12px rgba($accent, 0.8);
+      border-radius: 2px;
+
+      @media only screen and (max-width: 1023.98px) {
+        display: none; 
+      }
+    }
+  }
+
+  .contact-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.15rem; 
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0 0 15px 10px; 
+    height: 30px; 
+    white-space: nowrap;
+    
+    // 1. The glowing node (Forced to position 1: right after the text)
+    &::before {
+      content: '';
+      order: 1; 
+      margin-left: 20px;
       width: 8px;
       height: 8px;
       background: $accent;
       box-shadow: 0 0 12px rgba($accent, 0.8);
       border-radius: 2px;
-    }
-  }
-  
-  // Shifts the entire left column (including brackets) up by 15px on desktop
-  @media only screen and (min-width: 1024px) {
-    margin-top: -17.5px;
-  }
-}
-
-.circuit-bracket-left {
-  position: absolute;
-  left: 0;
-  top: 32.5px; // Aligns perfectly with the title text
-  bottom: 0px; 
-  width: 15px;
-  border-left: 2px solid $line;
-  border-top: 2px solid $line;
-  border-bottom: 2px solid $line;
-  border-radius: 12px 0 0 12px;
-  z-index: -1;
-
-  // MOBILE FIX: Strips the bottom curve and drops straight down to the display box
-  @media only screen and (max-width: 1023.98px) {
-    border-bottom: none;
-    border-radius: 12px 0 0 0;
-    bottom: -20px; // Flawlessly crosses the gap + 15px display padding
-  }
-
-  // The line shooting right, under the buttons
-  &::after {
-    content: '';
-    position: absolute;
-
-    // DESKTOP: Just a straight horizontal line
-    @media only screen and (min-width: 1024px) {
-      left: 13px;
-      bottom: -1.5px;
-      width: 120px;
-      height: 1.5px;
-      background: $line;
+      flex-shrink: 0;
     }
 
-    // MOBILE: Removed entirely since the main bracket now handles the drop directly
-    @media only screen and (max-width: 1023.98px) {
-      display: none;
+    // 2. The bridge line (Forced to position 2: right after the node)
+    &::after {
+      content: '';
+      order: 2; 
+      flex: 1; /* Grows to fill the rest of the space */
+      height: 1.6px;
+      background: $line; 
+      margin-left: 0; 
+      box-sizing: border-box; // Ensures our 20px height calculation below is absolute
+
+      // DESKTOP FIX: Crosses the gap, curves, and drops down 20px
+      @media only screen and (min-width: 1024px) {
+        background: transparent; // Erases the flat block line
+        height: 20px;
+        border-top: 1.6px solid $line;
+        border-right: 2px solid $line;
+        border-top-right-radius: 12px;
+        margin-right: -41.5px; // Overlays the 2px left border of the display box
+        align-self: flex-start;
+        margin-top: 14.2px; // Precisely anchors the top border to the exact vertical center of the title
+      }
     }
   }
 
-  // The glowing termination node
-  &::before {
-    content: '';
-    position: absolute;
-    left: 133px; // End of the line
-    bottom: -5px; // Centered on the line
-    width: 8px; 
-    height: 8px;
-    background: $accent;
-    box-shadow: 0 0 12px rgba($accent, 0.8);
-    border-radius: 2px;
-
-    @media only screen and (max-width: 1023.98px) {
-      display: none; 
-    }
-  }
-}
-
-.contact-title {
-  display: flex;
-  align-items: center;
-  font-size: 1.15rem; 
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: $text-primary;
-  margin: 0 0 15px 10px; 
-  height: 30px; 
-  white-space: nowrap;
-  
-  // 1. The glowing node (Forced to position 1: right after the text)
-  &::before {
-    content: '';
-    order: 1; 
-    margin-left: 20px;
-    width: 8px;
-    height: 8px;
-    background: $accent;
-    box-shadow: 0 0 12px rgba($accent, 0.8);
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-
-  // 2. The bridge line (Forced to position 2: right after the node)
-  &::after {
-    content: '';
-    order: 2; 
-    flex: 1; /* Grows to fill the rest of the space */
-    height: 1.6px;
-    background: $line; 
-    margin-left: 0; 
-    box-sizing: border-box; // Ensures our 20px height calculation below is absolute
-
-    // DESKTOP FIX: Crosses the gap, curves, and drops down 20px
-    @media only screen and (min-width: 1024px) {
-      background: transparent; // Erases the flat block line
-      height: 20px;
-      border-top: 1.6px solid $line;
-      border-right: 2px solid $line;
-      border-top-right-radius: 12px;
-      margin-right: -41.5px; // Overlays the 2px left border of the display box
-      align-self: flex-start;
-      margin-top: 14.2px; // Precisely anchors the top border to the exact vertical center of the title
-    }
-  }
-}
-
-.channel-btn {
-  display: flex;
-  justify-content: space-between; 
-  align-items: center;
-  
-  // GLASSMORPHISM CORE
-  background: rgba(lighten($main, 5%), 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transform: translateZ(0);
-  will-change: transform, background-color, border-color;
-
-  border: 1px solid rgba(255, 255, 255, 0.05); 
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  
-  border-left: 4px solid rgba($accent, 0.2); 
-  margin-left: 10px;
-  padding: 18px 25px;
-  border-radius: 6px;
-  color: $text-primary;
-  text-decoration: none;
-  font-size: 1.05rem;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  user-select: none;
-
-  .btn-left {
+  .channel-btn {
     display: flex;
+    justify-content: space-between; 
     align-items: center;
+    
+    // GLASSMORPHISM CORE
+    background: color.change(color.adjust($main, $lightness: 5%), $alpha: 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transform: translateZ(0);
+    will-change: transform, background-color, border-color;
 
-    i {
-      font-size: 1.4rem;
-      margin-right: 15px;
-      color: $text-secondary;
-      transition: color 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    
+    border-left: 4px solid rgba($accent, 0.2); 
+    margin-left: 10px;
+    padding: 18px 25px;
+    border-radius: 6px;
+    color: $text-primary;
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+
+    .btn-left {
+      display: flex;
+      align-items: center;
+
+      i {
+        font-size: 1.4rem;
+        margin-right: 15px;
+        color: $text-secondary;
+        transition: color 0.3s ease;
+      }
     }
-  }
 
-  .btn-right {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.8rem;
-    color: rgba($text-secondary, 0.6);
-    font-weight: 300;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
+    .btn-right {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      color: rgba($text-secondary, 0.6);
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
 
-  // Active / Hover State
-  &.active {
-    background: rgba($accent, 0.1);
-    border-color: rgba($accent, 0.3);
-    border-left-color: $accent; 
-    transform: translateX(10px) translateZ(0);
-    .btn-left i { color: $accent; }
-  }
-
-  @media (hover: hover) {
-    &:hover {
+    // Active / Hover State
+    &.active {
       background: rgba($accent, 0.1);
       border-color: rgba($accent, 0.3);
       border-left-color: $accent; 
       transform: translateX(10px) translateZ(0);
       .btn-left i { color: $accent; }
     }
-  }
-}
 
-/* --- 4. Right Side: Display Screen & Right Bracket --- */
-.contact-display {
-  padding-top: 15px; // Drops the right column exactly to the title's line height
-  position: relative;
-  display: flex;
-}
-
-.circuit-bracket-right {
-  position: absolute;
-  top: 15px; 
-  left: 0; right: 40px; bottom: 0; 
-  border-left: 2px solid $line;
-  border-bottom: 2px solid $line;
-  border-bottom-left-radius: 12px;
-  pointer-events: none;
-  z-index: 10;
-
-  // DESKTOP FIX: Starts 19.2px lower to flawlessly catch the curve dropping from above
-  @media only screen and (min-width: 1024px) {
-    top: 34.2px; 
+    @media (hover: hover) {
+      &:hover {
+        background: rgba($accent, 0.1);
+        border-color: rgba($accent, 0.3);
+        border-left-color: $accent; 
+        transform: translateX(10px) translateZ(0);
+        .btn-left i { color: $accent; }
+      }
+    }
   }
 
-  // The glowing termination node
-  &::before {
-    content: '';
+  /* --- 4. Right Side: Display Screen & Right Bracket --- */
+  .contact-display {
+    padding-top: 15px; // Drops the right column exactly to the title's line height
+    position: relative;
+    display: flex;
+  }
+
+  .circuit-bracket-right {
     position: absolute;
-    right: -5px; // Flushed to the far right edge of the bottom border
-    bottom: -5px; // Centered precisely over the bottom border
-    width: 8px; height: 8px;
-    background: $accent;
-    box-shadow: 0 0 12px rgba($accent, 0.8);
-    border-radius: 2px;
+    top: 15px; 
+    left: 0; right: 40px; bottom: 0; 
+    border-left: 2px solid $line;
+    border-bottom: 2px solid $line;
+    border-bottom-left-radius: 12px;
+    pointer-events: none;
+    z-index: 10;
+
+    // DESKTOP FIX: Starts 19.2px lower to flawlessly catch the curve dropping from above
+    @media only screen and (min-width: 1024px) {
+      top: 34.2px; 
+    }
+
+    // The glowing termination node
+    &::before {
+      content: '';
+      position: absolute;
+      right: -5px; // Flushed to the far right edge of the bottom border
+      bottom: -5px; // Centered precisely over the bottom border
+      width: 8px; height: 8px;
+      background: $accent;
+      box-shadow: 0 0 12px rgba($accent, 0.8);
+      border-radius: 2px;
+    }
   }
-}
 
-.display-screen {
-  position: relative;
-  width: 100%;
-  
-  // GLASSMORPHISM CORE
-  background: rgba(lighten($main, 5%), 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transform: translateZ(0);
+  .display-screen {
+    position: relative;
+    width: 100%;
+    
+    // GLASSMORPHISM CORE
+    background: color.change(color.adjust($main, $lightness: 5%), $alpha: 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transform: translateZ(0);
 
-  border: 1px solid rgba(255, 255, 255, 0.05); 
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
-  border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
+    border-radius: 12px;
 
-  padding: 20px 40px 35px 40px;
-  min-height: 285px; 
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
-  .display-content {
-    position: absolute;
-    top: 40px; left: 40px; right: 40px; bottom: 40px; 
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease; 
+    padding: 20px 40px 35px 40px;
+    min-height: 285px; 
+    overflow: hidden;
     display: flex;
     flex-direction: column;
 
-    &.active {
-      opacity: 1;
-      visibility: visible;
-      position: relative;
-      top: 0; left: 0; right: 0;
-      flex: 1; 
-    }
-
-    h3 {
+    .display-content {
+      position: absolute;
+      top: 40px; left: 40px; right: 40px; bottom: 40px; 
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease; 
       display: flex;
-      justify-content: space-between;
-      align-items: baseline; 
-      margin: 0 0 20px 0;
-      border-bottom: 1px dashed rgba($accent, 0.25);
-      padding-bottom: 10px;
+      flex-direction: column;
 
-      .title-primary {
-        color: $accent;
-        font-size: 1.25rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        i { margin-right: 10px; }
+      &.active {
+        opacity: 1;
+        visibility: visible;
+        position: relative;
+        top: 0; left: 0; right: 0;
+        flex: 1; 
       }
 
-      .title-secondary {
-        font-size: 0.9rem;
-        color: rgba($text-secondary, 0.7);
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        font-weight: 400;
+      h3 {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline; 
+        margin: 0 0 20px 0;
+        border-bottom: 1px dashed rgba($accent, 0.25);
+        padding-bottom: 10px;
+
+        .title-primary {
+          color: $accent;
+          font-size: 1.25rem;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          i { margin-right: 10px; }
+        }
+
+        .title-secondary {
+          font-size: 0.9rem;
+          color: rgba($text-secondary, 0.7);
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          font-weight: 400;
+        }
       }
-    }
 
-    p {
-      color: $text-secondary;
-      font-size: 1.05rem;
-      line-height: 1.8;
-      margin: 0 0 30px 0;
-      text-align: justify;
-      text-justify: inter-word;
-      hyphens: auto;
-    }
+      p {
+        color: $text-secondary;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin: 0 0 30px 0;
+        text-align: justify;
+        text-justify: inter-word;
+        hyphens: auto;
+      }
 
-    .action-link {
-      display: flex; 
-      width: 100%;
-      text-align: center; 
-      margin-top: auto;
-      letter-spacing: 1px; 
-      box-sizing: border-box; 
+      .action-link {
+        display: flex; 
+        width: 100%;
+        text-align: center; 
+        margin-top: auto;
+        letter-spacing: 1px; 
+        box-sizing: border-box; 
+      }
     }
   }
-}
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: none; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: none; }
+  }
+
 }

@@ -1,4 +1,5 @@
 @use '../_config/variables' as *;
+@use "sass:color";
 
 /*
  * =========================================
@@ -6,463 +7,467 @@
  * =========================================
  */
 
-.page-section.about-container {
-  margin-top: 70px; // Mobile spacing
-  margin-bottom: 100px;
-  
-  @media only screen and (min-width: 768px) {
-    margin-top: 50px; // Tighter laptop spacing
-  }
-}
-
-/* --- 1. Circuit Title --- */
-.about-header {
-  margin-bottom: 40px;
-}
-
-.about-title {
-  display: flex;
-  align-items: center;
-  font-size: 1.25rem; 
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: $text-primary;
-  margin: 0; 
-  white-space: nowrap;
-  
-  &::before {
-    content: '';
-    margin-right: 20px;
-    width: 8px;
-    height: 8px;
-    background: $accent;
-    box-shadow: 0 0 12px rgba($accent, 0.8);
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-}
-
-/* The traversing circuit U-turn */
-.circuit-line {
-  flex: 1;
-  position: relative;
-  height: 16px; // The downward drop distance
-  margin-left: 20px;
-  align-self: center; 
-  transform: translateY(7px); // Pushes the container down so the top line sits in true vertical center
-
-  // 1. The main straight line extending right
-  // We use border-top here so it has the exact same sub-pixel weight as the U-turn box.
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 15px; // Tucks completely under the U-turn box so there is absolutely zero seam
-    border-top: 1.6px solid $line;
-  }
-
-  // 2. The invisible rectangle acting as the U-turn
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0; // The right boundary stays exactly where it was
-    width: 70px; // Extended by 20px leftwards
-    height: 100%;
+.page-about {
     
-    // Applying the same border-top here ensures it seamlessly joins the connecting line
-    border-top: 1.6px solid $line;
-    border-right: 1.6px solid $line;
-    border-bottom: 1.6px solid $line;
-    border-radius: 0 12px 12px 0; // Perfect curves on the right corners
-    box-sizing: border-box;
-  }
-
-  // 3. The glowing node capping the end
-  .circuit-node {
-    position: absolute;
-    right: 68px; // Anchored perfectly to the new 70px tip (70px - 2px for true center)
-    bottom: -3.6px; // Mathematically centered vertically over the bottom border
-    width: 8px;
-    height: 8px;
-    background: $accent;
-    box-shadow: 0 0 12px rgba($accent, 0.8);
-    border-radius: 2px;
-    z-index: 2; // Renders the node cleanly on top of the line
-  }
-}
-
-/* --- 2. Shared Glass Elements --- */
-.glass-panel, .cta-glass-card {
-  background: rgba(lighten($main, 5%), 0.15);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.05); 
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
-  border-radius: 12px;
-  transform: translateZ(0);
-}
-
-/* --- 3. Hero Section (Bio & Photo) --- */
-.about-hero {
-  display: flex;
-  flex-direction: column-reverse; 
-  gap: 50px;
-  align-items: center;
-
-  // CRITICAL BUGFIX 1: 
-  // Release the GPU lock from .js-reveal once the animation is done.
-  // If this is not released, Safari/Chrome will permanently disable the backdrop-filter inside it!
-  &.is-visible {
-    will-change: auto !important; 
-  }
-
-  @media only screen and (min-width: 800px) {
-    flex-direction: row;
-    align-items: stretch;
-  }
-}
-
-// The outer container. Casts the shadow without clipping it.
-.bio-wrapper {
-  flex: 3;
-  position: relative;
-  border-radius: 12px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
-  z-index: 1; // Establishes a strict localized stacking context
-}
-
-// The inner container. Strictly clips the particles so they don't leak.
-.bio-particles-clip {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  z-index: 1; // Sits on the bottom layer of the wrapper
-  
-  // CRITICAL BUGFIX 2: 
-  // Forces the particle canvas into its own dedicated GPU hardware layer. 
-  // Without this, the browser flattens the canvas with the glass panel 
-  // and physically cannot blur it.
-  transform: translateZ(0); 
-}
-
-#bio-particles {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  pointer-events: none; 
-}
-
-// The glass panel. Sits on top and blurs the particle layer below it.
-.about-bio {
-  position: relative;
-  z-index: 2; // Strictly on top of the particles
-  padding: 40px;
-  height: 100%; 
-  box-sizing: border-box;
-  
-  // Turn off the duplicate shadow inherited from .glass-panel
-  box-shadow: none !important; 
-  
-  // Re-affirm the hardware lock and blur explicitly to override any remaining browser bugs
-  transform: translateZ(0) !important; 
-  backdrop-filter: blur(5px) !important;
-  -webkit-backdrop-filter: blur(5px) !important;
-  
-  h2 {
-    margin-top: 0;
-    color: $accent;
-    font-size: 1.3rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 25px;
-  }
-
-  p {
-    color: $text-secondary;
-    font-size: 1.05rem;
-    line-height: 1.8;
-    margin-bottom: 20px;
+  .page-section.about-container {
+    margin-top: 70px; // Mobile spacing
+    margin-bottom: 100px;
     
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: auto;
-
-    &:last-child {
-      margin-bottom: 0;
+    @media only screen and (min-width: 768px) {
+      margin-top: 50px; // Tighter laptop spacing
     }
   }
-}
 
-.about-visuals {
-  flex: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
+  /* --- 1. Circuit Title --- */
+  .about-header {
+    margin-bottom: 40px;
+  }
 
-/* --- 4. The Photo --- */
-.photo-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 280px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-// Unstable hologram/glitch effects for the tech frame
-@keyframes frame-glitch-tr {
-  0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
-  10% { filter: drop-shadow(-2px 2px 0px rgba($text-primary, 0.6)); transform: translate(1px, -1px); }
-  20% { filter: drop-shadow(0 0 6px $accent); transform: translate(0, 0); }
-  30% { filter: drop-shadow(2px -2px 0px rgba($accent, 0.9)); transform: translate(-1px, 1px); }
-  40% { filter: drop-shadow(0 0 3px $accent); transform: translate(0, 0); }
-  50% { filter: drop-shadow(2px 0 0px rgba($text-primary, 0.5)); transform: translate(-1px, 0); }
-  60% { filter: drop-shadow(0 0 8px $accent); transform: translate(0, 0); }
-  70% { filter: drop-shadow(-2px -2px 0px rgba($accent, 0.7)); transform: translate(1px, 1px); }
-  80% { filter: drop-shadow(0 0 5px $accent); transform: translate(0, 0); }
-  90% { filter: drop-shadow(0 2px 0px rgba($text-primary, 0.6)); transform: translate(0, -1px); }
-}
-
-@keyframes frame-glitch-bl {
-  0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
-  15% { filter: drop-shadow(2px -2px 0px rgba($text-primary, 0.6)); transform: translate(-1px, 1px); }
-  25% { filter: drop-shadow(0 0 8px $accent); transform: translate(0, 0); }
-  35% { filter: drop-shadow(-2px 2px 0px rgba($accent, 0.9)); transform: translate(1px, -1px); }
-  45% { filter: drop-shadow(0 0 3px $accent); transform: translate(0, 0); }
-  55% { filter: drop-shadow(0 -2px 0px rgba($text-primary, 0.5)); transform: translate(0, 1px); }
-  65% { filter: drop-shadow(0 0 6px $accent); transform: translate(0, 0); }
-  75% { filter: drop-shadow(2px 2px 0px rgba($accent, 0.7)); transform: translate(-1px, -1px); }
-  85% { filter: drop-shadow(0 0 5px $accent); transform: translate(0, 0); }
-  95% { filter: drop-shadow(-2px 0 0px rgba($text-primary, 0.6)); transform: translate(1px, 0); }
-}
-
-.photo-frame {
-  position: relative;
-  z-index: 1;
-  padding: 12px;
-  
-  // Base style for the two incomplete tech brackets
-  &::before, &::after {
-    content: '';
-    position: absolute;
-    width: 40px; // Base incomplete size
-    height: 40px;
-    border: 2px solid transparent; // Keeps the 12px curves perfect without diagonal corner cuts
-    border-radius: 12px;
-    box-sizing: border-box;
-    z-index: 2;
-    pointer-events: none;
+  .about-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem; 
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0; 
+    white-space: nowrap;
     
-    // REVERT ANIMATION (Mouse Leave)
-    // Width delays its collapse until height is almost done collapsing, smoothly tracing the L-shape backwards.
-    transition: height 0.3s cubic-bezier(0.5, 0, 0.1, 1),
-                width 0.3s cubic-bezier(0.5, 0, 0.1, 1) 0.15s,
-                border-color 0.4s ease,
-                filter 0.4s ease;
+    &::before {
+      content: '';
+      margin-right: 20px;
+      width: 8px;
+      height: 8px;
+      background: $accent;
+      box-shadow: 0 0 12px rgba($accent, 0.8);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
   }
 
-  // Top-Right Bracket
-  &::before {
-    top: 0;
-    right: 0;
-    border-top-color: $line;
-    border-right-color: $line;
-  }
-
-  // Bottom-Left Bracket
-  &::after {
-    bottom: 0;
-    left: 0;
-    border-bottom-color: $line;
-    border-left-color: $line;
-  }
-
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    filter: grayscale(30%) contrast(1.1);
-    transition: filter 0.5s ease;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  /* The traversing circuit U-turn */
+  .circuit-line {
+    flex: 1;
     position: relative;
-    z-index: 1;
-  }
+    height: 16px; // The downward drop distance
+    margin-left: 20px;
+    align-self: center; 
+    transform: translateY(7px); // Pushes the container down so the top line sits in true vertical center
 
-  // THE HOVER SEQUENCE
-  &:hover {
-    &::before, &::after {
-      width: 100%;
+    // 1. The main straight line extending right
+    // We use border-top here so it has the exact same sub-pixel weight as the U-turn box.
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 15px; // Tucks completely under the U-turn box so there is absolutely zero seam
+      border-top: 1.6px solid $line;
+    }
+
+    // 2. The invisible rectangle acting as the U-turn
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0; // The right boundary stays exactly where it was
+      width: 70px; // Extended by 20px leftwards
       height: 100%;
       
-      // FILL-OUT ANIMATION (Mouse Enter)
-      // Width shoots across first, then height follows. This forces a dynamic, 
-      // staggered "circuit-drawing" assembly rather than a boring diagonal expand.
-      transition: width 0.25s cubic-bezier(0.2, 1, 0.3, 1),
-                  height 0.25s cubic-bezier(0.2, 1, 0.3, 1) 0.15s,
-                  border-color 0.3s ease,
-                  filter 0.3s ease;
+      // Applying the same border-top here ensures it seamlessly joins the connecting line
+      border-top: 1.6px solid $line;
+      border-right: 1.6px solid $line;
+      border-bottom: 1.6px solid $line;
+      border-radius: 0 12px 12px 0; // Perfect curves on the right corners
+      box-sizing: border-box;
     }
 
-    &::before {
-      border-top-color: $accent;
-      border-right-color: $accent;
-      // Triggers the unstable, jittering glitch effect immediately upon hover
-      animation: frame-glitch-tr 0.4s infinite linear;
+    // 3. The glowing node capping the end
+    .circuit-node {
+      position: absolute;
+      right: 68px; // Anchored perfectly to the new 70px tip (70px - 2px for true center)
+      bottom: -3.6px; // Mathematically centered vertically over the bottom border
+      width: 8px;
+      height: 8px;
+      background: $accent;
+      box-shadow: 0 0 12px rgba($accent, 0.8);
+      border-radius: 2px;
+      z-index: 2; // Renders the node cleanly on top of the line
+    }
+  }
+
+  /* --- 2. Shared Glass Elements --- */
+  .glass-panel, .cta-glass-card {
+    background: color.change(color.adjust($main, $lightness: 5%), $alpha: 0.15);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
+    border-radius: 12px;
+    transform: translateZ(0);
+  }
+
+  /* --- 3. Hero Section (Bio & Photo) --- */
+  .about-hero {
+    display: flex;
+    flex-direction: column-reverse; 
+    gap: 50px;
+    align-items: center;
+
+    // CRITICAL BUGFIX 1: 
+    // Release the GPU lock from .js-reveal once the animation is done.
+    // If this is not released, Safari/Chrome will permanently disable the backdrop-filter inside it!
+    &.is-visible {
+      will-change: auto !important; 
     }
 
-    &::after {
-      border-bottom-color: $accent;
-      border-left-color: $accent;
-      animation: frame-glitch-bl 0.4s infinite linear;
-      animation-delay: 0.1s; // Desyncs the bottom-left jitter from the top-right
+    @media only screen and (min-width: 800px) {
+      flex-direction: row;
+      align-items: stretch;
     }
+  }
+
+  // The outer container. Casts the shadow without clipping it.
+  .bio-wrapper {
+    flex: 3;
+    position: relative;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
+    z-index: 1; // Establishes a strict localized stacking context
+  }
+
+  // The inner container. Strictly clips the particles so they don't leak.
+  .bio-particles-clip {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 1; // Sits on the bottom layer of the wrapper
     
-    img {
-      filter: grayscale(0%) contrast(1.1);
+    // CRITICAL BUGFIX 2: 
+    // Forces the particle canvas into its own dedicated GPU hardware layer. 
+    // Without this, the browser flattens the canvas with the glass panel 
+    // and physically cannot blur it.
+    transform: translateZ(0); 
+  }
+
+  #bio-particles {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; 
+  }
+
+  // The glass panel. Sits on top and blurs the particle layer below it.
+  .about-bio {
+    position: relative;
+    z-index: 2; // Strictly on top of the particles
+    padding: 40px;
+    height: 100%; 
+    box-sizing: border-box;
+    
+    // Turn off the duplicate shadow inherited from .glass-panel
+    box-shadow: none !important; 
+    
+    // Re-affirm the hardware lock and blur explicitly to override any remaining browser bugs
+    transform: translateZ(0) !important; 
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+    
+    h2 {
+      margin-top: 0;
+      color: $accent;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+    }
+
+    p {
+      color: $text-secondary;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
-}
 
-/* --- 5. Language Tags --- */
-.language-tags {
-  position: absolute;
-  bottom: -20px;
-  right: -20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 2;
-}
-
-.lang-tag {
-  background: rgba(lighten($main, 5%), 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba($accent, 0.3);
-  padding: 8px 16px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, border-color 0.3s ease;
-  cursor: default;
-  user-select: none;
-  -webkit-user-select: none;
-
-  &:hover {
-    transform: translateX(-5px);
-    border-color: $accent;
+  .about-visuals {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 
-  .lang-id {
-    font-weight: 700;
-    color: $accent;
-  }
-
-  .lang-level {
-    color: rgba($text-primary, 0.8);
-    font-size: 0.7rem;
-  }
-}
-
-/* --- 6. CTA Action Cards --- */
-.about-cta-section {
-  margin-top: 60px;
-}
-
-.cta-glass-card {
-  display: flex;
-  flex-direction: column;
-  padding: 40px;
-  gap: 30px;
-
-  @media only screen and (min-width: 768px) {
-    flex-direction: row;
+  /* --- 4. The Photo --- */
+  .photo-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
   }
-}
 
-.cta-block {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  h3 {
-    margin: 0 0 10px 0;
-    color: $text-primary;
-    font-size: 1.15rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  // Unstable hologram/glitch effects for the tech frame
+  @keyframes frame-glitch-tr {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
+    10% { filter: drop-shadow(-2px 2px 0px rgba($text-primary, 0.6)); transform: translate(1px, -1px); }
+    20% { filter: drop-shadow(0 0 6px $accent); transform: translate(0, 0); }
+    30% { filter: drop-shadow(2px -2px 0px rgba($accent, 0.9)); transform: translate(-1px, 1px); }
+    40% { filter: drop-shadow(0 0 3px $accent); transform: translate(0, 0); }
+    50% { filter: drop-shadow(2px 0 0px rgba($text-primary, 0.5)); transform: translate(-1px, 0); }
+    60% { filter: drop-shadow(0 0 8px $accent); transform: translate(0, 0); }
+    70% { filter: drop-shadow(-2px -2px 0px rgba($accent, 0.7)); transform: translate(1px, 1px); }
+    80% { filter: drop-shadow(0 0 5px $accent); transform: translate(0, 0); }
+    90% { filter: drop-shadow(0 2px 0px rgba($text-primary, 0.6)); transform: translate(0, -1px); }
   }
 
-  p {
-    color: $text-secondary;
-    font-size: 0.95rem;
-    margin: 0 0 25px 0;
-    line-height: 1.6;
-  }
-}
-
-.cta-divider {
-  width: 100%;
-  height: 1px;
-  background: rgba($accent, 0.2);
-
-  @media only screen and (min-width: 768px) {
-    width: 1px;
-    height: 120px;
-    background: rgba($accent, 0.2);
-  }
-}
-
-.btn-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.glass-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 20px;
-  background: rgba(lighten($main, 5%), 0.4);
-  border: 1px solid rgba($accent, 0.3);
-  border-radius: 8px;
-  color: $text-primary;
-  text-decoration: none;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-  width: fit-content;
-
-  i {
-    font-size: 1.1rem;
-    margin-right: 10px;
-    color: $accent;
-    transition: transform 0.3s ease;
+  @keyframes frame-glitch-bl {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
+    15% { filter: drop-shadow(2px -2px 0px rgba($text-primary, 0.6)); transform: translate(-1px, 1px); }
+    25% { filter: drop-shadow(0 0 8px $accent); transform: translate(0, 0); }
+    35% { filter: drop-shadow(-2px 2px 0px rgba($accent, 0.9)); transform: translate(1px, -1px); }
+    45% { filter: drop-shadow(0 0 3px $accent); transform: translate(0, 0); }
+    55% { filter: drop-shadow(0 -2px 0px rgba($text-primary, 0.5)); transform: translate(0, 1px); }
+    65% { filter: drop-shadow(0 0 6px $accent); transform: translate(0, 0); }
+    75% { filter: drop-shadow(2px 2px 0px rgba($accent, 0.7)); transform: translate(-1px, -1px); }
+    85% { filter: drop-shadow(0 0 5px $accent); transform: translate(0, 0); }
+    95% { filter: drop-shadow(-2px 0 0px rgba($text-primary, 0.6)); transform: translate(1px, 0); }
   }
 
-  &:hover:not(.wip-link) {
-    background: rgba($accent, 0.15);
-    border-color: $accent;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  .photo-frame {
+    position: relative;
+    z-index: 1;
+    padding: 12px;
     
-    i {
-      transform: scale(1.15);
+    // Base style for the two incomplete tech brackets
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      width: 40px; // Base incomplete size
+      height: 40px;
+      border: 2px solid transparent; // Keeps the 12px curves perfect without diagonal corner cuts
+      border-radius: 12px;
+      box-sizing: border-box;
+      z-index: 2;
+      pointer-events: none;
+      
+      // REVERT ANIMATION (Mouse Leave)
+      // Width delays its collapse until height is almost done collapsing, smoothly tracing the L-shape backwards.
+      transition: height 0.3s cubic-bezier(0.5, 0, 0.1, 1),
+                  width 0.3s cubic-bezier(0.5, 0, 0.1, 1) 0.15s,
+                  border-color 0.4s ease,
+                  filter 0.4s ease;
+    }
+
+    // Top-Right Bracket
+    &::before {
+      top: 0;
+      right: 0;
+      border-top-color: $line;
+      border-right-color: $line;
+    }
+
+    // Bottom-Left Bracket
+    &::after {
+      bottom: 0;
+      left: 0;
+      border-bottom-color: $line;
+      border-left-color: $line;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      filter: grayscale(30%) contrast(1.1);
+      transition: filter 0.5s ease;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    // THE HOVER SEQUENCE
+    &:hover {
+      &::before, &::after {
+        width: 100%;
+        height: 100%;
+        
+        // FILL-OUT ANIMATION (Mouse Enter)
+        // Width shoots across first, then height follows. This forces a dynamic, 
+        // staggered "circuit-drawing" assembly rather than a boring diagonal expand.
+        transition: width 0.25s cubic-bezier(0.2, 1, 0.3, 1),
+                    height 0.25s cubic-bezier(0.2, 1, 0.3, 1) 0.15s,
+                    border-color 0.3s ease,
+                    filter 0.3s ease;
+      }
+
+      &::before {
+        border-top-color: $accent;
+        border-right-color: $accent;
+        // Triggers the unstable, jittering glitch effect immediately upon hover
+        animation: frame-glitch-tr 0.4s infinite linear;
+      }
+
+      &::after {
+        border-bottom-color: $accent;
+        border-left-color: $accent;
+        animation: frame-glitch-bl 0.4s infinite linear;
+        animation-delay: 0.1s; // Desyncs the bottom-left jitter from the top-right
+      }
+      
+      img {
+        filter: grayscale(0%) contrast(1.1);
+      }
     }
   }
+
+  /* --- 5. Language Tags --- */
+  .language-tags {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 2;
+  }
+
+  .lang-tag {
+    background: color.change(color.adjust($main, $lightness: 5%), $alpha: 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba($accent, 0.3);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+
+    &:hover {
+      transform: translateX(-5px);
+      border-color: $accent;
+    }
+
+    .lang-id {
+      font-weight: 700;
+      color: $accent;
+    }
+
+    .lang-level {
+      color: rgba($text-primary, 0.8);
+      font-size: 0.7rem;
+    }
+  }
+
+  /* --- 6. CTA Action Cards --- */
+  .about-cta-section {
+    margin-top: 60px;
+  }
+
+  .cta-glass-card {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    gap: 30px;
+
+    @media only screen and (min-width: 768px) {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .cta-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h3 {
+      margin: 0 0 10px 0;
+      color: $text-primary;
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    p {
+      color: $text-secondary;
+      font-size: 0.95rem;
+      margin: 0 0 25px 0;
+      line-height: 1.6;
+    }
+  }
+
+  .cta-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba($accent, 0.2);
+
+    @media only screen and (min-width: 768px) {
+      width: 1px;
+      height: 120px;
+      background: rgba($accent, 0.2);
+    }
+  }
+
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .glass-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background: color.change(color.adjust($main, $lightness: 5%), $alpha: 0.4);
+    border: 1px solid rgba($accent, 0.3);
+    border-radius: 8px;
+    color: $text-primary;
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    width: fit-content;
+
+    i {
+      font-size: 1.1rem;
+      margin-right: 10px;
+      color: $accent;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover:not(.wip-link) {
+      background: rgba($accent, 0.15);
+      border-color: $accent;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      
+      i {
+        transform: scale(1.15);
+      }
+    }
+  }
+
 }

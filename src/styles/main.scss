@@ -26,21 +26,9 @@
 @use '_components/data-tooltip';
 
 // 6. Page-Specific Styles
-.page-home {
-  @import '_pages/home';
-}
-.page-about {
-  @import '_pages/about';
-}
-.page-contact {
-  @import '_pages/contact';
-}
-.page-research {
-  @import '_pages/research';
-}
-.page-projects {
-  @import '_pages/projects';
-}
-.page-talks {
-  @import '_pages/talks';
-}
+@use '_pages/home';
+@use '_pages/about';
+@use '_pages/contact';
+@use '_pages/research';
+@use '_pages/projects';
+@use '_pages/talks';
