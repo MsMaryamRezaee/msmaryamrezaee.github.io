@@ -223,7 +223,7 @@
     font-family: 'IBM Plex Mono', monospace; /* Changed to IBM Plex Mono */
     content: attr(data-tooltip);
     position: absolute;
-    bottom: calc(100% + 4px); 
+    bottom: calc(100% + 10px); 
     left: 50%;
     transform: translateX(-50%);
     background: $accent;
@@ -278,7 +278,7 @@
     left: auto;
     top: 50%;
     // Box sits just outside the left edge of the dropdown item
-    right: calc(100% + 4px); 
+    right: calc(100% + 10px); 
     transform: translateY(-50%); // Centers it perfectly vertically
   }
 

@@ -46,7 +46,7 @@
   height: 16px; // The downward drop distance
   margin-left: 20px;
   align-self: center; 
-  transform: translateY(8px); // Pushes the container down so the top line sits in true vertical center
+  transform: translateY(7px); // Pushes the container down so the top line sits in true vertical center
 
   // 1. The main straight line extending right
   // We use border-top here so it has the exact same sub-pixel weight as the U-turn box.

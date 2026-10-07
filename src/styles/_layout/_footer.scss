@@ -139,8 +139,7 @@
         bottom: auto;
         left: auto;
         top: 50%;
-        // Changed from 12px to 11px to force a 1px overlap with the arrow
-        left: calc(100% + 15px); 
+        left: calc(100% + 10px); 
         transform: translateY(-50%); 
       }
 
