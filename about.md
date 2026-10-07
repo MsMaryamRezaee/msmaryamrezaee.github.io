@@ -7,9 +7,14 @@ description: Me.
 <div class="page-section about-container">
 
 <!-- CIRCUIT TITLE -->
-<div class="about-header js-reveal">
-<h1 class="about-title">System Profile</h1>
-</div>
+  <div class="about-header js-reveal">
+    <h1 class="about-title">
+      System Profile
+      <span class="circuit-line">
+        <span class="circuit-node"></span>
+      </span>
+    </h1>
+  </div>
 
 <!-- HERO & IMAGE -->
 <div class="about-hero js-reveal">
@@ -36,7 +41,7 @@ description: Me.
     <!-- Language Tags -->
     <div class="language-tags">
       <span class="lang-tag" data-tooltip="Persian: Native/Bilingual"><span class="lang-id">FA</span> <span class="lang-level">NATIVE</span></span>
-      <span class="lang-tag" data-tooltip="English: Full Professional"><span class="lang-id">EN</span> <span class="lang-level">PROFICIENT</span></span>
+      <span class="lang-tag" data-tooltip="English: Full Proficiency"><span class="lang-id">EN</span> <span class="lang-level">PROFICIENT</span></span>
     </div>
   </div>
 </div>

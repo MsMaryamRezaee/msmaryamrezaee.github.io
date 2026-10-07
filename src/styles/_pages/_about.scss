@@ -6,8 +6,8 @@
  * =========================================
  */
 
-.about-container {
-  margin-top: 150px;
+.page-section.about-container {
+  margin-top: 80px;
   margin-bottom: 100px;
 }
 
@@ -37,13 +37,52 @@
     border-radius: 2px;
     flex-shrink: 0;
   }
+}
 
+/* The new traversing circuit U-turn */
+.circuit-line {
+  flex: 1;
+  position: relative;
+  height: 16px; // The downward drop distance
+  margin-left: 20px;
+  align-self: center; // Anchors it cleanly to the middle of the text
+
+  // The main straight line extending right
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 50px; // Stops exactly where the U-turn begins
+    height: 1.6px;
+    background: $line;
+  }
+
+  // The U-turn curve (Top, Right, Bottom borders)
   &::after {
     content: '';
-    flex: 1;
-    height: 1.6px;
-    background: $line; 
-    margin-left: 20px; 
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px; // "Goes left for a bit but not too much"
+    height: 100%;
+    border-top: 1.6px solid $line;
+    border-right: 2px solid $line;
+    border-bottom: 2px solid $line;
+    border-radius: 0 12px 12px 0; // Perfect curves on the right corners
+    box-sizing: border-box;
+  }
+
+  // The glowing node capping the end
+  .circuit-node {
+    position: absolute;
+    right: 46px; // Anchored perfectly to the left end of the U-turn's bottom border
+    bottom: -5px; // Centered vertically over the 2px bottom border
+    width: 8px;
+    height: 8px;
+    background: $accent;
+    box-shadow: 0 0 12px rgba($accent, 0.8);
+    border-radius: 2px;
   }
 }
 
@@ -213,6 +252,22 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, border-color 0.3s ease;
   cursor: default;
+
+  // OVERRIDE: Shift the tooltip to the Left Side 
+  &[data-tooltip] {
+    &::before {
+      bottom: auto; left: auto; top: 50%;
+      right: calc(100% + 12px); 
+      transform: translateY(-50%);
+    }
+    &::after {
+      bottom: auto; left: auto; top: 50%;
+      right: calc(100% + 7px); 
+      transform: translateY(-50%);
+      border-width: 5px 0 5px 5px !important; // Reverses the triangle to point right
+      border-color: transparent transparent transparent $accent !important;
+    }
+  }
 
   &:hover {
     transform: translateX(-5px);
