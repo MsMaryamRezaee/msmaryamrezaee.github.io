@@ -45,46 +45,48 @@
   position: relative;
   height: 16px; // The downward drop distance
   margin-left: 20px;
-  align-self: center; // Anchors it cleanly to the middle of the text
-  transform: translateY(8px); // Pushes the 16px box down so the top line hits true center
+  align-self: center; 
+  transform: translateY(8px); // Pushes the container down so the top line sits in true vertical center
 
-  // The main straight line extending right
+  // 1. The main straight line extending right
+  // We use border-top here so it has the exact same sub-pixel weight as the U-turn box.
   &::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    right: 70px; // Extended by 20px
-    height: 1.6px;
-    background: $line;
+    right: 15px; // Tucks completely under the U-turn box so there is absolutely zero seam
+    border-top: 1.6px solid $line;
   }
 
-  // The U-turn curve (Top, Right, Bottom borders)
+  // 2. The invisible rectangle acting as the U-turn
   &::after {
     content: '';
     position: absolute;
     top: 0;
-    right: 0;
-    width: 70px; // Extended by 20px
+    right: 0; // The right boundary stays exactly where it was
+    width: 70px; // Extended by 20px leftwards
     height: 100%;
+    
+    // Applying the same border-top here ensures it seamlessly joins the connecting line
     border-top: 1.6px solid $line;
-    border-right: 2px solid $line;
-    border-bottom: 2px solid $line;
+    border-right: 1.6px solid $line;
+    border-bottom: 1.6px solid $line;
     border-radius: 0 12px 12px 0; // Perfect curves on the right corners
     box-sizing: border-box;
   }
 
-  // The glowing node capping the end
+  // 3. The glowing node capping the end
   .circuit-node {
     position: absolute;
-    right: 66px; // Anchored perfectly to the new 70px tip (70 - 4px for true center)
-    bottom: -3px; // Perfect vertical center over the 2px bottom border
+    right: 66px; // Anchored perfectly to the new 70px tip (70px - 4px for true center)
+    bottom: -3.6px; // Mathematically centered vertically over the bottom border
     width: 8px;
     height: 8px;
     background: $accent;
     box-shadow: 0 0 12px rgba($accent, 0.8);
     border-radius: 2px;
-    z-index: 2; // Forces the node to render on top of the line
+    z-index: 2; // Renders the node cleanly on top of the line
   }
 }
 
