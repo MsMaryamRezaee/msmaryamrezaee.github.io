@@ -5,18 +5,17 @@ var concat = require('gulp-concat');
 var sass = require('gulp-sass')(require('sass'));
 var plumber = require('gulp-plumber');
 var cp = require('child_process');
-var imagemin = require('gulp-imagemin');
 var browserSync = require('browser-sync');
 
-var jekyllCommand = 'jekyll';
-var jekyllArgs = ['build'];
+// Use Bundler to run the local Jekyll environment
+var jekyllCommand = 'bundle';
+var jekyllArgs = ['exec', 'jekyll', 'build'];
 
 /*
  * Build the Jekyll Site
- * runs a child process in node that runs the jekyll commands
  */
 gulp.task('jekyll-build', function (done) {
-	return cp.spawn(jekyllCommand, jekyllArgs, {stdio: 'inherit'})
+	return cp.spawn(jekyllCommand, jekyllArgs, {stdio: 'inherit', shell: true})
 		.on('close', done);
 });
 
@@ -32,12 +31,15 @@ gulp.task('jekyll-rebuild', gulp.series(['jekyll-build'], function (done) {
  * Build the jekyll site and launch browser-sync
  */
 gulp.task('browser-sync', gulp.series(['jekyll-build'], function(done) {
-	browserSync({
-		server: {
-			baseDir: '_site'
-		}
-	});
-	done()
+    browserSync({
+        server: {
+            baseDir: '_site',
+            serveStaticOptions: {
+                extensions: ['html']
+            }
+        }
+    });
+    done()
 }));
 
 /*
@@ -52,25 +54,6 @@ gulp.task('sass', function() {
 	.pipe(gulp.dest('assets/css/'))
 });
 
-/*
-* Compile fonts
-*/
-gulp.task('fonts', function() {
-	return gulp.src('src/fonts/**/*.{ttf,woff,woff2}')
-		.pipe(plumber())
-		.pipe(gulp.dest('assets/fonts/'))
-});
-
-/*
- * Minify images
- */
-gulp.task('imagemin', function() {
-	return gulp.src('src/img/**/*.{jpg,JPG,jpeg,JPEG,png,gif}')
-		.pipe(plumber())
-		.pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
-		.pipe(gulp.dest('assets/img/'));
-});
-
 /**
  * Compile and minify js
  */
@@ -83,23 +66,20 @@ gulp.task('js', function() {
 });
 
 /*
-* Watch task
+* Watch task - Removed missing image/font folders
 */
 gulp.task('watch', function() {
   gulp.watch('src/styles/**/*.scss', gulp.series(['sass', 'jekyll-rebuild']));
   gulp.watch('src/js/**/*.js', gulp.series(['js', 'jekyll-rebuild']));
-  gulp.watch('src/fonts/**/*.{ttf,woff,woff2}', gulp.series(['fonts', 'jekyll-rebuild']));
-  gulp.watch('src/img/**/*.{jpg,JPG,jpeg,JPEG,png,gif}', gulp.series(['imagemin', 'jekyll-rebuild']));
-  gulp.watch(['*.html', '_includes/*.html', '_layouts/*.html'], gulp.series(['jekyll-rebuild']));
+  gulp.watch(['*.html', '*.md', '_includes/**/*.html', '_layouts/**/*.html'], gulp.series(['jekyll-rebuild']));
 });
 
 /*
 * Default task sequence: build assets, then build Jekyll, then serve and watch
 */
-gulp.task('default', gulp.series(['js', 'sass', 'fonts', 'imagemin', 'jekyll-build', 'browser-sync', 'watch']));
+gulp.task('default', gulp.series(['js', 'sass', 'jekyll-build', 'browser-sync', 'watch']));
 
 /*
-* Build task sequence: build assets, then build Jekyll (without serving/watching)
-* Useful for just creating the _site folder for deployment if needed.
+* Build task sequence (without serving/watching)
 */
-gulp.task('build', gulp.series(['js', 'sass', 'fonts', 'imagemin', 'jekyll-build']));
+gulp.task('build', gulp.series(['js', 'sass', 'jekyll-build']));
