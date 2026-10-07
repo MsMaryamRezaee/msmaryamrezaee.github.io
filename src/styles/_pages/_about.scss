@@ -493,6 +493,8 @@
   /* --- 6. CTA Action Cards --- */
   .about-cta-section {
     margin-top: 60px;
+    position: relative;
+    z-index: 10;
   }
 
   .cta-glass-card {

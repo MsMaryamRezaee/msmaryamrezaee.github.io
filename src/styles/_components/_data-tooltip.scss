@@ -102,4 +102,24 @@
       border-color: transparent transparent transparent $accent !important;
     }
   }
+
+  /* -----------------------------------------
+   * 4. Bottom Tooltip (.tooltip-bottom)
+   * ----------------------------------------- */
+  &.tooltip-bottom {
+    &::before {
+      bottom: auto; 
+      top: calc(100% + 12px); 
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &::after {
+      bottom: auto; 
+      top: calc(100% + 4px); 
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 5px 5px 5px !important; // Triangle points up
+      border-color: transparent transparent $accent transparent !important;
+    }
+  }
 }
