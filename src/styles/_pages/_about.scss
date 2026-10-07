@@ -214,24 +214,31 @@
   align-items: center;
 }
 
-// The high-speed system overload animation
-@keyframes frantic-surge {
-  0%, 100% {
-    border-color: $accent;
-    box-shadow: 0 0 10px rgba($accent, 0.5), inset 0 0 10px rgba($accent, 0.5);
-  }
-  25% {
-    border-color: $text-primary;
-    box-shadow: 0 0 25px $accent, inset 0 0 20px $accent;
-  }
-  50% {
-    border-color: lighten($accent, 15%);
-    box-shadow: 0 0 15px rgba($accent, 0.8), inset 0 0 10px rgba($accent, 0.8);
-  }
-  75% {
-    border-color: $line;
-    box-shadow: 0 0 2px rgba($accent, 0.1), inset 0 0 2px rgba($accent, 0.1);
-  }
+// Unstable hologram/glitch effects for the tech frame
+@keyframes frame-glitch-tr {
+  0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
+  10% { filter: drop-shadow(-2px 2px 0px rgba($text-primary, 0.6)); transform: translate(1px, -1px); }
+  20% { filter: drop-shadow(0 0 6px $accent); transform: translate(0, 0); }
+  30% { filter: drop-shadow(2px -2px 0px rgba($accent, 0.9)); transform: translate(-1px, 1px); }
+  40% { filter: drop-shadow(0 0 3px $accent); transform: translate(0, 0); }
+  50% { filter: drop-shadow(2px 0 0px rgba($text-primary, 0.5)); transform: translate(-1px, 0); }
+  60% { filter: drop-shadow(0 0 8px $accent); transform: translate(0, 0); }
+  70% { filter: drop-shadow(-2px -2px 0px rgba($accent, 0.7)); transform: translate(1px, 1px); }
+  80% { filter: drop-shadow(0 0 5px $accent); transform: translate(0, 0); }
+  90% { filter: drop-shadow(0 2px 0px rgba($text-primary, 0.6)); transform: translate(0, -1px); }
+}
+
+@keyframes frame-glitch-bl {
+  0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
+  15% { filter: drop-shadow(2px -2px 0px rgba($text-primary, 0.6)); transform: translate(-1px, 1px); }
+  25% { filter: drop-shadow(0 0 8px $accent); transform: translate(0, 0); }
+  35% { filter: drop-shadow(-2px 2px 0px rgba($accent, 0.9)); transform: translate(1px, -1px); }
+  45% { filter: drop-shadow(0 0 3px $accent); transform: translate(0, 0); }
+  55% { filter: drop-shadow(0 -2px 0px rgba($text-primary, 0.5)); transform: translate(0, 1px); }
+  65% { filter: drop-shadow(0 0 6px $accent); transform: translate(0, 0); }
+  75% { filter: drop-shadow(2px 2px 0px rgba($accent, 0.7)); transform: translate(-1px, -1px); }
+  85% { filter: drop-shadow(0 0 5px $accent); transform: translate(0, 0); }
+  95% { filter: drop-shadow(-2px 0 0px rgba($text-primary, 0.6)); transform: translate(1px, 0); }
 }
 
 .photo-frame {
@@ -239,42 +246,40 @@
   z-index: 1;
   padding: 12px;
   
-  // 1. The U-turn Circuit Bracket
-  &::before {
+  // Base style for the two incomplete tech brackets
+  &::before, &::after {
     content: '';
     position: absolute;
-    top: 0; left: 0; bottom: 0;
-    width: 70%; // Starts open, wrapping only 70% of the image
-    border: 2px solid $line;
-    border-right-width: 0px; // Leaves the right side completely open
-    border-radius: 12px 0 0 12px;
+    width: 40px; // Base incomplete size
+    height: 40px;
+    border: 2px solid transparent; // Keeps the 12px curves perfect without diagonal corner cuts
+    border-radius: 12px;
     box-sizing: border-box;
-    transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-                border-color 0.4s ease,
-                border-radius 0.4s ease,
-                border-right-width 0.4s ease,
-                box-shadow 0.4s ease;
-    z-index: 2; 
+    z-index: 2;
     pointer-events: none;
+    
+    // REVERT ANIMATION (Mouse Leave)
+    // Width delays its collapse until height is almost done collapsing, smoothly tracing the L-shape backwards.
+    transition: height 0.3s cubic-bezier(0.5, 0, 0.1, 1),
+                width 0.3s cubic-bezier(0.5, 0, 0.1, 1) 0.15s,
+                border-color 0.4s ease,
+                filter 0.4s ease;
   }
 
-  // 2. The Glowing Terminators (Nodes)
+  // Top-Right Bracket
+  &::before {
+    top: 0;
+    right: 0;
+    border-top-color: $line;
+    border-right-color: $line;
+  }
+
+  // Bottom-Left Bracket
   &::after {
-    content: '';
-    position: absolute;
-    top: -3px; bottom: -3px; 
-    right: calc(30% - 4px); // Mathematically locked perfectly to the tips of the 70% line
-    width: 8px;
-    // Draws both the top and bottom nodes simultaneously using CSS gradients!
-    background: 
-      linear-gradient($accent, $accent) top center / 8px 8px no-repeat,
-      linear-gradient($accent, $accent) bottom center / 8px 8px no-repeat;
-    filter: drop-shadow(0 0 8px $accent);
-    transition: right 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-                opacity 0.2s ease 0.3s, // Waits until the slide finishes, then fades out
-                filter 0.4s ease;
-    z-index: 3;
-    pointer-events: none;
+    bottom: 0;
+    left: 0;
+    border-bottom-color: $line;
+    border-left-color: $line;
   }
 
   img {
@@ -289,22 +294,33 @@
     z-index: 1;
   }
 
-  // 3. THE HOVER SEQUENCE
+  // THE HOVER SEQUENCE
   &:hover {
+    &::before, &::after {
+      width: 100%;
+      height: 100%;
+      
+      // FILL-OUT ANIMATION (Mouse Enter)
+      // Width shoots across first, then height follows. This forces a dynamic, 
+      // staggered "circuit-drawing" assembly rather than a boring diagonal expand.
+      transition: width 0.25s cubic-bezier(0.2, 1, 0.3, 1),
+                  height 0.25s cubic-bezier(0.2, 1, 0.3, 1) 0.15s,
+                  border-color 0.3s ease,
+                  filter 0.3s ease;
+    }
+
     &::before {
-      width: 100%; // Zips to the right
-      border-color: $accent;
-      border-right-width: 2px; // Completes the circuit wall
-      border-radius: 12px; // Rounds out the new corners
-      box-shadow: 0 0 10px rgba($accent, 0.4), inset 0 0 10px rgba($accent, 0.4);
-      // Waits EXACTLY 0.4s for the slide to finish, then goes completely frantic!
-      animation: frantic-surge 0.25s linear infinite 0.4s; 
+      border-top-color: $accent;
+      border-right-color: $accent;
+      // Triggers the unstable, jittering glitch effect immediately upon hover
+      animation: frame-glitch-tr 0.4s infinite linear;
     }
 
     &::after {
-      right: -4px; // Nodes slide flawlessly to the right edge
-      opacity: 0; // Fuses and vanishes into the completed frame
-      filter: drop-shadow(0 0 20px $accent); // Flares brightly just before vanishing
+      border-bottom-color: $accent;
+      border-left-color: $accent;
+      animation: frame-glitch-bl 0.4s infinite linear;
+      animation-delay: 0.1s; // Desyncs the bottom-left jitter from the top-right
     }
     
     img {
