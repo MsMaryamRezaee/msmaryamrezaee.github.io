@@ -39,13 +39,14 @@
   }
 }
 
-/* The new traversing circuit U-turn */
+/* The traversing circuit U-turn */
 .circuit-line {
   flex: 1;
   position: relative;
   height: 16px; // The downward drop distance
   margin-left: 20px;
   align-self: center; // Anchors it cleanly to the middle of the text
+  transform: translateY(8px); // Pushes the 16px box down so the top line hits true center
 
   // The main straight line extending right
   &::before {
@@ -53,7 +54,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    right: 50px; // Stops exactly where the U-turn begins
+    right: 70px; // Extended by 20px
     height: 1.6px;
     background: $line;
   }
@@ -64,7 +65,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 50px; // "Goes left for a bit but not too much"
+    width: 70px; // Extended by 20px
     height: 100%;
     border-top: 1.6px solid $line;
     border-right: 2px solid $line;
@@ -76,13 +77,14 @@
   // The glowing node capping the end
   .circuit-node {
     position: absolute;
-    right: 46px; // Anchored perfectly to the left end of the U-turn's bottom border
-    bottom: -5px; // Centered vertically over the 2px bottom border
+    right: 66px; // Anchored perfectly to the new 70px tip (70 - 4px for true center)
+    bottom: -3px; // Perfect vertical center over the 2px bottom border
     width: 8px;
     height: 8px;
     background: $accent;
     box-shadow: 0 0 12px rgba($accent, 0.8);
     border-radius: 2px;
+    z-index: 2; // Forces the node to render on top of the line
   }
 }
 
