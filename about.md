@@ -43,7 +43,7 @@ description: Me.
         <!-- Language Tags -->
         <div class="language-tags">
           <span class="lang-tag tooltip-left" data-tooltip="Persian: Native/Bilingual"><span class="lang-id">FA</span> <span class="lang-level">NATIVE</span></span>
-          <span class="lang-tag tooltip-left" data-tooltip="English: Full Professional"><span class="lang-id">EN</span> <span class="lang-level">PROFICIENT</span></span>
+          <span class="lang-tag tooltip-left" data-tooltip="English: Full Proficiency"><span class="lang-id">EN</span> <span class="lang-level">PROFICIENT</span></span>
         </div>
       </div>
     </div>

@@ -102,7 +102,7 @@
   border: 1px solid rgba(255, 255, 255, 0.05); 
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
   border-radius: 12px;
-  transform: translateZ(0);
+  transform: none;
 }
 
 /* --- 3. Hero Section (Bio & Photo) --- */
@@ -148,6 +148,7 @@
   height: 100%; 
   box-sizing: border-box;
   box-shadow: none !important; // Turns off the duplicate shadow from .glass-panel so it doesn't double up
+  transform: none !important;
   
   h2 {
     margin-top: 0;
