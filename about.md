@@ -6,7 +6,7 @@ description: Me.
 
 <div class="page-section about-container">
 
-<!-- CIRCUIT TITLE -->
+  <!-- CIRCUIT TITLE -->
   <div class="about-header js-reveal">
     <h1 class="about-title">
       System Profile
@@ -16,65 +16,84 @@ description: Me.
     </h1>
   </div>
 
-<!-- HERO & IMAGE -->
-<div class="about-hero js-reveal">
-
-<div class="about-bio glass-panel">
-  <h2>Maryam at your service :)</h2>
-  <p>
-    I am a researcher navigating the chaotic intersection of LLM Interpretability and Cognitively-Inspired AI. I don’t just want models to generate text; I want to understand and control how they do it. In other words, my goal is to tame the “black box” by integrating human-like structure and symbolic reasoning into NNs, making them into more than just statistically fluent machines.
-  </p>
-  <p>
-    My journey has taken me from theoretical narrative algorithms to rigorous concept-based interpretability. Currently, I am expanding my focus towards Neurosymbolic architectures, aiming to build systems that don’t just predict the next token, but reason in a way that is verifiable, explainable, and aligned with human thought.
-  </p>
-</div>
-
-<div class="about-visuals">
-  <div class="photo-wrapper">
-    <!-- Starry Particles Behind Image -->
-    <div id="photo-particles"></div>
+  <!-- HERO & IMAGE -->
+  <div class="about-hero js-reveal">
     
-    <div class="photo-frame">
-      <img src="/assets/img/Profile.jpg" alt="Maryam Rezaee" />
+    <div class="bio-wrapper">
+      <div id="bio-particles"></div>
+      <div class="about-bio glass-panel">
+        <h2>Maryam at your service :)</h2>
+        <p>
+          I am a researcher navigating the chaotic intersection of LLM Interpretability and Cognitively-Inspired AI. I don’t just want models to generate text; I want to understand and control how they do it. In other words, my goal is to tame the “black box” by integrating human-like structure and symbolic reasoning into NNs, making them into more than just statistically fluent machines.
+        </p>
+        <p>
+          My journey has taken me from theoretical narrative algorithms to rigorous concept-based interpretability. Currently, I am expanding my focus towards Neurosymbolic architectures, aiming to build systems that don’t just predict the next token, but reason in a way that is verifiable, explainable, and aligned with human thought.
+        </p>
+      </div>
     </div>
     
-    <!-- Language Tags -->
-    <div class="language-tags">
-      <span class="lang-tag tooltip-left" data-tooltip="Persian: Native/Bilingual"><span class="lang-id">FA</span> <span class="lang-level">NATIVE</span></span>
-      <span class="lang-tag tooltip-left" data-tooltip="English: Full Proficiency"><span class="lang-id">EN</span> <span class="lang-level">PROFICIENT</span></span>
+    <div class="about-visuals">
+      <div class="photo-wrapper">
+        <div class="photo-frame">
+          <img src="/assets/img/Profile.jpg" alt="Maryam Rezaee" />
+        </div>
+        
+        <!-- Language Tags -->
+        <div class="language-tags">
+          <span class="lang-tag tooltip-left" data-tooltip="Persian: Native/Bilingual"><span class="lang-id">FA</span> <span class="lang-level">NATIVE</span></span>
+          <span class="lang-tag tooltip-left" data-tooltip="English: Full Professional"><span class="lang-id">EN</span> <span class="lang-level">PROFICIENT</span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="about-visuals">
+    <div class="photo-wrapper">
+      <!-- Starry Particles Behind Image -->
+      <div id="photo-particles"></div>
+      
+        <div class="photo-frame">
+          <img src="/assets/img/Profile.jpg" alt="Maryam Rezaee" />
+        </div>
+        
+        <!-- Language Tags -->
+        <div class="language-tags">
+          <span class="lang-tag tooltip-left" data-tooltip="Persian: Native/Bilingual"><span class="lang-id">FA</span> <span class="lang-level">NATIVE</span></span>
+          <span class="lang-tag tooltip-left" data-tooltip="English: Full Proficiency"><span class="lang-id">EN</span> <span class="lang-level">PROFICIENT</span></span>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
 
-<!-- CTA CARDS -->
-<div class="about-cta-section js-reveal">
-<div class="cta-glass-card">
+  <!-- CTA CARDS -->
+  <div class="about-cta-section js-reveal">
+    <div class="cta-glass-card">
 
-  <div class="cta-block">
-    <h3>Learn more about me</h3>
-    <p>Dive into my history, academic timeline, and professional experience.</p>
-    <a aria-label="CV" href="/cv" target="_blank" rel="noopener noreferrer" class="glass-btn">
-      <i class="fa-solid fa-fingerprint"></i> Access Full CV
-    </a>
-  </div>
-  
-  <div class="cta-divider"></div>
-  
-  <div class="cta-block">
-    <h3>Read my thoughts</h3>
-    <p>I write a lot about trustworthy AI, design explorations, and life.</p>
-    <div class="btn-group">
-      <a aria-label="Academic Blog" href="{{ site.lab_url | default: '<https://lab.maryamrezaee.me>(https://lab.maryamrezaee.me)' }}" class="glass-btn wip-link" data-tooltip="System Updating...">
-        <i class="fa-solid fa-feather-pointed"></i> Academic Blog
-      </a>
-      <a aria-label="Personal Blog" href="{{ site.me_url | default: '<https://me.maryamrezaee.me>(https://me.maryamrezaee.me)' }}" target="_blank" rel="noopener noreferrer" class="glass-btn">
-        <i class="fa-solid fa-eye"></i> Personal Blog
-      </a>
+      <div class="cta-block">
+        <h3>Learn more about me</h3>
+        <p>Dive into my history, academic timeline, and professional experience.</p>
+        <a aria-label="CV" href="/cv" target="_blank" rel="noopener noreferrer" class="glass-btn">
+          <i class="fa-solid fa-fingerprint"></i> Access Full CV
+        </a>
+      </div>
+      
+      <div class="cta-divider"></div>
+      
+      <div class="cta-block">
+        <h3>Read my thoughts</h3>
+        <p>I write a lot about trustworthy AI, design explorations, and life.</p>
+        <div class="btn-group">
+          <a aria-label="Academic Blog" href="{{ site.lab_url | default: '<https://lab.maryamrezaee.me>(https://lab.maryamrezaee.me)' }}" class="glass-btn wip-link" data-tooltip="System Updating...">
+            <i class="fa-solid fa-feather-pointed"></i> Academic Blog
+          </a>
+          <a aria-label="Personal Blog" href="{{ site.me_url | default: '<https://me.maryamrezaee.me>(https://me.maryamrezaee.me)' }}" target="_blank" rel="noopener noreferrer" class="glass-btn">
+            <i class="fa-solid fa-eye"></i> Personal Blog
+          </a>
+        </div>
+      </div>
+      
     </div>
   </div>
-  
-</div>
-</div>
 
 </div>

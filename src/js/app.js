@@ -103,14 +103,10 @@ document.addEventListener("DOMContentLoaded", function () {
   if (document.getElementById('contact-particles')) {
     particlesJS('contact-particles', particleConfig);
   }
-  if (document.getElementById('photo-particles')) {
-    // Clone the config to make a custom "starry / firefly" effect behind the photo
-    const photoParticleConfig = JSON.parse(JSON.stringify(particleConfig));
-    photoParticleConfig.particles.number.value = 60; // More dense particles
-    photoParticleConfig.particles.size.value = 1.5;  // Smaller, starry dots
-    photoParticleConfig.particles.move.speed = 1.5;  // Very slow, dreamy movement
-    photoParticleConfig.particles.line_linked.enable = false; // Disable connecting lines for a "flickery/star" look
-    particlesJS('photo-particles', photoParticleConfig);
+  if (document.getElementById('bio-particles')) {
+    const bioParticleConfig = JSON.parse(JSON.stringify(particleConfig));
+    bioParticleConfig.particles.number.value = 80; // highly populated (normal is 30)
+    particlesJS('bio-particles', bioParticleConfig);
   }
 
   

@@ -7,8 +7,12 @@
  */
 
 .page-section.about-container {
-  margin-top: 80px;
+  margin-top: 80px; // Mobile spacing
   margin-bottom: 100px;
+  
+  @media only screen and (min-width: 768px) {
+    margin-top: 50px; // Tighter laptop spacing
+  }
 }
 
 /* --- 1. Circuit Title --- */
@@ -114,9 +118,28 @@
   }
 }
 
-.about-bio {
+// The new wrapper that confines the particles behind the glass
+.bio-wrapper {
   flex: 3;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden; 
+  transform: translateZ(0); // Hardware acceleration to fix Safari overflow leaks
+}
+
+#bio-particles {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none; // Lets the user click through to the text if needed
+}
+
+.about-bio {
+  position: relative;
+  z-index: 1;
   padding: 40px;
+  height: 100%; // Stretches the glass to fill the wrapper perfectly
+  box-sizing: border-box;
 
   h2 {
     margin-top: 0;
@@ -133,7 +156,6 @@
     line-height: 1.8;
     margin-bottom: 20px;
     
-    // The justified text requirement
     text-align: justify;
     text-justify: inter-word;
     hyphens: auto;
@@ -152,7 +174,7 @@
   width: 100%;
 }
 
-/* --- 4. The Photo & Starry Particles --- */
+/* --- 4. The Photo --- */
 .photo-wrapper {
   position: relative;
   width: 100%;
@@ -160,21 +182,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  &:hover {
-    #photo-particles {
-      opacity: 1; // Flares up on hover
-    }
-  }
-}
-
-#photo-particles {
-  position: absolute;
-  top: -30px; left: -30px; right: -30px; bottom: -30px;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.15; // Extremely subtle until hovered
-  transition: opacity 0.6s ease;
 }
 
 .photo-frame {
@@ -182,7 +189,6 @@
   z-index: 1;
   padding: 12px;
   
-  // The incomplete borders (soft corners)
   &::before, &::after {
     content: '';
     position: absolute;
@@ -190,7 +196,7 @@
     height: 35px;
     border-color: $accent;
     border-style: solid;
-    border-radius: 6px; // Softer, not razor sharp
+    border-radius: 6px; 
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -214,7 +220,6 @@
     box-shadow: 0 5px 20px rgba(0,0,0,0.4);
   }
 
-  // Border Completion Animation
   &:hover {
     &::before, &::after {
       width: 100%;

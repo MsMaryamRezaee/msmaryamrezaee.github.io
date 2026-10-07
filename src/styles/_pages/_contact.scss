@@ -34,13 +34,17 @@
   position: relative;
   z-index: 2; 
   width: 100%;
-  min-height: 80vh; /* Fallback */
-  min-height: 80dvh; /* Prevents layout jumping on mobile */
+  min-height: 80vh; 
+  min-height: 80dvh; 
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 5% 20px 5%;
+  padding: 40px 5% 20px 5%;
   box-sizing: border-box;
+
+  @media only screen and (min-width: 1024px) {
+    padding-top: 80px;
+  }
 }
 
 .contact-grid {
