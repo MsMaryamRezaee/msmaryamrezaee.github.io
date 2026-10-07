@@ -51,12 +51,12 @@
    * 1. Default (Top) Tooltip
    * ----------------------------------------- */
   &::before {
-    bottom: calc(100% + 11px); // 3px gap to triangle + 5px triangle + 3px gap to element
+    bottom: calc(100% + 12px); // 4px gap to triangle + 5px triangle + 3px gap to element
     left: 50%;
     transform: translateX(-50%);
   }
   &::after {
-    bottom: calc(100% + 3px); 
+    bottom: calc(100% + 4px); // 4px gap from the item
     left: 50%;
     transform: translateX(-50%);
     border-width: 5px 5px 0 5px !important; // Triangle points down
@@ -69,13 +69,13 @@
   &.tooltip-right {
     &::before {
       bottom: auto; 
-      left: calc(100% + 11px); 
+      left: calc(100% + 12px); 
       top: 50%;
       transform: translateY(-50%);
     }
     &::after {
       bottom: auto; 
-      left: calc(100% + 3px); 
+      left: calc(100% + 4px); 
       top: 50%;
       transform: translateY(-50%);
       border-width: 5px 5px 5px 0 !important; // Triangle points left
@@ -89,13 +89,13 @@
   &.tooltip-left {
     &::before {
       bottom: auto; left: auto;
-      right: calc(100% + 11px); 
+      right: calc(100% + 12px); 
       top: 50%;
       transform: translateY(-50%);
     }
     &::after {
       bottom: auto; left: auto;
-      right: calc(100% + 3px); 
+      right: calc(100% + 4px); 
       top: 50%;
       transform: translateY(-50%);
       border-width: 5px 0 5px 5px !important; // Triangle points right
