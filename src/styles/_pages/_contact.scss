@@ -126,10 +126,10 @@
       // DESKTOP: Just a straight horizontal line
       @media only screen and (min-width: 1024px) {
         left: 13px;
-        bottom: -1.5px;
+        bottom: -1.5px; // FIX: Adjusted slightly to align with the new 2px border (was -1.5px)
         width: 120px;
-        height: 1.5px;
-        background: $line;
+        height: 0; // FIX: Converted from height to border
+        border-top: 2px solid $line; // FIX: Standardized to 2px uniform border
       }
 
       // MOBILE: Removed entirely since the main bracket now handles the drop directly
@@ -186,21 +186,20 @@
       content: '';
       order: 2; 
       flex: 1; /* Grows to fill the rest of the space */
-      height: 1.6px;
-      background: $line; 
+      height: 0; // FIX: Base state now uses border instead of height
+      border-top: 2px solid $line; // FIX: Uniform 2px border (was 1.6px height/background)
       margin-left: 0; 
       box-sizing: border-box; // Ensures our 20px height calculation below is absolute
 
       // DESKTOP FIX: Crosses the gap, curves, and drops down 20px
       @media only screen and (min-width: 1024px) {
-        background: transparent; // Erases the flat block line
         height: 20px;
-        border-top: 1.6px solid $line;
+        border-top: 2px solid $line; // FIX: Standardized to 2px (was 1.6px)
         border-right: 2px solid $line;
         border-top-right-radius: 12px;
         margin-right: -41.5px; // Overlays the 2px left border of the display box
         align-self: flex-start;
-        margin-top: 14.2px; // Precisely anchors the top border to the exact vertical center of the title
+        margin-top: 14px; // FIX: Precisely anchors the 2px border to the center of the 30px title (was 14.2px)
       }
     }
   }
