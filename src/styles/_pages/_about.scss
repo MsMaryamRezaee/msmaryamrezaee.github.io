@@ -133,7 +133,7 @@
   /* --- 3. Hero Section (Bio & Photo) --- */
   .about-hero {
     display: flex;
-    flex-direction: column-reverse; 
+    flex-direction: column; /* Changed so we can force the bottom/top order freely */
     gap: 60px;
     align-items: center;
 
@@ -142,19 +142,29 @@
     }
 
     @media only screen and (min-width: 900px) {
-      flex-direction: row;
+      /* Grid handles asymmetric left/right balancing perfectly */
+      display: grid;
+      grid-template-columns: 3fr 2fr; /* Exact match to your old flex proportions */
+      grid-template-rows: auto 1fr;
       gap: 50px;
-      align-items: stretch;
+      align-items: start;
     }
   }
 
   // The outer container. Casts the shadow without clipping it.
   .bio-wrapper {
-    flex: 3;
+    order: 2; /* Mobile: Bio sits in the middle */
     position: relative;
     border-radius: 12px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
-    z-index: 1; // Establishes a strict localized stacking context
+    z-index: 1; 
+
+    @media only screen and (min-width: 900px) {
+      order: initial;
+      grid-column: 1;
+      grid-row: 1 / span 2; /* Forces bio to span the full height of the left column */
+      height: 100%;
+    }
   }
 
   // The inner container. Strictly clips the particles so they don't leak.
@@ -231,18 +241,40 @@
   }
 
   .about-visuals {
-    flex: 2;
+    order: 1; /* Mobile: Photo sits at the very top */
     display: flex;
     justify-content: center;
-    align-items: center; // Keeps it centered on mobile
+    align-items: center; 
     width: 100%;
 
     @media only screen and (min-width: 900px) {
-      align-items: flex-start; // Aligns the photo to the top on laptops
-      
-      // Optional: Since your text container has 40px padding and the frame has 12px padding,
-      // this 28px margin perfectly aligns the top border of the frame with the top of your <h2> text!
+      order: initial;
+      grid-column: 2;
+      grid-row: 1; /* Locks photo to the top right */
+      align-items: flex-start; 
       margin-top: 0; 
+    }
+  }
+
+  /* Target the logo specifically for the about page */
+  .about-logo-wrapper {
+    order: 3; /* Mobile: Pushes logo safely to the bottom beneath the bio */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    --logo-scale: 200px; /* Overrides the 300px default from the component */
+    --logo-color: #{$line};
+    --logo-stroke-width: 2px;
+    margin-top: -10px; /* Slight tuck so it isn't floating too far away on mobile */
+    opacity: 0.7; /* Optional: Knocks it back slightly so it acts as an accent */
+    
+    @media only screen and (min-width: 900px) {
+      order: initial;
+      grid-column: 2;
+      grid-row: 2; /* Drops it into the empty space directly beneath the photo */
+      align-self: center; /* Beautifully centers it in whatever remaining vertical space exists */
+      margin-top: 0;
+      --logo-scale: 250px; /* Slightly larger on desktop */
     }
   }
 

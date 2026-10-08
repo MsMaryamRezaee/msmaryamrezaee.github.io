@@ -1,0 +1,34 @@
+@use '../_config/variables' as *;
+
+/*
+ * =========================================
+ * Component: Logo Animation
+ * =========================================
+ */
+
+.logo-animation-container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  pointer-events: none; /* Lets clicks fall right through */
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  
+  svg {
+    /* Using a CSS variable here makes scaling it on different pages effortless */
+    width: var(--logo-scale, 300px);
+    height: auto;
+  }
+
+  .logo-path {
+    /* Set the CSS variable, but default to your existing $text-primary */
+    stroke: var(--logo-color, #{$text-primary}); 
+    stroke-width: var(--logo-stroke-width, 1px);
+    fill: transparent;
+
+    &.is-animating {
+      animation: draw 3s ease-in-out infinite alternate;
+    }
+  }
+}

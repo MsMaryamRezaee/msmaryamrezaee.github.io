@@ -178,21 +178,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   
-  /* 5. SVG Logo Drawing Animation */
-  const logoPath = document.querySelector('#logo-path');
-  const logoContainer = document.querySelector('.logo-animation-container');
+  /* 5. SVG Logo Drawing Animation (Modular) */
+  const logoContainers = document.querySelectorAll('.logo-animation-container');
 
-  if (logoPath && logoContainer) {
-    const length = logoPath.getTotalLength();
-    logoPath.style.strokeDasharray = length;
-    logoPath.style.strokeDashoffset = length;
-
+  if (logoContainers.length > 0) {
     const logoObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          logoPath.classList.add('is-animating');
-        } else {
-          logoPath.classList.remove('is-animating');
+        const path = entry.target.querySelector('.logo-path');
+        if (path) {
+          if (entry.isIntersecting) {
+            path.classList.add('is-animating');
+          } else {
+            path.classList.remove('is-animating');
+          }
         }
       });
     }, {
@@ -200,7 +198,16 @@ document.addEventListener("DOMContentLoaded", function () {
       threshold: 0.5 // Triggers at 50% visibility
     });
 
-    logoObserver.observe(logoContainer);
+    logoContainers.forEach(container => {
+      const path = container.querySelector('.logo-path');
+      if (path) {
+        // Calculate and set dash array independently for every logo on the page
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = length;
+        path.style.strokeDashoffset = length;
+        logoObserver.observe(container);
+      }
+    });
   }
 
 

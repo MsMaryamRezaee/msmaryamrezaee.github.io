@@ -56,7 +56,7 @@
     }
   }
 
-  #intro, #logo-section {
+  #intro {
     position: relative;
     z-index: 2; /* Lifts the content above the moving particles */
     pointer-events: none; /* Lets clicks fall right through the invisible full-width wrappers */
@@ -65,14 +65,6 @@
   // Re-enables interactions ONLY on the actual visible boxes
   .intro-container {
     pointer-events: auto; 
-  }
-
-  .logo-animation-container {
-    pointer-events: none; 
-    width: fit-content; 
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
   }
 
 
@@ -131,27 +123,9 @@
   }
 
 
-  // --- 3. Logo Animation ---
-  .logo-animation-container {
-    position: relative; 
-    z-index: 2;
-    text-align: center;
+  // --- 3. Homepage Logo Layout ---
+  .particles-wrapper > .logo-animation-container {
     margin: 150px auto 200px auto;
-    
-    svg {
-      width: 300px; 
-    }
-  }
-
-  #logo-path {
-    stroke: $text-primary; 
-    stroke-width: 1px; 
-    fill: transparent; // No fill
-  }
-
-  // Class added by JS on scroll
-  #logo-path.is-animating {
-    animation: draw 3s ease-in-out infinite alternate;
   }
 
 
