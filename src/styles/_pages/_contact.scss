@@ -27,8 +27,8 @@
   #contact-particles {
     position: fixed; 
     top: 0; left: 0; width: 100vw; 
-    height: 100vh; /* Fallback for older browsers */
-    height: 100dvh; /* Prevents layout jumping on mobile */
+    height: 100vh; 
+    height: 100dvh; // Prevents layout jumping on mobile
     z-index: 0;
   }
 
@@ -78,7 +78,7 @@
     padding-left: 30px; 
     padding-bottom: 40px; 
 
-    // GLITCH PATCH 1: Horizontal offset glitch (sparks shoot right)
+    // Glitch 1: Horizontal sparks right
     &::before {
       content: '';
       position: absolute;
@@ -91,18 +91,18 @@
         background-repeat: no-repeat;
         z-index: 30;
         
-        /* --- GLITCH CUSTOMIZATION --- */
+        // Glitch Customization
         --g-mask-color: #{color.change($main, $alpha: 0.8)};
         --g-mask-w: 25px;
         --g-mask-h: 3px;
-        --g-mask-x: 5px; /* Mask sits near the left curve */
+        --g-mask-x: 5px; 
         --g-mask-y: center;
 
         animation: organic-glitch-horizontal 0.3s infinite steps(1); 
       }
     }
 
-    // MOBILE: Caps the abrupt end of the title line with a glowing node
+    // Mobile: Glowing node cap for title
     &::after {
       @media only screen and (max-width: 1023.98px) {
         content: '';
@@ -125,7 +125,7 @@
   .circuit-bracket-left {
     position: absolute;
     left: 0;
-    top: 32.5px; // Aligns perfectly with the title text
+    top: 32.5px; // Aligns with title text
     bottom: 0px; 
     width: 15px;
     border-left: 2px solid $line;
@@ -134,28 +134,28 @@
     border-radius: 12px 0 0 12px;
     z-index: -1;
 
-    // MOBILE FIX: Strips the bottom curve and drops straight down to the display box
+    // Mobile: Strips curve and drops straight to display box
     @media only screen and (max-width: 1023.98px) {
       border-bottom: none;
       border-radius: 12px 0 0 0;
-      bottom: -20px; // Flawlessly crosses the gap + 15px display padding
+      bottom: -20px; 
     }
 
-    // The line shooting right, under the buttons
+    // Bridge line under buttons
     &::after {
       content: '';
       position: absolute;
 
-      // DESKTOP: Just a straight horizontal line
+      // Desktop: Straight horizontal line
       @media only screen and (min-width: 1024px) {
         left: 13px;
-        bottom: -2px; // FIX: Adjusted slightly to align with the new 2px border
+        bottom: -2px; 
         width: 120px;
-        height: 0; // FIX: Converted from height to border
-        border-top: 2px solid $line; // FIX: Standardized to 2px uniform border
+        height: 0; 
+        border-top: 2px solid $line; 
       }
 
-      // MOBILE: Re-purposed to act as the vertical glitch drop where it hits the display
+      // Mobile: Vertical glitch drop
       @media only screen and (max-width: 1023.98px) {
         left: -7.5px; 
         bottom: -75px; 
@@ -165,23 +165,23 @@
         background-repeat: no-repeat;
         z-index: 40;
 
-        /* --- GLITCH CUSTOMIZATION --- */
+        // Glitch Customization
         --g-mask-color: #{color.change($main, $alpha: 0.8)};
         --g-mask-w: 3px;
         --g-mask-h: 40px;
         --g-mask-x: center;
-        --g-mask-y: 50px; /* Mask shifted down to cover the bottom impact point */
+        --g-mask-y: 50px; 
 
         animation: organic-glitch-vertical 0.35s infinite steps(1);
       }
     }
 
-    // The glowing termination node
+    // Glowing termination node
     &::before {
       content: '';
       position: absolute;
-      left: 133px; // End of the line
-      bottom: -5px; // Centered on the line
+      left: 133px; 
+      bottom: -5px; 
       width: 8px; 
       height: 8px;
       background: $accent;
@@ -206,7 +206,7 @@
     height: 30px; 
     white-space: nowrap;
     
-    // 1. The glowing node (Forced to position 1: right after the text)
+    // 1. Glowing node
     &::before {
       content: '';
       order: 1; 
@@ -219,25 +219,25 @@
       flex-shrink: 0;
     }
 
-    // 2. The bridge line (Forced to position 2: right after the node)
+    // 2. Bridge line
     &::after {
       content: '';
       order: 2; 
-      flex: 1; /* Grows to fill the rest of the space */
-      height: 0; // FIX: Base state now uses border instead of height
-      border-top: 2px solid $line; // FIX: Uniform 2px border 
+      flex: 1; 
+      height: 0; 
+      border-top: 2px solid $line; 
       margin-left: 0; 
-      box-sizing: border-box; // Ensures our 20px height calculation below is absolute
+      box-sizing: border-box; 
 
-      // DESKTOP FIX: Crosses the gap, curves, and drops down 20px
+      // Desktop: Bridge gap and curve
       @media only screen and (min-width: 1024px) {
         height: 20px;
-        border-top: 2px solid $line; // FIX: Standardized to 2px 
+        border-top: 2px solid $line; 
         border-right: 2px solid $line;
         border-top-right-radius: 12px;
-        margin-right: -41.75px; // Overlays the 2px left border of the display box
+        margin-right: -41.75px; 
         align-self: flex-start;
-        margin-top: 14px; // FIX: Precisely anchors the 2px border to the center of the 30px title (was 14.2px)
+        margin-top: 14px; // Align to title center
       }
     }
   }
@@ -247,7 +247,7 @@
     justify-content: space-between; 
     align-items: center;
     
-    // GLASSMORPHISM CORE
+    // Glassmorphism
     background: color.change(color.adjust($main, $lightness: 5%), $alpha: 0.15);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -256,7 +256,6 @@
 
     border: 1px solid rgba(255, 255, 255, 0.05); 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    
     border-left: 4px solid rgba($accent, 0.2); 
     margin-left: 10px;
     padding: 18px 25px;
@@ -313,15 +312,15 @@
 
   /* --- 4. Right Side: Display Screen & Right Bracket --- */
   .contact-display {
-    padding-top: 15px; // Drops the right column exactly to the title's line height
+    padding-top: 15px; 
     position: relative;
     display: flex;
 
-    // NEW: The node is moved here so it can sit on top of the glitch (z-index 50 > 40)
+    // Node (Layered above glitch)
     &::before {
       content: '';
       position: absolute;
-      right: 35px; // Bracket is 40px from right, node overhung by -5px (40 - 5 = 35)
+      right: 35px; 
       bottom: -4px;
       width: 8px; 
       height: 8px;
@@ -332,7 +331,7 @@
       pointer-events: none;
     }
 
-    // GLITCH PATCH 3: Horizontal glitch shooting into the bottom termination node
+    // Glitch 3: Horizontal sparks under node
     &::after {
       content: '';
       position: absolute;
@@ -342,12 +341,12 @@
       height: 14px; 
       background-color: transparent; 
       background-repeat: no-repeat;
-      z-index: 40; // Glitch sits under the node (50) but over the line (30)
+      z-index: 40; 
       
-      /* --- GLITCH CUSTOMIZATION --- */
-      --g-mask-color: #{color.change($main, $alpha: 0.9)}; 
+      // Glitch Customization
+      --g-mask-color: #{color.change($main, $alpha: 1)}; 
       --g-mask-w: 50px;
-      --g-mask-h: 2px;
+      --g-mask-h: 3px;
       --g-mask-x: right; 
       --g-mask-y: center;
 
@@ -364,7 +363,7 @@
     border-bottom-left-radius: 12px;
     pointer-events: none;
 
-    // FIX: 10 on mobile so it sits UNDER the left glitch patch. 30 on desktop to sit OVER the title line.
+    // Layer 10 (mobile) under glitch, 30 (desktop) over title
     z-index: 10; 
 
     @media only screen and (min-width: 1024px) {
@@ -372,7 +371,7 @@
       top: 34.2px; 
     }
 
-    // GLITCH PATCH 2: Vertical offset glitch (sparks shoot down)
+    // Glitch 2: Vertical sparks down
     &::after {
       content: '';
       position: absolute;
@@ -385,27 +384,15 @@
         background-repeat: no-repeat;
         z-index: 40; 
         
-        /* --- GLITCH CUSTOMIZATION --- */
+        // Glitch Customization
         --g-mask-color: #{color.change($main, $alpha: 0.8)};
         --g-mask-w: 3px;
         --g-mask-h: 25px;
         --g-mask-x: center;
-        --g-mask-y: 8px; /* Mask sits near the top curve */
+        --g-mask-y: 8px; 
 
         animation: organic-glitch-vertical 0.35s infinite steps(1); 
       }
-    }
-
-    // The glowing termination node
-    &::before {
-      content: '';
-      position: absolute;
-      right: -5px; 
-      bottom: -4.5px; 
-      width: 8px; height: 8px;
-      background: $accent;
-      box-shadow: 0 0 12px rgba($accent, 0.8);
-      border-radius: 2px;
     }
   }
 
@@ -413,7 +400,7 @@
     position: relative;
     width: 100%;
     
-    // GLASSMORPHISM CORE
+    // Glassmorphism
     background: color.change(color.adjust($main, $lightness: 5%), $alpha: 0.15);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -491,210 +478,4 @@
       }
     }
   }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: none; }
-  }
-
-  /* --- HORIZONTAL OFFSET GLITCH (Sparks flow away from mask) --- */
-  @keyframes organic-glitch-horizontal {
-    0%, 100% {
-      background-image:
-        linear-gradient($accent, $accent),           
-        linear-gradient(#fff, #fff),                 
-        linear-gradient($line, $line),               
-        linear-gradient($accent-secondary, $accent-secondary), 
-        linear-gradient($accent, $accent),           
-        linear-gradient($line, $line),               
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)})); 
-      background-size:
-        8px 2px, 2px 4px, 6px 1px, 4px 1px, 1px 1px, 2px 1px, 
-        var(--g-mask-w, 25px) var(--g-mask-h, 5px);
-      background-position:
-        40% 6px, 60% 5px, 5% 7px, 75% 6px, 12% 6px, 85% 7px, 
-        var(--g-mask-x, 8px) var(--g-mask-y, center);
-    }
-    16% {
-      background-image:
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient(#fff, #fff),
-        linear-gradient($accent, $accent),
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
-      background-size:
-        10px 1px, 3px 3px, 4px 2px, 5px 1px, 2px 1px, 1px 2px, 
-        var(--g-mask-w, 25px) var(--g-mask-h, 5px);
-      background-position:
-        36% 7px, 50% 6px, 27% 6px, 68% 7px, 9% 6px, 88% 6px, 
-        var(--g-mask-x, 8px) var(--g-mask-y, center);
-    }
-    33% {
-      background-image:
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient($line, $line),
-        linear-gradient(#fff, #fff),
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
-      background-size:
-        6px 3px, 4px 1px, 3px 1px, 7px 2px, 2px 1px, 1px 1px, 
-        var(--g-mask-w, 25px) var(--g-mask-h, 5px);
-      background-position:
-        45% 5px, 63% 7px, 7% 7px, 77% 6px, 2% 7px, 93% 6px, 
-        var(--g-mask-x, 8px) var(--g-mask-y, center);
-    }
-    50% {
-      background-image:
-        linear-gradient(#fff, #fff),
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
-      background-size:
-        4px 2px, 8px 1px, 5px 1px, 3px 2px, 1px 2px, 2px 1px, 
-        var(--g-mask-w, 25px) var(--g-mask-h, 5px);
-      background-position:
-        54% 6px, 40% 7px, 14% 7px, 70% 5px, 5% 6px, 90% 7px, 
-        var(--g-mask-x, 8px) var(--g-mask-y, center);
-    }
-    66% {
-      background-image:
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient(#fff, #fff),
-        linear-gradient($accent, $accent),
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
-      background-size:
-        12px 1px, 2px 4px, 3px 1px, 6px 1px, 1px 1px, 2px 2px, 
-        var(--g-mask-w, 25px) var(--g-mask-h, 5px);
-      background-position:
-        34% 7px, 59% 5px, 11% 6px, 68% 7px, 2% 7px, 86% 6px, 
-        var(--g-mask-x, 8px) var(--g-mask-y, center);
-    }
-    83% {
-      background-image:
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient(#fff, #fff),
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
-      background-size:
-        6px 2px, 4px 1px, 4px 2px, 2px 1px, 2px 1px, 1px 1px, 
-        var(--g-mask-w, 25px) var(--g-mask-h, 5px);
-      background-position:
-        40% 6px, 54% 7px, 14% 5px, 77% 6px, 7% 7px, 95% 7px, 
-        var(--g-mask-x, 8px) var(--g-mask-y, center);
-    }
-  }
-
-  /* --- VERTICAL OFFSET GLITCH (Sparks flow away from mask) --- */
-  @keyframes organic-glitch-vertical {
-    0%, 100% {
-      background-image:
-        linear-gradient($accent, $accent),           
-        linear-gradient(#fff, #fff),                 
-        linear-gradient($line, $line),               
-        linear-gradient($accent-secondary, $accent-secondary), 
-        linear-gradient($accent, $accent),           
-        linear-gradient($line, $line),               
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));               
-      background-size:
-        2px 8px, 4px 2px, 1px 6px, 1px 4px, 1px 1px, 1px 2px, 
-        var(--g-mask-w, 5px) var(--g-mask-h, 25px);
-      background-position:
-        6px 40%, 5px 60%, 7px 5%, 6px 75%, 6px 12%, 7px 85%, 
-        var(--g-mask-x, center) var(--g-mask-y, 8px);
-    }
-    16% {
-      background-image:
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient(#fff, #fff),
-        linear-gradient($accent, $accent),
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
-      background-size:
-        1px 10px, 3px 3px, 2px 4px, 1px 5px, 1px 2px, 2px 1px, 
-        var(--g-mask-w, 5px) var(--g-mask-h, 25px);
-      background-position:
-        7px 36%, 6px 50%, 6px 27%, 7px 68%, 6px 9%, 6px 88%, 
-        var(--g-mask-x, center) var(--g-mask-y, 8px);
-    }
-    33% {
-      background-image:
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient($line, $line),
-        linear-gradient(#fff, #fff),
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
-      background-size:
-        3px 6px, 1px 4px, 1px 3px, 2px 7px, 1px 2px, 1px 1px, 
-        var(--g-mask-w, 5px) var(--g-mask-h, 25px);
-      background-position:
-        5px 45%, 7px 63%, 7px 7%, 6px 77%, 7px 2%, 6px 93%, 
-        var(--g-mask-x, center) var(--g-mask-y, 8px);
-    }
-    50% {
-      background-image:
-        linear-gradient(#fff, #fff),
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
-      background-size:
-        2px 4px, 1px 8px, 1px 5px, 2px 3px, 2px 1px, 1px 2px, 
-        var(--g-mask-w, 5px) var(--g-mask-h, 25px);
-      background-position:
-        6px 54%, 7px 40%, 7px 14%, 5px 70%, 6px 5%, 7px 90%, 
-        var(--g-mask-x, center) var(--g-mask-y, 8px);
-    }
-    66% {
-      background-image:
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient(#fff, #fff),
-        linear-gradient($accent, $accent),
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
-      background-size:
-        1px 12px, 4px 2px, 1px 3px, 1px 6px, 1px 1px, 2px 2px, 
-        var(--g-mask-w, 5px) var(--g-mask-h, 25px);
-      background-position:
-        7px 34%, 5px 59%, 6px 11%, 7px 68%, 7px 2%, 6px 86%, 
-        var(--g-mask-x, center) var(--g-mask-y, 8px);
-    }
-    83% {
-      background-image:
-        linear-gradient($accent, $accent),
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient(#fff, #fff),
-        linear-gradient($line, $line),
-        linear-gradient($accent-secondary, $accent-secondary),
-        linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
-      background-size:
-        2px 6px, 1px 4px, 2px 4px, 1px 2px, 1px 2px, 1px 1px, 
-        var(--g-mask-w, 5px) var(--g-mask-h, 25px);
-      background-position:
-        6px 40%, 7px 54%, 5px 14%, 6px 77%, 7px 7%, 7px 95%, 
-        var(--g-mask-x, center) var(--g-mask-y, 8px);
-    }
-  }
-
 }

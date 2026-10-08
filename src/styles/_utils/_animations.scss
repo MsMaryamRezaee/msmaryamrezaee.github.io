@@ -1,12 +1,13 @@
+@use '../_config/variables' as *;
+@use "sass:color";
+
 /*
  * =========================================
  * Global Animations & Keyframes
  * =========================================
  */
 
-
 // --- 1. Pulse (for scroll-down chevron) ---
-// Stripped ancient IE8 code and swapped CPU-heavy 'top' for GPU-accelerated 'translateY'
 @keyframes pulse {
   0%, 100% {
     opacity: 0.4;
@@ -18,27 +19,22 @@
   }
 }
 
-
 // --- 2. Fade-in-on-scroll ---
 .js-reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  /* Pre-allocates GPU memory to prevent scrolling micro-stutters */
   will-change: opacity, transform; 
 
   &.is-visible {
     opacity: 1;
-    /* Releases the GPU layer lock after fading in */
     transform: none; 
   }
 }
 
-
 // --- 3. Skills Scroller ---
 @keyframes scroll-left {
   0% {
-    /* Translate3d forces strict hardware acceleration for perfectly smooth infinite scrolling */
     transform: translate3d(0, 0, 0); 
   }
   100% {
@@ -46,10 +42,215 @@
   }
 }
 
-
 // --- 4. Logo Draw ---
 @keyframes draw {
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+// --- 5. Fade In ---
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+
+// --- 6. Organic Glitch: Horizontal ---
+@keyframes organic-glitch-horizontal {
+  0%, 100% {
+    background-image:
+      linear-gradient($accent, $accent),            
+      linear-gradient(#fff, #fff),                  
+      linear-gradient($line, $line),                
+      linear-gradient($accent-secondary, $accent-secondary), 
+      linear-gradient($accent, $accent),            
+      linear-gradient($line, $line),                
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)})); 
+    background-size:
+      8px 2px, 2px 4px, 6px 1px, 4px 1px, 1px 1px, 2px 1px, 
+      var(--g-mask-w, 25px) var(--g-mask-h, 5px);
+    background-position:
+      40% 6px, 60% 5px, 5% 7px, 75% 6px, 12% 6px, 85% 7px, 
+      var(--g-mask-x, 8px) var(--g-mask-y, center);
+  }
+  16% {
+    background-image:
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient(#fff, #fff),
+      linear-gradient($accent, $accent),
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
+    background-size:
+      10px 1px, 3px 3px, 4px 2px, 5px 1px, 2px 1px, 1px 2px, 
+      var(--g-mask-w, 25px) var(--g-mask-h, 5px);
+    background-position:
+      36% 7px, 50% 6px, 27% 6px, 68% 7px, 9% 6px, 88% 6px, 
+      var(--g-mask-x, 8px) var(--g-mask-y, center);
+  }
+  33% {
+    background-image:
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient($line, $line),
+      linear-gradient(#fff, #fff),
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
+    background-size:
+      6px 3px, 4px 1px, 3px 1px, 7px 2px, 2px 1px, 1px 1px, 
+      var(--g-mask-w, 25px) var(--g-mask-h, 5px);
+    background-position:
+      45% 5px, 63% 7px, 7% 7px, 77% 6px, 2% 7px, 93% 6px, 
+      var(--g-mask-x, 8px) var(--g-mask-y, center);
+  }
+  50% {
+    background-image:
+      linear-gradient(#fff, #fff),
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
+    background-size:
+      4px 2px, 8px 1px, 5px 1px, 3px 2px, 1px 2px, 2px 1px, 
+      var(--g-mask-w, 25px) var(--g-mask-h, 5px);
+    background-position:
+      54% 6px, 40% 7px, 14% 7px, 70% 5px, 5% 6px, 90% 7px, 
+      var(--g-mask-x, 8px) var(--g-mask-y, center);
+  }
+  66% {
+    background-image:
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient(#fff, #fff),
+      linear-gradient($accent, $accent),
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
+    background-size:
+      12px 1px, 2px 4px, 3px 1px, 6px 1px, 1px 1px, 2px 2px, 
+      var(--g-mask-w, 25px) var(--g-mask-h, 5px);
+    background-position:
+      34% 7px, 59% 5px, 11% 6px, 68% 7px, 2% 7px, 86% 6px, 
+      var(--g-mask-x, 8px) var(--g-mask-y, center);
+  }
+  83% {
+    background-image:
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient(#fff, #fff),
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
+    background-size:
+      6px 2px, 4px 1px, 4px 2px, 2px 1px, 2px 1px, 1px 1px, 
+      var(--g-mask-w, 25px) var(--g-mask-h, 5px);
+    background-position:
+      40% 6px, 54% 7px, 14% 5px, 77% 6px, 7% 7px, 95% 7px, 
+      var(--g-mask-x, 8px) var(--g-mask-y, center);
+  }
+}
+
+// --- 7. Organic Glitch: Vertical ---
+@keyframes organic-glitch-vertical {
+  0%, 100% {
+    background-image:
+      linear-gradient($accent, $accent),            
+      linear-gradient(#fff, #fff),                  
+      linear-gradient($line, $line),                
+      linear-gradient($accent-secondary, $accent-secondary), 
+      linear-gradient($accent, $accent),            
+      linear-gradient($line, $line),                
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));                
+    background-size:
+      2px 8px, 4px 2px, 1px 6px, 1px 4px, 1px 1px, 1px 2px, 
+      var(--g-mask-w, 5px) var(--g-mask-h, 25px);
+    background-position:
+      6px 40%, 5px 60%, 7px 5%, 6px 75%, 6px 12%, 7px 85%, 
+      var(--g-mask-x, center) var(--g-mask-y, 8px);
+  }
+  16% {
+    background-image:
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient(#fff, #fff),
+      linear-gradient($accent, $accent),
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
+    background-size:
+      1px 10px, 3px 3px, 2px 4px, 1px 5px, 1px 2px, 2px 1px, 
+      var(--g-mask-w, 5px) var(--g-mask-h, 25px);
+    background-position:
+      7px 36%, 6px 50%, 6px 27%, 7px 68%, 6px 9%, 6px 88%, 
+      var(--g-mask-x, center) var(--g-mask-y, 8px);
+  }
+  33% {
+    background-image:
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient($line, $line),
+      linear-gradient(#fff, #fff),
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
+    background-size:
+      3px 6px, 1px 4px, 1px 3px, 2px 7px, 1px 2px, 1px 1px, 
+      var(--g-mask-w, 5px) var(--g-mask-h, 25px);
+    background-position:
+      5px 45%, 7px 63%, 7px 7%, 6px 77%, 7px 2%, 6px 93%, 
+      var(--g-mask-x, center) var(--g-mask-y, 8px);
+  }
+  50% {
+    background-image:
+      linear-gradient(#fff, #fff),
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
+    background-size:
+      2px 4px, 1px 8px, 1px 5px, 2px 3px, 2px 1px, 1px 2px, 
+      var(--g-mask-w, 5px) var(--g-mask-h, 25px);
+    background-position:
+      6px 54%, 7px 40%, 7px 14%, 5px 70%, 6px 5%, 7px 90%, 
+      var(--g-mask-x, center) var(--g-mask-y, 8px);
+  }
+  66% {
+    background-image:
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient(#fff, #fff),
+      linear-gradient($accent, $accent),
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
+    background-size:
+      1px 12px, 4px 2px, 1px 3px, 1px 6px, 1px 1px, 2px 2px, 
+      var(--g-mask-w, 5px) var(--g-mask-h, 25px);
+    background-position:
+      7px 34%, 5px 59%, 6px 11%, 7px 68%, 7px 2%, 6px 86%, 
+      var(--g-mask-x, center) var(--g-mask-y, 8px);
+  }
+  83% {
+    background-image:
+      linear-gradient($accent, $accent),
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient(#fff, #fff),
+      linear-gradient($line, $line),
+      linear-gradient($accent-secondary, $accent-secondary),
+      linear-gradient(var(--g-mask-color, #{color.change($main, $alpha: 0.8)}), var(--g-mask-color, #{color.change($main, $alpha: 0.8)}));
+    background-size:
+      2px 6px, 1px 4px, 2px 4px, 1px 2px, 1px 2px, 1px 1px, 
+      var(--g-mask-w, 5px) var(--g-mask-h, 25px);
+    background-position:
+      6px 40%, 7px 54%, 5px 14%, 6px 77%, 7px 7%, 7px 95%, 
+      var(--g-mask-x, center) var(--g-mask-y, 8px);
   }
 }
