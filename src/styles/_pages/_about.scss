@@ -636,6 +636,13 @@
     position: relative;
     z-index: 10;
 
+    // Mobile: Scales width down to 80% of screen (10% margins on left and right)
+    @media only screen and (max-width: 550px) {
+      width: calc((80 / 90) * 100%);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     // Slide-in trigger via intersection observer
     &.is-visible .news-title-wrapper {
       transform: translateX(0);
@@ -813,7 +820,7 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
-    margin-top: -10px;
+    margin-top: -15px;
   }
 
   .news-item-title {
@@ -875,8 +882,8 @@
     line-height: 1.7;
     width: 100%;
     display: -webkit-box;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
