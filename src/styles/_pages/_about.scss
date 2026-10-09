@@ -1,43 +1,104 @@
 @use '../_config/variables' as *;
 @use "sass:color";
 
-/*
- * =========================================
- * Page-Specific: About
- * =========================================
- */
+/* ==========================================================================
+   Page-Specific: About Page Stylesheet
+   ========================================================================== */
 
 .page-about {
 
+  /* ------------------------------------------------------------------------
+     1. Page Shell & Global Panels
+     ------------------------------------------------------------------------ */
+
   .page-section.about-container {
-    margin-top: 70px; // Mobile spacing
+    margin-top: 70px; // Mobile viewport top offset
     margin-bottom: 0;
 
     @media only screen and (min-width: 900px) {
-      margin-top: 100px; // laptop spacing
+      margin-top: 100px; // Laptop & desktop top offset
     }
   }
 
-  /* --- 1. Circuit Title --- */
-  .about-header {
-    margin-bottom: 60px;
+  // Shared glassmorphic background card utility
+  .glass-panel {
+    background: color.change(color.adjust($main, $lightness: 5%), $alpha: 0.15);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    transform: translateZ(0);
+  }
+
+
+  /* ------------------------------------------------------------------------
+     2. Hero Section: Asymmetric Layout Grid
+     ------------------------------------------------------------------------ */
+
+  .about-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+
+    &.is-visible {
+      will-change: auto !important;
+    }
 
     @media only screen and (min-width: 900px) {
-      margin-bottom: 70px;
+      display: grid;
+      // Left column expands to fill space; right column locks strictly to the 280px photo width
+      grid-template-columns: minmax(0, 1fr) 280px;
+      grid-template-rows: auto 1fr;
+      column-gap: 40px;
+      row-gap: 20px;
+      align-items: start;
     }
+  }
+
+
+  /* ------------------------------------------------------------------------
+     3. Left Column: Integrated Circuit Title & Bio Box
+     ------------------------------------------------------------------------ */
+
+  // Structural column wrapper unifying circuit line and bio box
+  .bio-column {
+    order: 2; // Mobile: Drops beneath the hero photo
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    @media only screen and (min-width: 900px) {
+      order: initial;
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      align-self: start;
+    }
+  }
+
+  // --- 3.1. Circuit Header & Line ---
+  .about-header {
+    width: 100%;
+    margin-bottom: 24px; // Dedicated breathing room between circuit line and bio card
+    position: relative;
+    z-index: 3;
   }
 
   .about-title {
     display: flex;
     align-items: center;
-    font-size: 1.25rem; 
+    font-size: 1.25rem;
     letter-spacing: 4px;
     text-transform: uppercase;
     font-weight: 600;
     color: $text-primary;
-    margin: 0; 
+    margin: 0;
+    line-height: 1.2;
     white-space: nowrap;
+    transform: translateY(-7px); // Centers title text and leading square over the circuit line
 
+    // Decorative square anchor preceding the title text
     &::before {
       content: '';
       margin-right: 20px;
@@ -50,164 +111,121 @@
     }
   }
 
-  /* The traversing circuit U-turn */
+  // Horizontal trace and terminal U-turn
   .circuit-line {
     flex: 1;
     position: relative;
-    height: 16px; // The downward drop distance
+    height: 18px;
     margin-left: 20px;
-    align-self: center; 
-    transform: translateY(7px); // Pushes the container down so the top line sits in true vertical center
+    margin-right: 60px; // Clears exact width for the U-turn extension
+    margin-top: 1px;
+    align-self: center;
+    box-sizing: border-box;
+    transform: translateY(7px); // Counter-offsets title lift to stay aligned with photo frame top
 
-    // 1. The main straight line extending right (Drawn as a background to free up ::before)
-    background-image: linear-gradient($line, $line);
-    background-position: left top;
-    background-repeat: no-repeat;
-    background-size: calc(100% - 15px) 2px; // Tucks completely under the U-turn box
+    // Main horizontal trace (flat border, no radius)
+    border-top: 2px solid $line;
 
-    // NEW GLITCH PATCH: Layered directly onto the circuit line
+    // Glitch effect anchored across the trace
     &::before {
       content: '';
       position: absolute;
       left: 0;
-      top: -6px; // Center vertically over the 2px top line
-      width: min(300px, 100%); 
+      top: -8px; // Centers glitch mask vertically over 2px border
+      width: min(300px, 100%);
       height: 14px;
       background-color: transparent;
       background-repeat: no-repeat;
       z-index: 10;
+      pointer-events: none;
 
-      /* --- GLITCH CUSTOMIZATION --- */
       --g-mask-color: #{color.change($main, $alpha: 0.7)};
-      --g-mask-w: 150px;
+      --g-mask-w: 200px;
       --g-mask-h: 3px;
-      --g-mask-x: left; 
+      --g-mask-x: left;
       --g-mask-y: center;
 
-      animation: organic-glitch-horizontal 0.3s infinite steps(1); 
+      animation: organic-glitch-horizontal 0.3s infinite steps(1);
     }
 
-    // 2. The invisible rectangle acting as the U-turn
+    // Terminal U-turn curving right and returning left
     &::after {
       content: '';
       position: absolute;
-      top: 0;
-      right: 0; 
-      // Dynamically bounds the U-turn so it NEVER overflows its container 
-      // when the screen gets ultra-narrow.
-      width: min(70px, 100%); 
-      height: 100%;
+      left: 100%; // Starts at the exact terminus of the straight trace
+      top: -2px;  // Aligns seamlessly with the 2px top border
+      width: 60px;
+      height: 18px;
       border-top: 2px solid $line;
       border-right: 2px solid $line;
       border-bottom: 2px solid $line;
-      border-radius: 0 12px 12px 0; 
+      border-left: none;
+      border-radius: 0 10px 10px 0; // Curves strictly on the outer turn
       box-sizing: border-box;
+      pointer-events: none;
     }
 
-    // 3. The glowing node capping the end
+    // Glowing termination node capping the bottom return line
     .circuit-node {
       position: absolute;
-      // Mathematically locks the node to the dynamic tip of the U-turn
-      right: calc(min(70px, 100%) - 2px); 
-      bottom: -3.6px; 
+      left: 100%;
+      transform: translateX(-50%); // Centers node at the inner terminus of the return line
+      bottom: -2.5px;
       width: 8px;
       height: 8px;
       background: $accent;
       box-shadow: 0 0 12px rgba($accent, 0.8);
       border-radius: 2px;
-      z-index: 2; 
+      z-index: 4;
     }
   }
 
-  /* --- 2. Shared Glass Elements --- */
-  .glass-panel {
-    background: color.change(color.adjust($main, $lightness: 5%), $alpha: 0.15);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.05); 
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
-    border-radius: 12px;
-    transform: translateZ(0);
-  }
-
-  /* --- 3. Hero Section (Bio & Photo) --- */
-  .about-hero {
-    display: flex;
-    flex-direction: column; /* Changed so we can force the bottom/top order freely */
-    gap: 60px;
-    align-items: center;
-
-    &.is-visible {
-      will-change: auto !important; 
-    }
-
-    @media only screen and (min-width: 900px) {
-      /* Grid handles asymmetric left/right balancing perfectly */
-      display: grid;
-      grid-template-columns: 3fr 2fr; /* Exact match to your old flex proportions */
-      grid-template-rows: auto 1fr;
-      gap: 50px;
-      align-items: start;
-    }
-  }
-
-  // The outer container. Casts the shadow without clipping it.
+  // --- 3.2. Bio Glass Card & Canvas Particle Layer ---
   .bio-wrapper {
-    order: 2; /* Mobile: Bio sits in the middle */
     position: relative;
     border-radius: 12px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
-    z-index: 1; 
-
-    @media only screen and (min-width: 900px) {
-      order: initial;
-      grid-column: 1;
-      grid-row: 1 / span 2;
-      height: auto; // Lets the card fit content naturally instead of stretching
-      align-self: start; // Prevents grid-stretching artifacts
-    }
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    width: 100%;
   }
 
-  // The inner container. Strictly clips the particles so they don't leak.
+  // Dedicated container strictly clipping particle canvas overflow
   .bio-particles-clip {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 12px;
     overflow: hidden;
-    z-index: 1; // Sits on the bottom layer of the wrapper
-
-    // CRITICAL BUGFIX 2: 
-    // Forces the particle canvas into its own dedicated GPU hardware layer. 
-    // Without this, the browser flattens the canvas with the glass panel 
-    // and physically cannot blur it.
-    transform: translateZ(0); 
+    z-index: 1;
+    transform: translateZ(0); // Hardware acceleration lock prevents canvas flattening
   }
 
   #bio-particles {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
   }
 
-  // The glass panel. Sits on top and blurs the particle layer below it.
+  // Glass panel containing bio typography
   .about-bio {
     position: relative;
-    z-index: 2; // Strictly on top of the particles
-    padding: 34px 40px 40px; // 34px top padding optically offsets font ascender space
-    height: auto; // Natural height matching content
+    z-index: 2; // Renders directly over the particle canvas
+    padding: 34px 40px 40px;
+    height: auto;
     box-sizing: border-box;
-
-    // Turn off the duplicate shadow inherited from .glass-panel
-    box-shadow: none !important; 
-
-    // Re-affirm the hardware lock and blur explicitly to override any remaining browser bugs
-    transform: translateZ(0) !important; 
+    box-shadow: none !important; // Defers elevation shadow to .bio-wrapper
+    transform: translateZ(0) !important;
     backdrop-filter: blur(5px) !important;
     -webkit-backdrop-filter: blur(5px) !important;
 
     h2 {
       margin-top: -10px;
-      line-height: 1.15; // Tight leading removes empty font box padding above uppercase glyphs
+      line-height: 1.15;
       color: $accent;
       font-size: 1.15rem;
       letter-spacing: 2px;
@@ -219,7 +237,6 @@
       font-size: 0.8rem;
       line-height: 1.65;
       margin-bottom: 12px;
-
       text-align: justify;
       text-justify: inter-word;
       hyphens: auto;
@@ -234,51 +251,36 @@
       }
 
       .text-accent {
-        color: color.adjust($accent-secondary, $lightness: 25%); 
+        color: color.adjust($accent-secondary, $lightness: 25%);
         font-weight: 600;
       }
     }
   }
 
+
+  /* ------------------------------------------------------------------------
+     4. Right Column: Profile Photo, Glitch Optics & Sub-Logo
+     ------------------------------------------------------------------------ */
+
   .about-visuals {
-    order: 1; /* Mobile: Photo sits at the very top */
+    order: 1; // Mobile: Positions photo at top of hero
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     width: 100%;
+    margin-bottom: 70px; // Mobile clearance separating tags from the bio column
 
     @media only screen and (min-width: 900px) {
       order: initial;
       grid-column: 2;
-      grid-row: 1; /* Locks photo to the top right */
-      align-items: flex-start; 
-      margin-top: 0; 
-    }
-  }
-
-  /* Target the logo specifically for the about page */
-  .about-logo-wrapper {
-    order: 3; /* Mobile: Pushes logo safely to the bottom beneath the bio */
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    --logo-scale: 200px; /* Overrides the 300px default from the component */
-    --logo-color: #{$line};
-    --logo-stroke-width: 2px;
-    margin-top: -10px; /* Slight tuck so it isn't floating too far away on mobile */
-    opacity: 0.7; /* Optional: Knocks it back slightly so it acts as an accent */
-
-    @media only screen and (min-width: 900px) {
-      order: initial;
-      grid-column: 2;
-      grid-row: 2; /* Drops it into the empty space directly beneath the photo */
-      align-self: center; /* Beautifully centers it in whatever remaining vertical space exists */
+      grid-row: 1;
+      justify-content: center;
+      align-items: flex-start;
       margin-top: 0;
-      --logo-scale: 250px; /* Slightly larger on desktop */
+      margin-bottom: 0;
     }
   }
 
-  /* --- 4. The Photo --- */
   .photo-wrapper {
     position: relative;
     width: 100%;
@@ -286,246 +288,193 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 auto;
+
+    @media only screen and (min-width: 900px) {
+      margin-top: 7px; // Locks frame border to the top circuit trace line
+    }
   }
-
-  // Base frame instability
-  @keyframes frame-glitch-tr {
-    0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
-    10% { filter: drop-shadow(-2px 2px 0px rgba($text-primary, 0.6)); transform: translate(1px, -1px); }
-    20% { filter: drop-shadow(0 0 6px $accent); transform: translate(0, 0); }
-    30% { filter: drop-shadow(2px -2px 0px rgba($accent, 0.9)); transform: translate(-1px, 1px); }
-    40% { filter: drop-shadow(0 0 3px $accent); transform: translate(0, 0); }
-    50% { filter: drop-shadow(2px 0 0px rgba($text-primary, 0.5)); transform: translate(-1px, 0); }
-    60% { filter: drop-shadow(0 0 8px $accent); transform: translate(0, 0); }
-    70% { filter: drop-shadow(-2px -2px 0px rgba($accent, 0.7)); transform: translate(1px, 1px); }
-    80% { filter: drop-shadow(0 0 5px $accent); transform: translate(0, 0); }
-    90% { filter: drop-shadow(0 2px 0px rgba($text-primary, 0.6)); transform: translate(0, -1px); }
-  }
-
-  @keyframes frame-glitch-bl {
-    0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
-    15% { filter: drop-shadow(2px -2px 0px rgba($text-primary, 0.6)); transform: translate(-1px, 1px); }
-    25% { filter: drop-shadow(0 0 8px $accent); transform: translate(0, 0); }
-    35% { filter: drop-shadow(-2px 2px 0px rgba($accent, 0.9)); transform: translate(1px, -1px); }
-    45% { filter: drop-shadow(0 0 3px $accent); transform: translate(0, 0); }
-    55% { filter: drop-shadow(0 -2px 0px rgba($text-primary, 0.5)); transform: translate(0, 1px); }
-    65% { filter: drop-shadow(0 0 6px $accent); transform: translate(0, 0); }
-    75% { filter: drop-shadow(2px 2px 0px rgba($accent, 0.7)); transform: translate(-1px, -1px); }
-    85% { filter: drop-shadow(0 0 5px $accent); transform: translate(0, 0); }
-    95% { filter: drop-shadow(-2px 0 0px rgba($text-primary, 0.6)); transform: translate(1px, 0); }
-  }
-
-  // Thin hyper-fast data sparks
-  @keyframes spark-h {
-    0%, 10% { opacity: 0; top: 0; bottom: auto; left: 10%; width: 10px; }
-    11% { opacity: 1; }
-    13% { opacity: 1; top: 0; bottom: auto; left: 60%; width: 25px; }
-    14%, 30% { opacity: 0; }
-    31% { opacity: 1; top: auto; bottom: 0; left: 80%; width: 15px; }
-    33% { opacity: 1; top: auto; bottom: 0; left: 20%; width: 5px; }
-    34%, 50% { opacity: 0; }
-    51% { opacity: 1; top: 30%; bottom: auto; left: 15%; width: 20px; }
-    52% { opacity: 1; top: 32%; bottom: auto; left: 45%; width: 8px; } 
-    54%, 75% { opacity: 0; }
-    76% { opacity: 1; top: 0; bottom: auto; left: 75%; width: 12px; }
-    78% { opacity: 1; top: 0; bottom: auto; left: 95%; width: 4px; }
-    79%, 100% { opacity: 0; }
-  }
-
-  @keyframes spark-v {
-    0%, 20% { opacity: 0; left: auto; right: 0; top: 80%; height: 12px; }
-    21% { opacity: 1; }
-    23% { opacity: 1; left: auto; right: 0; top: 20%; height: 25px; }
-    24%, 45% { opacity: 0; }
-    46% { opacity: 1; left: 0; right: auto; top: 15%; height: 15px; }
-    48% { opacity: 1; left: 0; right: auto; top: 65%; height: 6px; }
-    49%, 65% { opacity: 0; }
-    66% { opacity: 1; left: 65%; right: auto; top: 75%; height: 18px; }
-    67% { opacity: 1; left: 63%; right: auto; top: 45%; height: 5px; } 
-    69%, 85% { opacity: 0; }
-    86% { opacity: 1; left: auto; right: 0; top: 10%; height: 10px; }
-    88% { opacity: 1; left: auto; right: 0; top: 0%; height: 3px; }
-    89%, 100% { opacity: 0; }
-  }
-
-  // --- Flying Constellation Stars (1-10) ---
-  @keyframes c-drift-1 { 0%, 5% { transform: translate(0,0); opacity: 0; } 10%, 25% { opacity: 1; } 30%, 100% { transform: translate(-20px, -35px); opacity: 0; } }
-  @keyframes c-tail-1 { 0%, 5% { width: 0; } 30%, 100% { width: 40px; } }
-
-  @keyframes c-drift-2 { 0%, 20% { transform: translate(0,0); opacity: 0; } 25%, 45% { opacity: 1; } 50%, 100% { transform: translate(-45px, 20px); opacity: 0; } }
-  @keyframes c-tail-2 { 0%, 20% { width: 0; } 50%, 100% { width: 50px; } }
-
-  @keyframes c-drift-3 { 0%, 40% { transform: translate(0,0); opacity: 0; } 45%, 65% { opacity: 1; } 70%, 100% { transform: translate(30px, 40px); opacity: 0; } }
-  @keyframes c-tail-3 { 0%, 40% { width: 0; } 70%, 100% { width: 50px; } }
-
-  @keyframes c-drift-4 { 0%, 60% { transform: translate(0,0); opacity: 0; } 65%, 85% { opacity: 1; } 90%, 100% { transform: translate(35px, -35px); opacity: 0; } }
-  @keyframes c-tail-4 { 0%, 60% { width: 0; } 90%, 100% { width: 50px; } }
-
-  @keyframes c-drift-5 { 0%, 10% { transform: translate(0,0); opacity: 0; } 15%, 35% { opacity: 1; } 40%, 100% { transform: translate(40px, -15px); opacity: 0; } }
-  @keyframes c-tail-5 { 0%, 10% { width: 0; } 40%, 100% { width: 45px; } }
-
-  @keyframes c-drift-6 { 0%, 15% { transform: translate(0,0); opacity: 0; } 20%, 40% { opacity: 1; } 45%, 100% { transform: translate(-30px, 25px); opacity: 0; } }
-  @keyframes c-tail-6 { 0%, 15% { width: 0; } 45%, 100% { width: 35px; } }
-
-  @keyframes c-drift-7 { 0%, 30% { transform: translate(0,0); opacity: 0; } 35%, 55% { opacity: 1; } 60%, 100% { transform: translate(-40px, -40px); opacity: 0; } }
-  @keyframes c-tail-7 { 0%, 30% { width: 0; } 60%, 100% { width: 55px; } }
-
-  @keyframes c-drift-8 { 0%, 8% { transform: translate(0,0); opacity: 0; } 13%, 33% { opacity: 1; } 38%, 100% { transform: translate(25px, -20px); opacity: 0; } }
-  @keyframes c-tail-8 { 0%, 8% { width: 0; } 38%, 100% { width: 40px; } }
-
-  @keyframes c-drift-9 { 0%, 45% { transform: translate(0,0); opacity: 0; } 50%, 70% { opacity: 1; } 75%, 100% { transform: translate(5px, 45px); opacity: 0; } }
-  @keyframes c-tail-9 { 0%, 45% { width: 0; } 75%, 100% { width: 45px; } }
-
-  @keyframes c-drift-10 { 0%, 55% { transform: translate(0,0); opacity: 0; } 60%, 80% { opacity: 1; } 85%, 100% { transform: translate(-10px, -35px); opacity: 0; } }
-  @keyframes c-tail-10 { 0%, 55% { width: 0; } 85%, 100% { width: 40px; } }
 
   .photo-frame {
     position: relative;
     z-index: 1;
     padding: 12px;
 
-    // Base style for the two incomplete tech brackets
+    // Corner targeting brackets
     &::before, &::after {
       content: '';
       position: absolute;
-      width: 40px; 
+      width: 40px;
       height: 40px;
-      border: 2px solid transparent; 
+      border: 2px solid transparent;
       border-radius: 12px;
       box-sizing: border-box;
       z-index: 2;
       pointer-events: none;
-
-      // REVERT ANIMATION
       transition: height 0.3s cubic-bezier(0.5, 0, 0.1, 1),
                   width 0.3s cubic-bezier(0.5, 0, 0.1, 1) 0.15s,
                   border-color 0.4s ease,
                   filter 0.4s ease;
     }
 
-    &::before { top: 0; right: 0; border-top-color: $line; border-right-color: $line; }
-    &::after { bottom: 0; left: 0; border-bottom-color: $line; border-left-color: $line; }
+    &::before {
+      top: 0;
+      right: 0;
+      border-top-color: $line;
+      border-right-color: $line;
+    }
 
+    &::after {
+      bottom: 0;
+      left: 0;
+      border-bottom-color: $line;
+      border-left-color: $line;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      filter: grayscale(30%) contrast(1.1);
+      transition: filter 0.5s ease;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    // High-speed edge spark container
     .tech-glitch-sparks {
       position: absolute;
       inset: 0;
-      z-index: 4; 
+      z-index: 4;
       pointer-events: none;
       border-radius: 12px;
-      opacity: 0; 
+      opacity: 0;
       transition: opacity 0.2s ease;
 
       &::before, &::after {
-        content: ''; position: absolute; background: #fff;
+        content: '';
+        position: absolute;
+        background: #fff;
         box-shadow: 0 0 6px $accent, 0 0 12px $accent;
-        border-radius: 2px; opacity: 0;
+        border-radius: 2px;
+        opacity: 0;
       }
 
       &::before { height: 1.5px; width: 0; }
       &::after { width: 1.5px; height: 0; }
     }
 
-    // Expanded Constellation setup
+    // Orbiting constellation particle system
     .constellation-drift {
       position: absolute;
       inset: 0;
-      z-index: 5; 
+      z-index: 5;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.2s ease;
 
       .drift-star {
         position: absolute;
-        width: 4px; 
-        height: 4px; /* Increased slightly from 3px so the hexagon is visually legible */
-        opacity: 0; 
-
-        /* Moved glow to drop-shadow on the parent so the hexagon's clip-path doesn't cut off the shadow */
+        width: 4px;
+        height: 4px;
+        opacity: 0;
         filter: drop-shadow(0 0 6px $accent) drop-shadow(0 0 12px $accent);
 
-        /* 1 & 2: Hexagon Head */
+        // Hexagonal star body
         &::before {
-          content: ''; 
+          content: '';
           position: absolute;
-          inset: 0; /* Fills the 4x4 parent container */
+          inset: 0;
           background: #fff;
           clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-          z-index: 2; /* Forces the head to sit ON TOP of the tail */
+          z-index: 2;
         }
 
-        /* 3: Centered Comet Tail */
+        // Directional comet tail
         &::after {
-          content: ''; 
+          content: '';
           position: absolute;
           top: 50%;
-          left: 50%; /* Anchor exactly at the horizontal center of the star head */
-          margin-top: -0.5px; /* Offset by half the height to perfectly center the 1px line */
+          left: 50%;
+          margin-top: -0.5px;
           height: 1px;
           background: linear-gradient(to right, $accent, transparent);
-          transform-origin: 0 50%; /* Rotates exactly from its left-center edge */
+          transform-origin: 0 50%;
           box-shadow: 0 0 4px rgba($accent, 0.4);
-          z-index: 1; /* Tucks the tail UNDER the head */
+          z-index: 1;
         }
       }
 
-      // Scattering 10 positions and correctly calculating reverse angles for the tails
-      .ds-1 { top: 0%; left: 25%; &::after { transform: rotate(60deg); } }
-      .ds-2 { top: 60%; right: 0; &::after { transform: rotate(-25deg); } }
-      .ds-3 { bottom: 0; left: 50%; &::after { transform: rotate(-130deg); } }
-      .ds-4 { top: 40%; left: 0; &::after { transform: rotate(135deg); } }
-      .ds-5 { top: 0; right: 15%; &::after { transform: rotate(160deg); } }
-      .ds-6 { top: 70%; left: 0; &::after { transform: rotate(-40deg); } }
-      .ds-7 { bottom: 20%; left: 0; &::after { transform: rotate(45deg); } }
-      .ds-8 { top: 20%; right: 0; &::after { transform: rotate(135deg); } }
-      .ds-9 { top: 0; left: 50%; &::after { transform: rotate(-85deg); } }
-      .ds-10 { bottom: 0; left: 80%; &::after { transform: rotate(70deg); } }
+      // Initial star positioning & tail vector angles
+      .ds-1  { top: 0%;    left: 25%;  &::after { transform: rotate(60deg);   } }
+      .ds-2  { top: 60%;   right: 0;   &::after { transform: rotate(-25deg);  } }
+      .ds-3  { bottom: 0;  left: 50%;  &::after { transform: rotate(-130deg); } }
+      .ds-4  { top: 40%;   left: 0;    &::after { transform: rotate(135deg);  } }
+      .ds-5  { top: 0;     right: 15%; &::after { transform: rotate(160deg);  } }
+      .ds-6  { top: 70%;   left: 0;    &::after { transform: rotate(-40deg);  } }
+      .ds-7  { bottom: 20%; left: 0;   &::after { transform: rotate(45deg);   } }
+      .ds-8  { top: 20%;   right: 0;   &::after { transform: rotate(135deg);  } }
+      .ds-9  { top: 0;     left: 50%;  &::after { transform: rotate(-85deg);  } }
+      .ds-10 { bottom: 0;  left: 80%;  &::after { transform: rotate(70deg);   } }
     }
 
-    img {
-      display: block; width: 100%; height: auto; border-radius: 8px;
-      filter: grayscale(30%) contrast(1.1); transition: filter 0.5s ease;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.4); position: relative; z-index: 1;
-    }
-
-    // THE HOVER SEQUENCE
+    // Photo hover trigger: Expands brackets and triggers particle effects
     &:hover {
       &::before, &::after {
-        width: 100%; height: 100%;
+        width: 100%;
+        height: 100%;
         transition: width 0.25s cubic-bezier(0.2, 1, 0.3, 1),
                     height 0.25s cubic-bezier(0.2, 1, 0.3, 1) 0.15s,
-                    border-color 0.3s ease, filter 0.3s ease;
+                    border-color 0.3s ease,
+                    filter 0.3s ease;
       }
 
-      &::before { border-top-color: $accent; border-right-color: $accent; animation: frame-glitch-tr 0.4s infinite linear; }
-      &::after { border-bottom-color: $accent; border-left-color: $accent; animation: frame-glitch-bl 0.4s infinite linear; animation-delay: 0.1s; }
+      &::before {
+        border-top-color: $accent;
+        border-right-color: $accent;
+        animation: frame-glitch-tr 0.4s infinite linear;
+      }
+
+      &::after {
+        border-bottom-color: $accent;
+        border-left-color: $accent;
+        animation: frame-glitch-bl 0.4s infinite linear;
+        animation-delay: 0.1s;
+      }
+
+      img {
+        filter: grayscale(0%) contrast(1.1);
+      }
 
       .tech-glitch-sparks {
-        opacity: 1; transition: opacity 0.1s ease 0.25s; 
+        opacity: 1;
+        transition: opacity 0.1s ease 0.25s;
+
         &::before { animation: spark-h 2.2s infinite linear; }
-        &::after { animation: spark-v 2.7s infinite linear; }
+        &::after  { animation: spark-v 2.7s infinite linear; }
       }
 
       .constellation-drift {
-        opacity: 1; transition: opacity 0.1s ease 0.25s; 
+        opacity: 1;
+        transition: opacity 0.1s ease 0.25s;
 
-        // Asynchronous loop durations and negative delays create a pseudo-random particle system
-        .ds-1 { animation: c-drift-1 3.5s infinite linear -0.5s; } .ds-1::after { animation: c-tail-1 3.5s infinite linear -0.5s; }
-        .ds-2 { animation: c-drift-2 4.2s infinite linear -1.2s; } .ds-2::after { animation: c-tail-2 4.2s infinite linear -1.2s; }
-        .ds-3 { animation: c-drift-3 2.9s infinite linear -0.8s; } .ds-3::after { animation: c-tail-3 2.9s infinite linear -0.8s; }
-        .ds-4 { animation: c-drift-4 4.7s infinite linear -2.1s; } .ds-4::after { animation: c-tail-4 4.7s infinite linear -2.1s; }
-        .ds-5 { animation: c-drift-5 3.1s infinite linear -0.3s; } .ds-5::after { animation: c-tail-5 3.1s infinite linear -0.3s; }
-        .ds-6 { animation: c-drift-6 5.3s infinite linear -3.0s; } .ds-6::after { animation: c-tail-6 5.3s infinite linear -3.0s; }
-        .ds-7 { animation: c-drift-7 3.8s infinite linear -1.5s; } .ds-7::after { animation: c-tail-7 3.8s infinite linear -1.5s; }
-        .ds-8 { animation: c-drift-8 4.5s infinite linear -0.9s; } .ds-8::after { animation: c-tail-8 4.5s infinite linear -0.9s; }
-        .ds-9 { animation: c-drift-9 5.0s infinite linear -2.5s; } .ds-9::after { animation: c-tail-9 5.0s infinite linear -2.5s; }
+        .ds-1  { animation: c-drift-1 3.5s infinite linear -0.5s; } .ds-1::after  { animation: c-tail-1 3.5s infinite linear -0.5s; }
+        .ds-2  { animation: c-drift-2 4.2s infinite linear -1.2s; } .ds-2::after  { animation: c-tail-2 4.2s infinite linear -1.2s; }
+        .ds-3  { animation: c-drift-3 2.9s infinite linear -0.8s; } .ds-3::after  { animation: c-tail-3 2.9s infinite linear -0.8s; }
+        .ds-4  { animation: c-drift-4 4.7s infinite linear -2.1s; } .ds-4::after  { animation: c-tail-4 4.7s infinite linear -2.1s; }
+        .ds-5  { animation: c-drift-5 3.1s infinite linear -0.3s; } .ds-5::after  { animation: c-tail-5 3.1s infinite linear -0.3s; }
+        .ds-6  { animation: c-drift-6 5.3s infinite linear -3.0s; } .ds-6::after  { animation: c-tail-6 5.3s infinite linear -3.0s; }
+        .ds-7  { animation: c-drift-7 3.8s infinite linear -1.5s; } .ds-7::after  { animation: c-tail-7 3.8s infinite linear -1.5s; }
+        .ds-8  { animation: c-drift-8 4.5s infinite linear -0.9s; } .ds-8::after  { animation: c-tail-8 4.5s infinite linear -0.9s; }
+        .ds-9  { animation: c-drift-9 5.0s infinite linear -2.5s; } .ds-9::after  { animation: c-tail-9 5.0s infinite linear -2.5s; }
         .ds-10 { animation: c-drift-10 3.3s infinite linear -1.8s; } .ds-10::after { animation: c-tail-10 3.3s infinite linear -1.8s; }
       }
-
-      img { filter: grayscale(0%) contrast(1.1); }
     }
   }
 
-  /* --- 5. Language Tags --- */
+  // --- 4.1. Language Badges ---
   .language-tags {
     position: absolute;
     bottom: -20px;
@@ -570,14 +519,131 @@
     }
   }
 
-  /* --- 6. News Section --- */
-  .about-news-section {
-    margin-top: 80px; 
-    position: relative;
-    z-index: 10;
+  // --- 4.2. Vector Logo Module ---
+  .about-logo-wrapper {
+    order: 3; // Mobile: Centers under the bio section
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --logo-scale: 140px;
+    --logo-color: #{$line};
+    --logo-stroke-width: 2px;
+    margin-top: 10px;
+    opacity: 0.7;
+
+    @media only screen and (min-width: 900px) {
+      order: initial;
+      grid-column: 2;
+      grid-row: 2;
+      align-self: center; // Anchors along column 2 centerline under photo
+      margin-top: 0;
+      --logo-scale: 140px;
+    }
   }
 
-  /* The infinite left bar - Solid, Curved, Continuous Gradient & Shadow */
+
+  /* ------------------------------------------------------------------------
+     5. Photo Frame Keyframe Animations
+     ------------------------------------------------------------------------ */
+
+  @keyframes frame-glitch-tr {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
+    10%      { filter: drop-shadow(-2px 2px 0px rgba($text-primary, 0.6)); transform: translate(1px, -1px); }
+    20%      { filter: drop-shadow(0 0 6px $accent); transform: translate(0, 0); }
+    30%      { filter: drop-shadow(2px -2px 0px rgba($accent, 0.9)); transform: translate(-1px, 1px); }
+    40%      { filter: drop-shadow(0 0 3px $accent); transform: translate(0, 0); }
+    50%      { filter: drop-shadow(2px 0 0px rgba($text-primary, 0.5)); transform: translate(-1px, 0); }
+    60%      { filter: drop-shadow(0 0 8px $accent); transform: translate(0, 0); }
+    70%      { filter: drop-shadow(-2px -2px 0px rgba($accent, 0.7)); transform: translate(1px, 1px); }
+    80%      { filter: drop-shadow(0 0 5px $accent); transform: translate(0, 0); }
+    90%      { filter: drop-shadow(0 2px 0px rgba($text-primary, 0.6)); transform: translate(0, -1px); }
+  }
+
+  @keyframes frame-glitch-bl {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba($accent, 0.8)); transform: translate(0, 0); }
+    15%      { filter: drop-shadow(2px -2px 0px rgba($text-primary, 0.6)); transform: translate(-1px, 1px); }
+    25%      { filter: drop-shadow(0 0 8px $accent); transform: translate(0, 0); }
+    35%      { filter: drop-shadow(-2px 2px 0px rgba($accent, 0.9)); transform: translate(1px, -1px); }
+    45%      { filter: drop-shadow(0 0 3px $accent); transform: translate(0, 0); }
+    55%      { filter: drop-shadow(0 -2px 0px rgba($text-primary, 0.5)); transform: translate(0, 1px); }
+    65%      { filter: drop-shadow(0 0 6px $accent); transform: translate(0, 0); }
+    75%      { filter: drop-shadow(2px 2px 0px rgba($accent, 0.7)); transform: translate(-1px, -1px); }
+    85%      { filter: drop-shadow(0 0 5px $accent); transform: translate(0, 0); }
+    95%      { filter: drop-shadow(-2px 0 0px rgba($text-primary, 0.6)); transform: translate(1px, 0); }
+  }
+
+  @keyframes spark-h {
+    0%, 10%  { opacity: 0; top: 0; bottom: auto; left: 10%; width: 10px; }
+    11%      { opacity: 1; }
+    13%      { opacity: 1; top: 0; bottom: auto; left: 60%; width: 25px; }
+    14%, 30% { opacity: 0; }
+    31%      { opacity: 1; top: auto; bottom: 0; left: 80%; width: 15px; }
+    33%      { opacity: 1; top: auto; bottom: 0; left: 20%; width: 5px; }
+    34%, 50% { opacity: 0; }
+    51%      { opacity: 1; top: 30%; bottom: auto; left: 15%; width: 20px; }
+    52%      { opacity: 1; top: 32%; bottom: auto; left: 45%; width: 8px; }
+    54%, 75% { opacity: 0; }
+    76%      { opacity: 1; top: 0; bottom: auto; left: 75%; width: 12px; }
+    78%      { opacity: 1; top: 0; bottom: auto; left: 95%; width: 4px; }
+    79%, 100%{ opacity: 0; }
+  }
+
+  @keyframes spark-v {
+    0%, 20%  { opacity: 0; left: auto; right: 0; top: 80%; height: 12px; }
+    21%      { opacity: 1; }
+    23%      { opacity: 1; left: auto; right: 0; top: 20%; height: 25px; }
+    24%, 45% { opacity: 0; }
+    46%      { opacity: 1; left: 0; right: auto; top: 15%; height: 15px; }
+    48%      { opacity: 1; left: 0; right: auto; top: 65%; height: 6px; }
+    49%, 65% { opacity: 0; }
+    66%      { opacity: 1; left: 65%; right: auto; top: 75%; height: 18px; }
+    67%      { opacity: 1; left: 63%; right: auto; top: 45%; height: 5px; }
+    69%, 85% { opacity: 0; }
+    86%      { opacity: 1; left: auto; right: 0; top: 10%; height: 10px; }
+    88%      { opacity: 1; left: auto; right: 0; top: 0%; height: 3px; }
+    89%, 100%{ opacity: 0; }
+  }
+
+  @keyframes c-drift-1  { 0%, 5% { transform: translate(0, 0); opacity: 0; } 10%, 25% { opacity: 1; } 30%, 100% { transform: translate(-20px, -35px); opacity: 0; } }
+  @keyframes c-tail-1   { 0%, 5% { width: 0; } 30%, 100% { width: 40px; } }
+  @keyframes c-drift-2  { 0%, 20% { transform: translate(0, 0); opacity: 0; } 25%, 45% { opacity: 1; } 50%, 100% { transform: translate(-45px, 20px); opacity: 0; } }
+  @keyframes c-tail-2   { 0%, 20% { width: 0; } 50%, 100% { width: 50px; } }
+  @keyframes c-drift-3  { 0%, 40% { transform: translate(0, 0); opacity: 0; } 45%, 65% { opacity: 1; } 70%, 100% { transform: translate(30px, 40px); opacity: 0; } }
+  @keyframes c-tail-3   { 0%, 40% { width: 0; } 70%, 100% { width: 50px; } }
+  @keyframes c-drift-4  { 0%, 60% { transform: translate(0, 0); opacity: 0; } 65%, 85% { opacity: 1; } 90%, 100% { transform: translate(35px, -35px); opacity: 0; } }
+  @keyframes c-tail-4   { 0%, 60% { width: 0; } 90%, 100% { width: 50px; } }
+  @keyframes c-drift-5  { 0%, 10% { transform: translate(0, 0); opacity: 0; } 15%, 35% { opacity: 1; } 40%, 100% { transform: translate(40px, -15px); opacity: 0; } }
+  @keyframes c-tail-5   { 0%, 10% { width: 0; } 40%, 100% { width: 45px; } }
+  @keyframes c-drift-6  { 0%, 15% { transform: translate(0, 0); opacity: 0; } 20%, 40% { opacity: 1; } 45%, 100% { transform: translate(-30px, 25px); opacity: 0; } }
+  @keyframes c-tail-6   { 0%, 15% { width: 0; } 45%, 100% { width: 35px; } }
+  @keyframes c-drift-7  { 0%, 30% { transform: translate(0, 0); opacity: 0; } 35%, 55% { opacity: 1; } 60%, 100% { transform: translate(-40px, -40px); opacity: 0; } }
+  @keyframes c-tail-7   { 0%, 30% { width: 0; } 60%, 100% { width: 55px; } }
+  @keyframes c-drift-8  { 0%, 8%  { transform: translate(0, 0); opacity: 0; } 13%, 33% { opacity: 1; } 38%, 100% { transform: translate(25px, -20px); opacity: 0; } }
+  @keyframes c-tail-8   { 0%, 8%  { width: 0; } 38%, 100% { width: 40px; } }
+  @keyframes c-drift-9  { 0%, 45% { transform: translate(0, 0); opacity: 0; } 50%, 70% { opacity: 1; } 75%, 100% { transform: translate(5px, 45px); opacity: 0; } }
+  @keyframes c-tail-9   { 0%, 45% { width: 0; } 75%, 100% { width: 45px; } }
+  @keyframes c-drift-10 { 0%, 55% { transform: translate(0, 0); opacity: 0; } 60%, 80% { opacity: 1; } 85%, 100% { transform: translate(-10px, -35px); opacity: 0; } }
+  @keyframes c-tail-10  { 0%, 55% { width: 0; } 85%, 100% { width: 40px; } }
+
+
+  /* ------------------------------------------------------------------------
+     6. News & Timeline Feed Section
+     ------------------------------------------------------------------------ */
+
+  .about-news-section {
+    margin-top: 80px;
+    position: relative;
+    z-index: 10;
+
+    // Slide-in trigger via intersection observer
+    &.is-visible .news-title-wrapper {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  // Infinite-left pill header
   .news-header-bar {
     display: flex;
     margin-bottom: 50px;
@@ -588,59 +654,52 @@
       display: inline-flex;
       align-items: center;
       gap: 20px;
-      padding: 12px 35px 12px 0; // Content padding
-
-      // Mobile: visible width is the wrapper plus left page padding
-      --news-bar-width: calc(100% + 30px);
-
-      // Desktop: on a centered container, screen-left to pill-tip scales with 50vw
-      @media only screen and (min-width: 900px) {
-        --news-bar-width: calc(50vw - 280px);
-      }
-
-      // Entry Animation Initial State
+      padding: 12px 35px 12px 0;
       transform: translateX(-100px);
       opacity: 0;
       transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s,
                   opacity 0.8s ease-out 0.3s;
 
-      // 1. THE UNIFIED STRUCTURAL LAYER
+      --news-bar-width: calc(100% + 30px);
+
+      @media only screen and (min-width: 900px) {
+        --news-bar-width: calc(50vw - 280px);
+      }
+
+      // Structural pill background running into viewport-left
       &::before {
         content: '';
         position: absolute;
-        top: 0; bottom: 0; 
-        right: 0; 
-        left: -100vw; // Extends infinitely off-screen to the left
-        z-index: 0; 
-
-        // 1. Fills the off-screen overflow with solid $main
-        background-color: $main; 
-
-        // 2. Starts at $main at screen-left, reaches$accent at the pill cap
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: -100vw;
+        z-index: 0;
+        background-color: $main;
         background-image: linear-gradient(
-          to right, 
-          $main 0%, 
-          rgba($accent, 0.04) 40%, 
+          to right,
+          $main 0%,
+          rgba($accent, 0.04) 40%,
           rgba($accent, 0.18) 100%
         );
-        background-size: var(--news-bar-width) 100%; // Locks gradient to visible screen span
-        background-position: right top;             // Anchors the accent tip to the right
+        background-size: var(--news-bar-width) 100%;
+        background-position: right top;
         background-repeat: no-repeat;
-
-        // Borders & Pill Curve
         border: 1px solid rgba(255, 255, 255, 0.05);
         border-left: none;
         border-radius: 0 35px 35px 0;
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
       }
 
-      // 2. The Accent Glow (Focused cleanly on the rounded pill tip)
+      // Soft glow concentrated on the pill nose
       &::after {
         content: '';
         position: absolute;
-        top: 0; bottom: 0; right: 0;
-        width: 150px; // Localized to the pill head
-        border-radius: 0 35px 35px 0; 
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 150px;
+        border-radius: 0 35px 35px 0;
         background-image: linear-gradient(to right, transparent, rgba($accent, 0.12));
         pointer-events: none;
         z-index: 1;
@@ -653,7 +712,7 @@
         letter-spacing: 4px;
         position: relative;
         z-index: 2;
-        transform: translateY(-9px); 
+        transform: translateY(-9px);
       }
 
       .title-glow-orb {
@@ -668,9 +727,11 @@
         &::before {
           content: '';
           position: absolute;
-          top: 50%; left: 50%;
+          top: 50%;
+          left: 50%;
           transform: translate(-50%, -50%);
-          width: 24px; height: 24px;
+          width: 24px;
+          height: 24px;
           border: 1px solid rgba($accent, 0.5);
           border-radius: 50%;
           animation: orb-sonar 2s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -679,23 +740,16 @@
     }
   }
 
-  // Trigger the slide-in when the parent section (.about-news-section.js-reveal) comes into view
-  .about-news-section.is-visible .news-title-wrapper {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
-  // The Sonar Animation for the Orb
   @keyframes orb-sonar {
-    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
     100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
   }
 
-  /* The floating items list */
+  // --- 6.1. Feed Items ---
   .news-feed {
     display: flex;
     flex-direction: column;
-    gap: 0; // REMOVED gap so separation lines touch the next item perfectly
+    gap: 0;
     margin-bottom: 40px;
   }
 
@@ -707,23 +761,23 @@
     position: relative;
     cursor: default;
 
-    // Native border with gradient: snaps perfectly to the hardware pixel grid
     &:not(:last-child) {
       border-style: solid;
       border-width: 0 0 1px 0;
       border-image: linear-gradient(
-        90deg, 
-        rgba($accent, 0.2) 0%, 
-        rgba($accent, 0.05) 40%, 
+        90deg,
+        rgba($accent, 0.2) 0%,
+        rgba($accent, 0.05) 40%,
         transparent 100%
       ) 1;
     }
 
-    // Hover interaction bracket
+    // Left indicator bar appearing on hover
     &::before {
       content: '';
       position: absolute;
-      top: 15px; bottom: 15px;
+      top: 15px;
+      bottom: 15px;
       left: -20px;
       width: 2px;
       background: $accent;
@@ -742,11 +796,11 @@
         background: $accent;
         box-shadow: 0 0 8px $accent;
       }
-      
+
       .news-item-date {
         transform: translateY(-2px);
         box-shadow: 0 2px 2px rgba($accent, 0.4);
-        
+
         &::before {
           transform: translateX(100%);
         }
@@ -758,8 +812,8 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 20px; 
-    margin-top: -10px; // Cleanly moves text up without corrupting the square bullet shape
+    gap: 20px;
+    margin-top: -10px;
   }
 
   .news-item-title {
@@ -770,7 +824,6 @@
     display: flex;
     align-items: center;
 
-    // Tiny decorative square next to title
     .tech-bullet {
       display: inline-block;
       width: 6px;
@@ -783,30 +836,31 @@
     }
   }
 
-  // The beautiful elegant date box
   .news-item-date {
-    flex-shrink: 0; 
-    font-family: 'Space Grotesk', monospace; 
+    flex-shrink: 0;
+    font-family: 'Space Grotesk', monospace;
     font-size: 0.75rem;
     font-weight: 600;
-    color: $main; // Main colored text
-    background: $accent; // Accent color bg
+    color: $main;
+    background: $accent;
     padding: 4px 14px;
-    border-radius: 50px; // New pill shape
+    border-radius: 50px;
     letter-spacing: 1px;
     box-shadow: 0 0 15px rgba($accent, 0.2);
     transition: all 0.3s ease;
     position: relative;
-    overflow: hidden; // Keeps the shimmer effect inside the pill
+    overflow: hidden;
     z-index: 1;
-
     margin-top: 15px;
-    
-    // The techy sliding shimmer effect
+
+    // Sliding shimmer highlight
     &::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
       transform: translateX(-100%);
       transition: transform 0.5s ease;
@@ -819,28 +873,29 @@
     font-size: 0.9rem;
     color: $text-secondary;
     line-height: 1.7;
-    width: 100%; // Ensures it stretches to the right edge constraint
-
-    // Limits the text to 2 lines cleanly using webkit line clamp
+    width: 100%;
     display: -webkit-box;
     line-clamp: 2;
     -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;  
+    -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  /* Center the button */
   .news-action {
     display: flex;
     justify-content: center;
     margin-top: 10px;
 
     .glass-btn {
-      padding: 12px 30px; // Make it a bit wider than standard buttons
+      padding: 12px 30px;
     }
   }
 
-  /* --- 7. CTA Action Cards --- */
+
+  /* ------------------------------------------------------------------------
+     7. Call-to-Action (CTA) Dual Cards
+     ------------------------------------------------------------------------ */
+
   .about-cta-section {
     margin-top: 160px;
     position: relative;
@@ -848,12 +903,10 @@
   }
 
   .cta-glass-card {
-    // 1. Solid background: Faster performance and distinct layout contrast
-    background: color.adjust($main, $lightness: 3%); 
-    border: 1px solid rgba($accent, 0.15); // Subtle accent-tinted border
+    background: color.adjust($main, $lightness: 3%);
+    border: 1px solid rgba($accent, 0.15);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
     border-radius: 12px;
-
     display: flex;
     flex-direction: column;
     padding: 40px;
@@ -861,7 +914,7 @@
 
     @media only screen and (min-width: 900px) {
       flex-direction: row;
-      align-items: stretch; // Forces both columns to be exactly the same height
+      align-items: stretch;
     }
   }
 
@@ -872,7 +925,7 @@
     justify-content: flex-start;
 
     h3 {
-      margin: -22px 0 10px 0; 
+      margin: -22px 0 10px 0;
       color: $text-primary;
       font-size: 1.15rem;
       letter-spacing: 2px;
@@ -885,8 +938,7 @@
       line-height: 1.6;
     }
 
-    // TABLET LAYOUT
-    // Turns the block into a grid where text is on the left and buttons stack on the right
+    // Tablet grid layout: Text left, buttons stacked right
     @media only screen and (min-width: 670px) and (max-width: 899.98px) {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -897,22 +949,22 @@
       h3 {
         grid-column: 1;
         grid-row: 1;
-        margin: -15px 0 -10px 0; 
+        margin: -15px 0 -10px 0;
       }
 
       p {
         grid-column: 1;
         grid-row: 2;
-        margin: -20px 0 0 0; 
+        margin: -20px 0 0 0;
       }
 
       .btn-group {
         grid-column: 2;
         grid-row: 1 / span 2;
-        flex-direction: column; // Stack vertically on the right
-        align-items: stretch; // Makes the stacked buttons identical in width
+        flex-direction: column;
+        align-items: stretch;
         gap: 12px;
-        margin-top: 0 !important; // Override the auto margin used for laptop
+        margin-top: 0 !important;
       }
     }
   }
@@ -925,7 +977,7 @@
 
     @media only screen and (min-width: 900px) {
       width: 1px;
-      height: auto; // Stretches perfectly with the card's height
+      height: auto;
       align-self: stretch;
     }
   }
@@ -934,20 +986,15 @@
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    // Pushes the buttons to the absolute bottom of the block.
-    // This perfectly aligns the left and right buttons on laptops regardless of text length!
-    margin-top: auto; 
+    margin-top: auto; // Aligns button pairs along card bottom across uneven descriptions
 
-    // --- Symmetrical Stacking for Narrow Laptops ---
-    // Forces both columns to stack vertically between 900px and 1150px,
-    // avoiding the awkward phase where one side wraps and the other doesn't.
+    // Symmetrical stacking across laptop viewports
     @media only screen and (min-width: 900px) and (max-width: 1120px) {
       flex-direction: column;
       align-items: stretch;
     }
 
-    // --- Symmetrical Stacking for Mobile (500px and lower) ---
-    // Forces the buttons to stack vertically instead of wrapping awkwardly on small screens.
+    // Symmetrical stacking across mobile viewports
     @media only screen and (max-width: 490px) {
       flex-direction: column;
       align-items: stretch;
@@ -968,10 +1015,7 @@
     font-size: 0.85rem;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-
-    // Allows buttons to stretch and fill the space evenly. 
-    // If one wraps to a new line, it beautifully expands to 100% width.
-    flex: 1 1 auto; 
+    flex: 1 1 auto;
     text-align: center;
     white-space: nowrap;
 
