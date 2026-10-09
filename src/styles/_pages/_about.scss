@@ -16,7 +16,7 @@
     margin-bottom: 0;
 
     @media only screen and (min-width: 900px) {
-      margin-top: 100px; // Laptop & desktop top offset
+      margin-top: 80px; // Laptop & desktop top offset
     }
   }
 
@@ -80,7 +80,7 @@
   // --- 3.1. Circuit Header & Line ---
   .about-header {
     width: 100%;
-    margin-bottom: 24px; // Dedicated breathing room between circuit line and bio card
+    margin-bottom: -20px;
     position: relative;
     z-index: 3;
   }
@@ -88,7 +88,7 @@
   .about-title {
     display: flex;
     align-items: center;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     letter-spacing: 4px;
     text-transform: uppercase;
     font-weight: 600;
@@ -96,7 +96,7 @@
     margin: 0;
     line-height: 1.2;
     white-space: nowrap;
-    transform: translateY(-7px); // Centers title text and leading square over the circuit line
+    transform: translateY(-8px); // Centers title text and leading square over the circuit line
 
     // Decorative square anchor preceding the title text
     &::before {
@@ -224,10 +224,10 @@
     -webkit-backdrop-filter: blur(5px) !important;
 
     h2 {
-      margin-top: -10px;
+      margin-top: 0;
       line-height: 1.15;
       color: $accent;
-      font-size: 1.15rem;
+      font-size: 1rem;
       letter-spacing: 2px;
       margin-bottom: 25px;
     }
