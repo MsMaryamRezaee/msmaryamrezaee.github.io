@@ -301,4 +301,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }, { passive: true }); // passive: true keeps the browser scrolling buttery smooth
   }
 
+  // 10. Dynamically locks --news-bar-width to the exact distance from viewport-left
+  function syncNewsBarWidth() {
+    const bar = document.querySelector('.news-header-bar');
+    const wrapper = document.querySelector('.news-title-wrapper');
+    if (!bar || !wrapper) return;
+
+    // bar.getBoundingClientRect().left measures from viewport-left
+    // unaffected by the wrapper's translateX entry animation
+    const visibleWidth = bar.getBoundingClientRect().left + wrapper.offsetWidth;
+    wrapper.style.setProperty('--news-bar-width', `${visibleWidth}px`);
+  }
+
+  window.addEventListener('resize', syncNewsBarWidth);
+  window.addEventListener('DOMContentLoaded', syncNewsBarWidth);
+
 }, false);

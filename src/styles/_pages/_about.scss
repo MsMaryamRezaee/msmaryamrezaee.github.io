@@ -8,11 +8,11 @@
  */
 
 .page-about {
-    
+
   .page-section.about-container {
     margin-top: 70px; // Mobile spacing
     margin-bottom: 0;
-    
+
     @media only screen and (min-width: 900px) {
       margin-top: 100px; // laptop spacing
     }
@@ -37,7 +37,7 @@
     color: $text-primary;
     margin: 0; 
     white-space: nowrap;
-    
+
     &::before {
       content: '';
       margin-right: 20px;
@@ -76,7 +76,7 @@
       background-color: transparent;
       background-repeat: no-repeat;
       z-index: 10;
-      
+
       /* --- GLITCH CUSTOMIZATION --- */
       --g-mask-color: #{color.change($main, $alpha: 0.7)};
       --g-mask-w: 150px;
@@ -162,8 +162,9 @@
     @media only screen and (min-width: 900px) {
       order: initial;
       grid-column: 1;
-      grid-row: 1 / span 2; /* Forces bio to span the full height of the left column */
-      height: 100%;
+      grid-row: 1 / span 2;
+      height: auto; // Lets the card fit content naturally instead of stretching
+      align-self: start; // Prevents grid-stretching artifacts
     }
   }
 
@@ -174,7 +175,7 @@
     border-radius: 12px;
     overflow: hidden;
     z-index: 1; // Sits on the bottom layer of the wrapper
-    
+
     // CRITICAL BUGFIX 2: 
     // Forces the particle canvas into its own dedicated GPU hardware layer. 
     // Without this, the browser flattens the canvas with the glass panel 
@@ -192,20 +193,21 @@
   .about-bio {
     position: relative;
     z-index: 2; // Strictly on top of the particles
-    padding: 40px;
-    height: 100%; 
+    padding: 34px 40px 40px; // 34px top padding optically offsets font ascender space
+    height: auto; // Natural height matching content
     box-sizing: border-box;
-    
+
     // Turn off the duplicate shadow inherited from .glass-panel
     box-shadow: none !important; 
-    
+
     // Re-affirm the hardware lock and blur explicitly to override any remaining browser bugs
     transform: translateZ(0) !important; 
     backdrop-filter: blur(5px) !important;
     -webkit-backdrop-filter: blur(5px) !important;
-    
+
     h2 {
-      margin-top: 0;
+      margin-top: -10px;
+      line-height: 1.15; // Tight leading removes empty font box padding above uppercase glyphs
       color: $accent;
       font-size: 1.15rem;
       letter-spacing: 2px;
@@ -215,9 +217,9 @@
     p {
       color: $text-secondary;
       font-size: 0.8rem;
-      line-height: 1.65; // Tighter line-height (was 1.8)
-      margin-bottom: 12px; // Decreased spacing (was 20px)
-      
+      line-height: 1.65;
+      margin-bottom: 12px;
+
       text-align: justify;
       text-justify: inter-word;
       hyphens: auto;
@@ -226,14 +228,12 @@
         margin-bottom: 0;
       }
 
-      // --- New Typography Styles ---
       strong, b {
-        color: $text-primary; // Makes bold text pop forward
+        color: $text-primary;
         font-weight: 400;
       }
 
       .text-accent {
-        // Lightened slightly so the dark violet remains highly legible on the dark background
         color: color.adjust($accent-secondary, $lightness: 25%); 
         font-weight: 600;
       }
@@ -267,7 +267,7 @@
     --logo-stroke-width: 2px;
     margin-top: -10px; /* Slight tuck so it isn't floating too far away on mobile */
     opacity: 0.7; /* Optional: Knocks it back slightly so it acts as an accent */
-    
+
     @media only screen and (min-width: 900px) {
       order: initial;
       grid-column: 2;
@@ -383,7 +383,7 @@
     position: relative;
     z-index: 1;
     padding: 12px;
-    
+
     // Base style for the two incomplete tech brackets
     &::before, &::after {
       content: '';
@@ -395,7 +395,7 @@
       box-sizing: border-box;
       z-index: 2;
       pointer-events: none;
-      
+
       // REVERT ANIMATION
       transition: height 0.3s cubic-bezier(0.5, 0, 0.1, 1),
                   width 0.3s cubic-bezier(0.5, 0, 0.1, 1) 0.15s,
@@ -414,7 +414,7 @@
       border-radius: 12px;
       opacity: 0; 
       transition: opacity 0.2s ease;
-      
+
       &::before, &::after {
         content: ''; position: absolute; background: #fff;
         box-shadow: 0 0 6px $accent, 0 0 12px $accent;
@@ -439,10 +439,10 @@
         width: 4px; 
         height: 4px; /* Increased slightly from 3px so the hexagon is visually legible */
         opacity: 0; 
-        
+
         /* Moved glow to drop-shadow on the parent so the hexagon's clip-path doesn't cut off the shadow */
         filter: drop-shadow(0 0 6px $accent) drop-shadow(0 0 12px $accent);
-        
+
         /* 1 & 2: Hexagon Head */
         &::before {
           content: ''; 
@@ -452,7 +452,7 @@
           clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
           z-index: 2; /* Forces the head to sit ON TOP of the tail */
         }
-        
+
         /* 3: Centered Comet Tail */
         &::after {
           content: ''; 
@@ -498,7 +498,7 @@
 
       &::before { border-top-color: $accent; border-right-color: $accent; animation: frame-glitch-tr 0.4s infinite linear; }
       &::after { border-bottom-color: $accent; border-left-color: $accent; animation: frame-glitch-bl 0.4s infinite linear; animation-delay: 0.1s; }
-      
+
       .tech-glitch-sparks {
         opacity: 1; transition: opacity 0.1s ease 0.25s; 
         &::before { animation: spark-h 2.2s infinite linear; }
@@ -507,7 +507,7 @@
 
       .constellation-drift {
         opacity: 1; transition: opacity 0.1s ease 0.25s; 
-        
+
         // Asynchronous loop durations and negative delays create a pseudo-random particle system
         .ds-1 { animation: c-drift-1 3.5s infinite linear -0.5s; } .ds-1::after { animation: c-tail-1 3.5s infinite linear -0.5s; }
         .ds-2 { animation: c-drift-2 4.2s infinite linear -1.2s; } .ds-2::after { animation: c-tail-2 4.2s infinite linear -1.2s; }
@@ -520,7 +520,7 @@
         .ds-9 { animation: c-drift-9 5.0s infinite linear -2.5s; } .ds-9::after { animation: c-tail-9 5.0s infinite linear -2.5s; }
         .ds-10 { animation: c-drift-10 3.3s infinite linear -1.8s; } .ds-10::after { animation: c-tail-10 3.3s infinite linear -1.8s; }
       }
-      
+
       img { filter: grayscale(0%) contrast(1.1); }
     }
   }
@@ -570,9 +570,279 @@
     }
   }
 
-  /* --- 6. CTA Action Cards --- */
+  /* --- 6. News Section --- */
+  .about-news-section {
+    margin-top: 80px; 
+    position: relative;
+    z-index: 10;
+  }
+
+  /* The infinite left bar - Solid, Curved, Continuous Gradient & Shadow */
+  .news-header-bar {
+    display: flex;
+    margin-bottom: 50px;
+    position: relative;
+
+    .news-title-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      padding: 12px 35px 12px 0; // Content padding
+
+      // Mobile: visible width is the wrapper plus left page padding
+      --news-bar-width: calc(100% + 30px);
+
+      // Desktop: on a centered container, screen-left to pill-tip scales with 50vw
+      @media only screen and (min-width: 900px) {
+        --news-bar-width: calc(50vw - 280px);
+      }
+
+      // Entry Animation Initial State
+      transform: translateX(-100px);
+      opacity: 0;
+      transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s,
+                  opacity 0.8s ease-out 0.3s;
+
+      // 1. THE UNIFIED STRUCTURAL LAYER
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0; 
+        right: 0; 
+        left: -100vw; // Extends infinitely off-screen to the left
+        z-index: 0; 
+
+        // 1. Fills the off-screen overflow with solid $main
+        background-color: $main; 
+
+        // 2. Starts at $main at screen-left, reaches$accent at the pill cap
+        background-image: linear-gradient(
+          to right, 
+          $main 0%, 
+          rgba($accent, 0.04) 40%, 
+          rgba($accent, 0.18) 100%
+        );
+        background-size: var(--news-bar-width) 100%; // Locks gradient to visible screen span
+        background-position: right top;             // Anchors the accent tip to the right
+        background-repeat: no-repeat;
+
+        // Borders & Pill Curve
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-left: none;
+        border-radius: 0 35px 35px 0;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+      }
+
+      // 2. The Accent Glow (Focused cleanly on the rounded pill tip)
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0; right: 0;
+        width: 150px; // Localized to the pill head
+        border-radius: 0 35px 35px 0; 
+        background-image: linear-gradient(to right, transparent, rgba($accent, 0.12));
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      h2 {
+        margin: 0;
+        color: $text-primary;
+        font-size: 1.15rem;
+        letter-spacing: 4px;
+        position: relative;
+        z-index: 2;
+        transform: translateY(-9px); 
+      }
+
+      .title-glow-orb {
+        width: 8px;
+        height: 8px;
+        background: $accent;
+        border-radius: 50%;
+        box-shadow: 0 0 12px rgba($accent, 0.8);
+        position: relative;
+        z-index: 2;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          width: 24px; height: 24px;
+          border: 1px solid rgba($accent, 0.5);
+          border-radius: 50%;
+          animation: orb-sonar 2s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+      }
+    }
+  }
+
+  // Trigger the slide-in when the parent section (.about-news-section.js-reveal) comes into view
+  .about-news-section.is-visible .news-title-wrapper {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  // The Sonar Animation for the Orb
+  @keyframes orb-sonar {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+  }
+
+  /* The floating items list */
+  .news-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 0; // REMOVED gap so separation lines touch the next item perfectly
+    margin-bottom: 40px;
+  }
+
+  .news-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 25px 0;
+    position: relative;
+    cursor: default;
+
+    // Native border with gradient: snaps perfectly to the hardware pixel grid
+    &:not(:last-child) {
+      border-style: solid;
+      border-width: 0 0 1px 0;
+      border-image: linear-gradient(
+        90deg, 
+        rgba($accent, 0.2) 0%, 
+        rgba($accent, 0.05) 40%, 
+        transparent 100%
+      ) 1;
+    }
+
+    // Hover interaction bracket
+    &::before {
+      content: '';
+      position: absolute;
+      top: 15px; bottom: 15px;
+      left: -20px;
+      width: 2px;
+      background: $accent;
+      transform: scaleY(0);
+      transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      transform-origin: center;
+    }
+
+    &:hover {
+      &::before {
+        transform: scaleY(1);
+        box-shadow: 0 0 10px rgba($accent, 0.8);
+      }
+
+      .tech-bullet {
+        background: $accent;
+        box-shadow: 0 0 8px $accent;
+      }
+      
+      .news-item-date {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 2px rgba($accent, 0.4);
+        
+        &::before {
+          transform: translateX(100%);
+        }
+      }
+    }
+  }
+
+  .news-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px; 
+    margin-top: -10px; // Cleanly moves text up without corrupting the square bullet shape
+  }
+
+  .news-item-title {
+    font-size: 1.05rem;
+    color: $text-primary;
+    margin: 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+
+    // Tiny decorative square next to title
+    .tech-bullet {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: rgba($accent, 0.4);
+      margin-right: 12px;
+      border-radius: 1px;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+  }
+
+  // The beautiful elegant date box
+  .news-item-date {
+    flex-shrink: 0; 
+    font-family: 'Space Grotesk', monospace; 
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $main; // Main colored text
+    background: $accent; // Accent color bg
+    padding: 4px 14px;
+    border-radius: 50px; // New pill shape
+    letter-spacing: 1px;
+    box-shadow: 0 0 15px rgba($accent, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden; // Keeps the shimmer effect inside the pill
+    z-index: 1;
+
+    margin-top: 15px;
+    
+    // The techy sliding shimmer effect
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+      z-index: -1;
+    }
+  }
+
+  .news-item-desc {
+    margin: 0;
+    font-size: 0.9rem;
+    color: $text-secondary;
+    line-height: 1.7;
+    width: 100%; // Ensures it stretches to the right edge constraint
+
+    // Limits the text to 2 lines cleanly using webkit line clamp
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+  }
+
+  /* Center the button */
+  .news-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+    .glass-btn {
+      padding: 12px 30px; // Make it a bit wider than standard buttons
+    }
+  }
+
+  /* --- 7. CTA Action Cards --- */
   .about-cta-section {
-    margin-top: 60px;
+    margin-top: 160px;
     position: relative;
     z-index: 10;
   }
@@ -583,7 +853,7 @@
     border: 1px solid rgba($accent, 0.15); // Subtle accent-tinted border
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
     border-radius: 12px;
-    
+
     display: flex;
     flex-direction: column;
     padding: 40px;
@@ -698,7 +968,7 @@
     font-size: 0.85rem;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    
+
     // Allows buttons to stretch and fill the space evenly. 
     // If one wraps to a new line, it beautifully expands to 100% width.
     flex: 1 1 auto; 
@@ -717,7 +987,7 @@
       border-color: $accent;
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      
+
       i {
         transform: scale(1.15);
       }
