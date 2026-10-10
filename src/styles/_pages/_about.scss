@@ -988,7 +988,7 @@
       position: absolute;
       left: 11px;
       bottom: 0;
-      width: 400px;          // Extends farther right than the top 50px line
+      width: min(400px, 95%);
       height: 40px;
       border-bottom: 2px solid $line;
       border-left: 2px solid $line;
