@@ -958,7 +958,7 @@
       .circuit-node {
         position: absolute;
         right: -4px;
-        top: -4px;          // Centers 8px node over 2px top border
+        top: -4.5px;          // Centers 8px node over 2px top border
         width: 8px;
         height: 8px;
         background: $accent;
@@ -1021,7 +1021,7 @@
         content: '';
         position: absolute;
         top: 0;
-        left: -1px;
+        left: -1.5px;
         transform: translate(calc(-50% + 1px), -50%); // Centered directly over the 2px seam
         width: 14px;
         height: 70px;
