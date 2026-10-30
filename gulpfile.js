@@ -1,3 +1,30 @@
+// Workaround for Node.js 20+ / 22+ Happy Eyeballs (autoSelectFamily) causing
+// AggregateError when portscanner probes localhost
+var net = require('net');
+if (net.setDefaultAutoSelectFamily) {
+  net.setDefaultAutoSelectFamily(false);
+}
+
+try {
+  var portscanner = require('portscanner');
+  var origFind = portscanner.findAPortNotInUse;
+  portscanner.findAPortNotInUse = function(port) {
+    var args = Array.prototype.slice.call(arguments);
+    var cb = args[args.length - 1];
+    if (typeof cb === 'function') {
+      args[args.length - 1] = function(err, freePort) {
+        if (err && (err.name === 'AggregateError' || (err.errors && err.errors.length))) {
+          return cb(null, port);
+        }
+        cb(err, freePort);
+      };
+    }
+    return origFind.apply(this, args);
+  };
+} catch (e) {
+  // portscanner not found or already patched
+}
+
 var gulp = require('gulp');
 var csso = require('gulp-csso');
 var uglify = require('gulp-uglify');
@@ -31,15 +58,15 @@ gulp.task('jekyll-rebuild', gulp.series(['jekyll-build'], function (done) {
  * Build the jekyll site and launch browser-sync
  */
 gulp.task('browser-sync', gulp.series(['jekyll-build'], function(done) {
-    browserSync({
+    browserSync.init({
         server: {
             baseDir: '_site',
             serveStaticOptions: {
                 extensions: ['html']
             }
-        }
-    });
-    done()
+        },
+        listen: '127.0.0.1'
+    }, done)
 }));
 
 /*
@@ -77,7 +104,7 @@ gulp.task('watch', function() {
 /*
 * Default task sequence: build assets, then build Jekyll, then serve and watch
 */
-gulp.task('default', gulp.series(['js', 'sass', 'jekyll-build', 'browser-sync', 'watch']));
+gulp.task('default', gulp.series(['js', 'sass', 'browser-sync', 'watch']));
 
 /*
 * Build task sequence (without serving/watching)
