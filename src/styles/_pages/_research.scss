@@ -601,7 +601,7 @@
 
     @media only screen and (max-width: 767.98px) {
       margin-top: 24px;
-      gap: 24px;
+      gap: 50px;
     }
 
     // Timeline circuit stem running top-to-bottom across both mobile & desktop
@@ -1221,23 +1221,14 @@
      ------------------------------------------------------------------------ */
 
   .research-hero {
-    margin-bottom: 30px;
-
-    @media only screen and (min-width: 768px) {
-      margin-bottom: 40px;
-    }
+    margin-bottom: 40px;
 
     .research-meta-top {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 10px;
       align-items: center;
-      margin-bottom: 20px;
-
-      @media only screen and (min-width: 768px) {
-        gap: 10px;
-        margin-bottom: 30px;
-      }
+      margin-bottom: 30px;
     }
 
     .research-title {
@@ -1251,6 +1242,8 @@
       margin: 0 0 10px 0;
       padding: 0; // Clears 1em padding-top from _typography.scss
       letter-spacing: -0.3px;
+      margin-top: 20px;
+      margin-bottom: 30px;
 
       @media only screen and (min-width: 600px) {
         font-size: 1.75rem;
@@ -1259,7 +1252,6 @@
 
       @media only screen and (min-width: 768px) {
         font-size: 2.2rem;
-        margin-bottom: 12px;
         letter-spacing: -0.5px;
       }
 
@@ -1274,15 +1266,10 @@
         height: 0;
         width: 100%;
         max-width: 100%;
-        margin-top: 8px;
-        margin-bottom: 18px;
+        margin-top: 5px;
+        margin-bottom: 25px;
         border-top: 2px solid;
         border-image: linear-gradient(to left, $line 60%, transparent 100%) 1;
-
-        @media only screen and (min-width: 768px) {
-          margin-top: 5px;
-          margin-bottom: 25px;
-        }
 
         // Node Type 1: Small square with curved corners on circuit termination
         .circuit-node {
@@ -1302,14 +1289,13 @@
       font-size: 0.95rem;
       line-height: 1.55;
       color: color.adjust($text-secondary, $lightness: 10%);
-      margin: 12px 0 16px 0;
+      margin: 0 20px 40px 20px;
       padding: 0;
       max-width: 100%;
 
       @media only screen and (min-width: 768px) {
         font-size: 1.12rem;
         line-height: 1.6;
-        margin: 20px 20px 16px 20px;
       }
     }
 
@@ -1318,8 +1304,8 @@
       grid-template-columns: 1fr;
       gap: 14px;
       padding: 16px 18px;
-      margin-top: 20px;
-      margin-bottom: 24px;
+      margin-top: 28px;
+      margin-bottom: 35px;
       background-color: color.adjust($main, $lightness: 2.5%);
       border: 1px solid color.adjust($line, $lightness: -24%);
       border-radius: 8px;
@@ -1327,16 +1313,12 @@
       @media only screen and (min-width: 600px) {
         gap: 18px;
         padding: 20px;
-        margin-top: 24px;
-        margin-bottom: 28px;
       }
 
       @media only screen and (min-width: 768px) {
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 20px;
         padding: 24px;
-        margin-top: 28px;
-        margin-bottom: 35px;
         border-radius: 10px;
       }
 
@@ -1348,7 +1330,7 @@
         // Mobile: Subtle dashed record divider matching cyber-circuit theme
         @media only screen and (max-width: 767.98px) {
           &:not(:last-child) {
-            padding-bottom: 12px;
+            padding-bottom: 16px;
             border-bottom: 1px solid rgba($line, 0.3);
           }
         }
@@ -1361,11 +1343,10 @@
           color: $text-secondary;
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 10px;
 
           @media only screen and (min-width: 768px) {
             font-size: 0.75rem;
-            gap: 10px;
           }
 
           i {
@@ -1410,15 +1391,13 @@
       justify-content: center;
       gap: 10px;
       align-items: stretch;
-      margin-top: 24px;
-      margin-bottom: 28px;
+      margin-top: 50px;
+      margin-bottom: 35px;
       width: 100%;
       box-sizing: border-box;
 
       @media only screen and (min-width: 768px) {
         gap: 12px;
-        margin-top: 50px;
-        margin-bottom: 35px;
         align-items: center;
       }
 
@@ -1559,14 +1538,6 @@
         gap: 6px;
         margin-right: 2px;
 
-        @media only screen and (max-width: 550px) {
-          width: 100%;
-          font-size: 0.72rem;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          margin-bottom: 4px;
-        }
-
         i {
           color: $accent;
           font-size: 0.75rem;
@@ -1631,12 +1602,8 @@
      ------------------------------------------------------------------------ */
 
   .research-main {
-    margin-top: 60px;
+    margin-top: 100px;
     margin-bottom: 50px;
-
-    @media only screen and (min-width: 768px) {
-      margin-top: 100px;
-    }
 
     .research-content {
       padding: 20px 25px;
