@@ -1,7 +1,181 @@
 ---
-layout: page
+layout: default
 title: Research
-description: None.
+permalink: /research/
+description: Academic papers, exploratory investigations, and research projects by Maryam Rezaee in LLM interpretability, neurosymbolic architectures, and verifiable AI.
 ---
 
-This is the Research page. You can add unique styles for this page in `src/styles/_pages/_research.scss`.
+<div class="page-section research-index-container">
+
+  <!-- PAGE HERO & CIRCUIT TITLE -->
+  <header class="research-index-hero js-reveal">
+    <div class="research-header-title">
+      <h1 class="research-page-title">
+        <span class="title-text">Research Stream</span>
+        <span class="circuit-line">
+          <span class="circuit-node"></span>
+        </span>
+      </h1>
+      <!-- <p class="research-page-tagline">
+        Inquiries at the boundary of machine cognition, semantic transparency, and algorithmic structure. Spanning current preprints on black-box interpretability, active lab mentorship, and foundational competition work.
+      </p> -->
+    </div>
+
+    <!-- FILTER CONTROLS -->
+    {% assign all_research = site.research | sort: 'date' | reverse %}
+    {% assign active_count = 0 %}
+    {% assign print_count = 0 %}
+    {% assign preprint_count = 0 %}
+    {% assign other_count = 0 %}
+    {% for item in all_research %}
+      {% if item.category == 'active' %}
+        {% assign active_count = active_count | plus: 1 %}
+      {% elsif item.category == 'print' %}
+        {% assign print_count = print_count | plus: 1 %}
+      {% elsif item.category == 'preprint' or item.category == 'papers' %}
+        {% assign preprint_count = preprint_count | plus: 1 %}
+      {% elsif item.category == 'other' or item.category == 'early' %}
+        {% assign other_count = other_count | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+
+    <div class="research-filter-bar">
+      <div class="filter-label">
+        <i class="fa-solid fa-filter" aria-hidden="true"></i>
+        <span class="filter-label-text">Filter</span>
+      </div>
+      <div class="filter-buttons">
+        <button type="button" class="filter-btn active" data-filter="all">
+          <span class="btn-text">All</span>
+          <span class="btn-count">{{ all_research.size }}</span>
+        </button>
+        <button type="button" class="filter-btn" data-filter="active">
+          <span class="btn-text">Active</span>
+          <span class="btn-count">{{ active_count }}</span>
+        </button>
+        <button type="button" class="filter-btn" data-filter="print">
+          <span class="btn-text">Print</span>
+          <span class="btn-count">{{ print_count }}</span>
+        </button>
+        <button type="button" class="filter-btn" data-filter="preprint">
+          <span class="btn-text">Preprint</span>
+          <span class="btn-count">{{ preprint_count }}</span>
+        </button>
+        <button type="button" class="filter-btn" data-filter="other">
+          <span class="btn-text">Other</span>
+          <span class="btn-count">{{ other_count }}</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- RESEARCH TIMELINE STREAM -->
+  <div class="research-stream js-reveal" id="researchStream">
+    <div class="timeline-circuit-stem" aria-hidden="true"></div>
+
+    {% for item in all_research %}
+      {% assign item_cat = item.category %}{% if item_cat == 'papers' %}{% assign item_cat = 'preprint' %}{% elsif item_cat == 'early' %}{% assign item_cat = 'other' %}{% endif %}
+      <article class="research-entry" data-category="{{ item_cat }}">
+        
+        <!-- LEFT TIMELINE / LEDGER RAIL -->
+        <div class="entry-rail">
+          <div class="rail-node">
+            <span class="rail-dot"></span>
+            <span class="rail-pulse"></span>
+          </div>
+          <div class="rail-meta">
+            <span class="rail-date">{{ item.date_display | default: item.date }}</span>
+            <span class="rail-category-tag">{{ item.category_label | default: item.category | capitalize }}</span>
+          </div>
+        </div>
+
+        <!-- RIGHT CYBER-ACADEMIC FLAT CARD -->
+        <div class="entry-card">
+          <div class="card-top-badges">
+            {% if item.status %}
+              <span class="status-badge">
+                <i class="fa-solid fa-circle-dot" aria-hidden="true"></i>
+                {{ item.status }}
+              </span>
+            {% endif %}
+            {% if item.venue_short %}
+              <span class="venue-badge">
+                <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
+                {{ item.venue_short }}
+              </span>
+            {% endif %}
+          </div>
+
+          <h2 class="card-title">
+            <a href="{{ item.url }}">{{ item.title }}</a>
+          </h2>
+
+          <div class="card-authors">
+            <span class="author-icon"><i class="fa-solid fa-user-group" aria-hidden="true"></i></span>
+            <div class="authors-inline">
+              {% if item.authors %}
+                {% for author in item.authors %}
+                  <span class="author-item {% if author.highlight %}is-lead{% endif %}">
+                    {{ author.name }}{% if author.role %}<span class="role"> ({{ author.role }})</span>{% endif %}{% unless forloop.last %}, {% endunless %}
+                  </span>
+                {% endfor %}
+              {% else %}
+                <span class="author-item is-lead">{{ site.user_name }}</span>
+              {% endif %}
+              {% if item.host %}
+                <span class="card-host"><span style="padding-right: 10px;">&bull;</span>{{ item.host }}</span>
+              {% endif %}
+            </div>
+          </div>
+
+          {% if item.summary %}
+            <p class="card-summary">
+              {{ item.summary }}
+            </p>
+          {% elsif item.excerpt %}
+            <p class="card-summary">
+              {{ item.excerpt | strip_html | truncatewords: 35 }}
+            </p>
+          {% endif %}
+
+          {% if item.tags and item.tags.size > 0 %}
+            <div class="card-tags">
+              {% for tag in item.tags %}
+                <span class="card-tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="card-footer">
+            <div class="quick-links">
+              {% if item.links and item.links.size > 0 %}
+                {% for link in item.links %}
+                  <a href="{{ link.url }}" class="link-pill" {% unless link.url contains '#' %}target="_blank" rel="noopener noreferrer"{% endunless %} title="{{ link.name }}">
+                    {% if link.icon %}<i class="{{ link.icon }}" aria-hidden="true"></i>{% endif %}
+                    <span>{{ link.name }}</span>
+                  </a>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+            <a href="{{ item.url }}" class="deep-dive-btn">
+              <span>Explore</span>
+              <i class="fa-solid fa-angle-right" aria-hidden="true"></i>
+            </a>
+          </div>
+
+        </div>
+      </article>
+    {% endfor %}
+
+    <!-- EMPTY STATE (Shows if no items match a filter) -->
+    <div class="stream-empty-state" id="streamEmptyState" style="display: none;">
+      <i class="fa-solid fa-satellite-dish" aria-hidden="true"></i>
+      <h3>OOPS, this filter is a dud :(</h3>
+      <p>Please select another filter or view all research.</p>
+      <button type="button" class="action-btn btn-primary" id="resetFilterBtn">View All Research</button>
+    </div>
+
+  </div>
+
+</div>

@@ -239,9 +239,7 @@
       font-size: 0.8rem;
       line-height: 1.65;
       margin-bottom: 12px;
-      text-align: justify;
-      text-justify: inter-word;
-      hyphens: auto;
+      @include text-justified-hyphens;
 
       &:last-child {
         margin-bottom: 0;

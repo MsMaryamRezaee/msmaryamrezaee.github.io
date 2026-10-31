@@ -25,4 +25,9 @@ me_url: "https://me.maryamrezaee.me"
 google-analytics:
   id: "G-0R7D6BFS2Z"
 
+collections:
+  research:
+    output: true
+    permalink: /research/:name/
+
 exclude: ['package.json', 'package-lock.json', 'src' , 'node_modules', 'gulpfile.js']

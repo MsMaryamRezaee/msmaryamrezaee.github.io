@@ -16,6 +16,8 @@
   // This makes the main content area grow
   // to fill space, pushing footer down
   flex: 1 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 // Global container for page sections

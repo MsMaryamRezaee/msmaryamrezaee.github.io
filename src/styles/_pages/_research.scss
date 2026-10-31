@@ -1,5 +1,2373 @@
 @use '../_config/variables' as *;
+@use "sass:color";
+
+/* ==========================================================================
+   Page-Specific: Research & Publications Stylesheet
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Shared Tokens & Base Card Utilities (Flat Palette, No Glass Blur)
+   -------------------------------------------------------------------------- */
+
+.page-research,
+.page-research-detail {
+  
+  // Reusable flat dark panel for cards & blocks
+  .flat-card,
+  .entry-card,
+  .research-filter-bar,
+  .research-meta-grid,
+  .research-content,
+  .lab-dispatch-placeholder,
+  .lab-dispatch-card,
+  .pagination-link,
+  .pagination-all-btn,
+  .stream-empty-state {
+    background-color: color.adjust($main, $lightness: 1.5%);
+    border: 1px solid color.adjust($line, $lightness: -24%);
+    border-radius: 10px;
+    box-shadow: 0 6px 18px color-mix(in srgb, color-mix(in srgb, $main, #000 70%), transparent 60%);
+  }
+
+  // Common Meta Badges
+  .meta-badge,
+  .status-badge,
+  .venue-badge,
+  .category-badge,
+  .date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    border-radius: 20px;
+    padding: 4.5px 10px 4px 10px;
+    line-height: 1.2;
+
+    @media only screen and (max-width: 600px) {
+      font-size: 0.7rem;
+      padding: 3.5px 8px 3px 8px;
+      gap: 5px;
+    }
+  }
+
+  .status-badge {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: color.change($accent, $alpha: 0.12);
+    border: 1px solid color.change($accent, $alpha: 0.3);
+    color: color.adjust($accent, $lightness: 10%);
+
+    i {
+      font-size: 0.55rem;
+      color: $accent;
+      transform: translateY(-0.5px);
+    }
+  }
+
+  .venue-badge {
+    font-weight: 500;
+    background: color.adjust($main, $lightness: 8%);
+    border: 1px solid color.adjust($line, $lightness: -20%);
+    color: $text-secondary;
+    max-width: 100%;
+    white-space: normal;
+
+    i {
+      font-size: 0.7rem;
+      color: color.adjust($line, $lightness: 20%);
+      transform: translateY(-0.5px);
+    }
+  }
+
+  .category-badge {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: color.change($accent-secondary, $alpha: 0.35);
+    border: 1px solid color.change($accent, $alpha: 0.25);
+    color: $text-primary;
+
+    i {
+      font-size: 0.7rem;
+      color: $accent;
+      transform: translateY(-0.5px);
+    }
+  }
+
+  .date-badge {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: color.adjust($main, $lightness: 6%);
+    border: 1px solid color.adjust($line, $lightness: -20%);
+    color: color.adjust($text-secondary, $lightness: 10%);
+
+    i {
+      font-size: 0.7rem;
+      color: $accent;
+      transform: translateY(-0.5px);
+    }
+  }
+
+  // Heading bar with neon trace & glow orb (Node Type 2: circle with glowing effect next to unique title)
+  .section-heading-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid color.change($line, $alpha: 0.5);
+    position: relative;
+
+    @media only screen and (max-width: 600px) {
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      gap: 10px;
+    }
+
+    @media only screen and (max-width: 330px) {
+      flex-wrap: wrap;
+    }
+
+    .heading-glow-title {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+
+      @media only screen and (max-width: 600px) {
+        gap: 12px;
+      }
+
+      i {
+        color: $accent;
+        font-size: 1.1rem;
+        display: inline-flex;
+        align-items: center;
+        margin-top: -6px;
+        margin-right: -5px;
+
+        @media only screen and (max-width: 600px) {
+          font-size: 1rem;
+          margin-top: -3px;
+        }
+      }
+
+      h3, .title-text {
+        font-size: 1.25rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        color: $text-primary;
+        margin: 0;
+        padding: 0; // Clears 1em padding-top from _typography.scss
+        line-height: 1;
+        display: inline-block;
+        transform: translateY(-2px); // Optical elevation for Space Grotesk ascender
+
+        @media only screen and (max-width: 600px) {
+          font-size: 1.1rem;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      // Node Type 2: Small circle with glowing effect next to a unique title (NOT on circuit)
+      .title-glow-orb {
+        width: 8px;
+        height: 8px;
+        background: $accent;
+        border-radius: 50%;
+        box-shadow: 0 0 12px rgba($accent, 0.8);
+        position: relative;
+        z-index: 2;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 24px;
+          height: 24px;
+          border: 1px solid rgba($accent, 0.5);
+          border-radius: 50%;
+          animation: orb-sonar 2s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+      }
+    }
+  }
+}
+
+
+/* ==========================================================================
+   2. Research Index Page (.page-research)
+   ========================================================================== */
 
 .page-research {
-  --wip-placeholder: true; 
+
+  .research-index-container {
+    margin-top: 70px;
+    margin-bottom: 0px;
+
+    @media only screen and (min-width: 900px) {
+      margin-top: 60px;
+      margin-bottom: 0px;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     2.1 Hero & Circuit Header
+     ------------------------------------------------------------------------ */
+
+  .research-index-hero {
+    margin-bottom: 36px;
+
+    @media only screen and (max-width: 600px) {
+      margin-bottom: 24px;
+    }
+  }
+
+  .research-header-title {
+    margin-bottom: 24px;
+
+    @media only screen and (max-width: 600px) {
+      margin-bottom: 16px;
+    }
+  }
+
+  .research-page-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.15rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: $text-primary;
+    margin: 0 0 16px 0;
+    padding: 0; // Clears 1em padding-top from _typography.scss
+    line-height: 1;
+
+    @media only screen and (max-width: 550px) {
+      font-size: 0.98rem;
+      letter-spacing: 2.5px;
+      margin-bottom: 12px;
+    }
+
+    // Node Type 1: Small square with curved corners preceding title
+    &::before {
+      content: '';
+      margin-right: 18px;
+      width: 8px;
+      height: 8px;
+      background: $accent;
+      box-shadow: 0 0 12px rgba($accent, 0.8);
+      border-radius: 2px;
+      flex-shrink: 0;
+
+      @media only screen and (max-width: 550px) {
+        margin-right: 12px;
+        width: 7px;
+        height: 7px;
+      }
+    }
+
+    // Space Grotesk optical centering: lifts text to match square node & circuit line
+    .title-text {
+      display: inline-block;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .circuit-line {
+      flex: 1;
+      position: relative;
+      height: 2px;
+      margin-left: 20px;
+      border-top: 2px solid $line;
+      min-width: 24px;
+
+      @media only screen and (max-width: 550px) {
+        margin-left: 14px;
+      }
+
+      // Node Type 1: Small square with curved corners on circuit termination (NEVER a circle)
+      .circuit-node {
+        position: absolute;
+        right: 0;
+        top: -5px; // Centers 8px square over 2px border
+        width: 8px;
+        height: 8px;
+        background: $accent;
+        box-shadow: 0 0 12px rgba($accent, 0.8);
+        border-radius: 2px;
+
+        @media only screen and (max-width: 550px) {
+          width: 7px;
+          height: 7px;
+          top: -4.5px;
+        }
+      }
+    }
+  }
+
+  .research-page-tagline {
+    font-size: 1rem;
+    color: $text-secondary;
+    line-height: 1.7;
+    max-width: 760px;
+    margin: 0;
+    padding: 0;
+
+    @media only screen and (max-width: 600px) {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     2.2 Category Filter Bar (Snapped to Card Bounds & Fully Responsive)
+     ------------------------------------------------------------------------ */
+
+  .research-filter-bar {
+    display: grid;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 24px;
+    background-color: color.adjust($main, $lightness: 1.5%);
+    border: 1px solid color.adjust($line, $lightness: -24%);
+    border-radius: 8px;
+    box-shadow: 0 4px 14px color-mix(in srgb, color-mix(in srgb, $main, #000 70%), transparent 50%);
+
+    // --- DESKTOP & TABLET (Two-Column Layout: >= 768px) ---
+    // In .research-entry: grid-template-columns: 140px minmax(0, 1fr); gap: 36px;
+    // Date rail is 140px, stem gap is 36px. Total to card start: 176px.
+    // Filter bar: padding 6px + label 164px + gap 6px = 176px!
+    // The filter tabs start at EXACTLY 176px, snapping right above the cards.
+    @media only screen and (min-width: 768px) {
+      grid-template-columns: 164px minmax(0, 1fr);
+      gap: 6px;
+      padding: 6px;
+    }
+
+    // --- MOBILE (Single-Column Layout: < 768px) ---
+    // In .research-entry: padding-left: 34px (circuit stem at 11px, cards start at 34px).
+    // Filter bar: padding 5px + icon 24px + gap 5px = 34px!
+    // The title text "Filter" is hidden, leaving just the icon on the left (above the stem),
+    // and the tabs start at EXACTLY 34px (directly above the boundary of the cards).
+    @media only screen and (max-width: 767.98px) {
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 5px;
+      padding: 5px;
+      margin-top: 16px;
+    }
+
+    // ------------------------------------------------------------------------
+    // Left Section: .filter-label
+    // ------------------------------------------------------------------------
+    .filter-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 38px;
+      box-sizing: border-box;
+      user-select: none;
+      border-radius: 6px;
+      color: $text-secondary;
+      transition: all 0.2s ease;
+      font-size: 0.8rem;
+
+      .filter-label-text {
+          margin-left: 5px;
+          letter-spacing: 2px;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+
+      @media only screen and (min-width: 768px) {
+        gap: 8px;
+        padding: 0 10px;
+      }
+
+      // Tablet: reduced padding to fit tighter spaces cleanly
+      @media only screen and (min-width: 768px) and (max-width: 960px) {
+        gap: 6px;
+        padding: 0 6px;
+      }
+
+      // Mobile (< 768px): Hide title text, just have the icon on the left
+      @media only screen and (max-width: 767.98px) {
+        padding: 0;
+        min-height: 34px;
+
+        .filter-label-text {
+          display: none;
+        }
+      }
+
+      i {
+        color: $accent;
+        font-size: 0.82rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        @media only screen and (max-width: 767.98px) {
+          font-size: 0.85rem;
+          transform: translateY(0);
+        }
+      }
+    }
+
+    // ------------------------------------------------------------------------
+    // Right Section: .filter-buttons (Tabs stretching to fill the bar)
+    // ------------------------------------------------------------------------
+    .filter-buttons {
+      display: grid;
+      width: 100%;
+      box-sizing: border-box;
+
+      // Desktop: 5 equal columns stretching across the entire card boundary
+      @media only screen and (min-width: 768px) {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      // Tablet: slightly tighter gap
+      @media only screen and (min-width: 768px) and (max-width: 960px) {
+        gap: 5px;
+      }
+
+      // Mobile (500.02px - 767.98px): Single row of 5 columns, shrinking with page
+      @media only screen and (min-width: 500.02px) and (max-width: 767.98px) {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 5px;
+      }
+
+      // Mobile (<= 500px): When all 5 no longer fit together in one row,
+      // divide into two rows and stretch to fill:
+      // Row 1: 3 tabs (span 2 of 6 columns)
+      // Row 2: 2 tabs (span 3 of 6 columns)
+      @media only screen and (max-width: 500px) {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 5px;
+
+        .filter-btn:nth-child(1),
+        .filter-btn:nth-child(2),
+        .filter-btn:nth-child(3) {
+          grid-column: span 2;
+        }
+
+        .filter-btn:nth-child(4),
+        .filter-btn:nth-child(5) {
+          grid-column: span 3;
+        }
+      }
+    }
+
+    // ------------------------------------------------------------------------
+    // Filter Buttons (.filter-btn)
+    // ------------------------------------------------------------------------
+    .filter-btn {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      background: color.change($accent, $alpha: 0.08);
+      border: 1px solid color.adjust($line, $lightness: -15%);
+      color: $text-secondary;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+
+      // Desktop (> 960px): full spacious padding
+      @media only screen and (min-width: 960.02px) {
+        padding: 8px 10px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        gap: 8px;
+        min-height: 30px;
+      }
+
+      // Tablet (768px - 960px): decreased padding so all 5 fit in two-column mode
+      @media only screen and (min-width: 768px) and (max-width: 960px) {
+        padding: 7px 4px;
+        font-size: 0.76rem;
+        font-weight: 500;
+        gap: 5px;
+        min-height: 30px;
+      }
+
+      // Mobile 5-in-a-row (500.02px - 767.98px): shrink with page
+      @media only screen and (min-width: 500.02px) and (max-width: 767.98px) {
+        padding: 6px 3px;
+        font-size: 0.72rem;
+        font-weight: 500;
+        gap: 4px;
+        min-height: 30px;
+      }
+
+      // Mobile two rows (<= 500px): stretch across 2 rows cleanly
+      @media only screen and (max-width: 500px) {
+        padding: 7px 5px;
+        font-size: 0.76rem;
+        font-weight: 500;
+        gap: 6px;
+        min-height: 30px;
+      }
+
+      // Small phone screens (<= 380px)
+      @media only screen and (max-width: 380px) {
+        padding: 6px 3px;
+        font-size: 0.7rem;
+        gap: 4px;
+      }
+
+      @media only screen and (max-width: 767.98px) {
+        &:hover {
+          transform: none;
+        }
+      }
+
+      .btn-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .btn-count {
+        background: color.change($accent, $alpha: 0.15);
+        color: $text-secondary;
+        border-radius: 10px;
+        font-weight: 500;
+        line-height: 1;
+        flex-shrink: 0;
+
+        @media only screen and (min-width: 960.02px) {
+          font-size: 0.72rem;
+          padding: 2px 7px;
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 960px) {
+          font-size: 0.65rem;
+          padding: 1px 5px;
+        }
+
+        @media only screen and (min-width: 500.02px) and (max-width: 767.98px) {
+          font-size: 0.62rem;
+          padding: 1px 4px;
+        }
+
+        @media only screen and (max-width: 500px) {
+          font-size: 0.68rem;
+          padding: 2px 6px;
+        }
+
+        @media only screen and (max-width: 380px) {
+          font-size: 0.62rem;
+          padding: 1px 4px;
+        }
+      }
+
+      &:hover {
+        background: color.change($accent, $alpha: 0.16);
+        color: $text-primary;
+        border-color: color.change($accent, $alpha: 0.4);
+        transform: translateY(-1px);
+      }
+
+      &.active {
+        background: color.change($accent, $alpha: 0.3);
+        border-color: $accent;
+        color: color.adjust($text-primary, $lightness: 10%);
+        box-shadow: none;
+
+        .btn-count {
+          background: $accent;
+          color: $main;
+        }
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     2.3 Hybrid Ledger / Timeline Stream (Preserved Circuit Structure on Mobile)
+     ------------------------------------------------------------------------ */
+
+  .research-stream {
+    position: relative;
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    @media only screen and (max-width: 767.98px) {
+      margin-top: 24px;
+      gap: 24px;
+    }
+
+    // Timeline circuit stem running top-to-bottom across both mobile & desktop
+    .timeline-circuit-stem {
+      display: block;
+      position: absolute;
+      top: 30px;
+      bottom: 24px;
+      width: 0px;
+      border-left: 2px solid;
+      border-image: linear-gradient(
+        to bottom,
+        $line 0%,
+        $line 85%,
+        transparent 100%
+      ) 1;
+      z-index: 1;
+
+      // Mobile: positioned along left edge behind the glowing rail-nodes
+      left: 11px;
+
+      @media only screen and (min-width: 768px) {
+        left: 145px;
+        top: 38px;
+        bottom: 0px;
+      }
+    }
+
+    &.is-empty {
+      .timeline-circuit-stem {
+        display: none !important;
+      }
+    }
+  }
+
+  .research-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    padding-left: 34px; // Mobile: room for vertical circuit stem and pulsing orb
+    transition: opacity 0.3s ease, transform 0.3s ease;
+
+    &.is-hidden {
+      display: none;
+    }
+
+    @media only screen and (min-width: 768px) {
+      display: grid;
+      grid-template-columns: 140px minmax(0, 1fr);
+      gap: 36px;
+      align-items: start;
+      padding-left: 0;
+    }
+
+    // --- Left Rail (Date / Ledger node) ---
+    .entry-rail {
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding-top: 20px;
+
+      @media only screen and (min-width: 768px) {
+        flex-direction: column;
+        align-items: flex-end;
+        text-align: right;
+        padding-top: 30px;
+        padding-right: 28px;
+        gap: 6px;
+        width: auto;
+      }
+
+      // Node Type 2: Small circle on the timeline with glowing effect
+      .rail-node {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        // Mobile: Centered directly over the 2px stem at left: 11px of the stream
+        left: -34px;
+        top: 30px;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        z-index: 3;
+
+        @media only screen and (min-width: 768px) {
+          left: auto;
+          right: -12px;
+          top: 36px;
+          transform: none;
+          width: 12px;
+          height: 12px;
+        }
+
+        .rail-dot {
+          width: 8px;
+          height: 8px;
+          background: $accent;
+          border-radius: 50%;
+          box-shadow: 0 0 10px rgba($accent, 0.9);
+          position: relative;
+          z-index: 2;
+        }
+
+        .rail-pulse {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 18px;
+          height: 18px;
+          border: 1px solid rgba($accent, 0.45);
+          border-radius: 50%;
+          animation: orb-sonar 2.5s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
+
+          @media only screen and (min-width: 768px) {
+            width: 20px;
+            height: 20px;
+            border-color: rgba($accent, 0.4);
+          }
+        }
+      }
+
+      .rail-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 8px;
+
+        @media only screen and (min-width: 768px) {
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 6px;
+          width: auto;
+        }
+      }
+
+      .rail-date {
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: $accent;
+        font-family: 'IBM Plex Mono', monospace;
+
+        @media only screen and (min-width: 768px) {
+          font-size: 0.95rem;
+          letter-spacing: 1px;
+        }
+      }
+
+      .rail-category-tag {
+        font-size: 0.68rem;
+        color: $main;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        background: $accent;
+        padding: 1.75px 8px 2px 8px;
+        border-radius: 10px;
+        font-weight: 600;
+        margin-left: 0;
+
+        @media only screen and (min-width: 768px) {
+          font-size: 0.75rem;
+          letter-spacing: 2px;
+          background: transparent;
+          border: none;
+          padding: 0;
+          color: $text-secondary;
+          font-weight: 400;
+        }
+      }
+    }
+
+    // --- Right Cyber-Academic Flat Card ---
+    .entry-card {
+      padding: 18px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      background-color: color.adjust($main, $lightness: 3.5%);
+      border: 1px solid color.adjust($line, $lightness: -20%);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px color-mix(in srgb, color-mix(in srgb, $main, #000 70%), transparent 60%);
+      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+
+      @media only screen and (min-width: 768px) {
+        padding: 28px;
+        gap: 16px;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px color-mix(in srgb, color-mix(in srgb, $main, #000 70%), transparent 60%);
+      }
+
+      &:hover {
+        border-color: $accent;
+        box-shadow: 0 8px 24px color-mix(in srgb, color-mix(in srgb, $main, #000 70%), transparent 75%);
+        transform: translateY(-2px);
+      }
+
+      .card-top-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+
+        @media only screen and (min-width: 768px) {
+          gap: 10px;
+        }
+      }
+
+      .card-title {
+        font-size: 1.15rem;
+        line-height: 1.35;
+        margin: 0;
+        padding: 0; // Clears 1em padding-top from _typography.scss
+        font-weight: 500;
+
+        @media only screen and (min-width: 768px) {
+          font-size: 1.35rem;
+        }
+
+        a {
+          color: $text-primary;
+          text-decoration: none;
+          transition: color 0.2s ease;
+
+          &:hover {
+            color: $accent;
+          }
+        }
+      }
+
+      .card-authors {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 0.82rem;
+        color: $text-secondary;
+        line-height: 1.45;
+
+        @media only screen and (min-width: 768px) {
+          align-items: center;
+          gap: 10px;
+          font-size: 0.88rem;
+          line-height: 1.5;
+        }
+
+        .author-icon {
+          color: $accent;
+          font-size: 0.8rem;
+          flex-shrink: 0;
+          display: inline-flex;
+          align-items: center;
+          margin-top: 2px;
+
+          @media only screen and (min-width: 768px) {
+            font-size: 0.85rem;
+            margin-top: 0;
+            transform: translateY(-1px);
+          }
+        }
+
+        .authors-inline {
+          .author-item {
+            color: $text-secondary;
+
+            &.is-lead {
+              font-weight: 500;
+              color: color.adjust($text-primary, $lightness: 5%);
+            }
+
+            .role {
+              font-size: 0.78rem;
+              color: color.adjust($text-secondary, $lightness: -15%);
+            }
+          }
+
+          .card-host {
+            margin-left: 4px;
+            color: color.adjust($main, $lightness: 50%);
+            font-style: italic;
+          }
+        }
+      }
+
+      .card-summary {
+        font-size: 0.82rem;
+        line-height: 1.6;
+        color: $text-secondary;
+        margin: 0;
+        padding: 0;
+        @include text-justified-hyphens;
+        margin-top: -5px;
+
+        @media only screen and (min-width: 768px) {
+          font-size: 0.8rem;
+          line-height: 1.5;
+        }
+      }
+
+      .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 2px;
+
+        @media only screen and (min-width: 768px) {
+          gap: 8px;
+          margin-top: 4px;
+        }
+
+        .card-tag {
+          font-size: 0.7rem;
+          color: color.adjust($main, $lightness: 60%);
+          background: color.adjust($main, $lightness: 8%);
+          border: 1px solid color.adjust($line, $lightness: -20%);
+          padding: 2px 6px;
+          border-radius: 4px;
+          letter-spacing: 0.3px;
+
+          @media only screen and (min-width: 768px) {
+            font-size: 0.75rem;
+            border-radius: 6px;
+          }
+        }
+      }
+
+      .card-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+        padding-top: 14px;
+        border-top: 1px solid color.adjust($line, $lightness: -20%);
+        margin-top: 4px;
+
+        @media only screen and (min-width: 500px) {
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          padding-top: 20px;
+          margin-top: 6px;
+          margin-bottom: -5px;
+        }
+
+        .quick-links {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          align-items: center;
+
+          @media only screen and (max-width: 499.98px) {
+            width: 100%;
+          }
+
+          .link-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 8px 12px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: $text-primary;
+            background: color.change($accent, $alpha: 0.1);
+            border: 1px solid color.adjust($line, $lightness: -10%);
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+
+            @media only screen and (max-width: 499.98px) {
+              flex: 1 1 auto;
+              min-height: 40px;
+              box-sizing: border-box;
+            }
+
+            @media only screen and (min-width: 500px) {
+              padding: 6px 12px;
+              font-size: 0.82rem;
+            }
+
+            i {
+              color: $accent;
+              font-size: 0.8rem;
+              transform: translateY(-0.5px);
+            }
+
+            &:hover {
+              background: $accent;
+              border-color: color.change($accent, $alpha: 0.4);
+              color: $main;
+              transform: translateY(-1px);
+
+              i {
+                color: $main;
+              }
+            }
+          }
+        }
+
+        .deep-dive-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          padding: 9px 16px;
+          font-size: 0.85rem;
+          font-weight: 500;
+          color: $main;
+          background: $accent;
+          border: 1px solid transparent;
+          border-radius: 6px;
+          text-decoration: none;
+          box-shadow: 0 3px 12px rgba($accent, 0.25);
+          transition: all 0.2s ease;
+
+          @media only screen and (max-width: 499.98px) {
+            width: 100%;
+            min-height: 40px;
+            box-sizing: border-box;
+          }
+
+          @media only screen and (min-width: 500) {
+            padding: 7.5px 14px 8px 14px;
+            font-size: 0.88rem;
+          }
+
+          i {
+            transition: transform 0.2s ease;
+            font-size: 0.72rem;
+            margin-top: 1px;
+          }
+
+          &:hover {
+            background: color.adjust($accent, $lightness: 8%);
+            box-shadow: 0 4px 16px rgba($accent, 0.4);
+            transform: translateY(-1px);
+
+            i {
+              transform: translateX(4px);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Empty state when a filter matches 0 entries
+  .stream-empty-state {
+    padding: 40px 18px;
+    text-align: center;
+    margin-top: 20px;
+    background-color: color.adjust($main, $lightness: 1.5%);
+    border: 1px solid color.adjust($line, $lightness: -24%);
+    border-radius: 8px;
+    position: relative;
+    z-index: 2;
+
+    @media only screen and (min-width: 600px) {
+      padding: 60px 24px;
+      border-radius: 10px;
+    }
+
+    i {
+      font-size: 2rem;
+      color: $accent;
+      margin-bottom: 14px;
+      display: inline-block;
+
+      @media only screen and (min-width: 600px) {
+        font-size: 2.2rem;
+        margin-bottom: 16px;
+      }
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: $text-primary;
+      margin: 0 0 8px 0;
+      padding: 0; // Clears 1em padding-top
+      line-height: 1.25;
+
+      @media only screen and (min-width: 600px) {
+        font-size: 1.2rem;
+      }
+    }
+
+    p {
+      color: $text-secondary;
+      margin: 0 0 18px 0;
+      font-size: 0.88rem;
+
+      @media only screen and (min-width: 600px) {
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+      }
+    }
+
+    .action-btn,
+    #resetFilterBtn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 22px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: $main;
+      background: $accent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 3px 12px rgba($accent, 0.25);
+      transition: all 0.2s ease;
+      font-family: inherit;
+
+      @media only screen and (min-width: 600px) {
+        font-size: 0.88rem;
+      }
+
+      &:hover {
+        background: color.adjust($accent, $lightness: 8%);
+        box-shadow: 0 4px 16px rgba($accent, 0.4);
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+
+/* ==========================================================================
+   3. Dedicated Research Subpage (.page-research-detail)
+   ========================================================================== */
+
+.page-research-detail {
+  position: relative;
+  z-index: 2;
+
+  .research-detail-container {
+    margin-top: 70px;
+    margin-bottom: 0;
+
+    @media only screen and (min-width: 900px) {
+      margin-top: 60px;
+      margin-bottom: 0;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     3.1 Breadcrumbs
+     ------------------------------------------------------------------------ */
+
+  .research-breadcrumbs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.82rem;
+    margin-bottom: 22px;
+
+    @media only screen and (min-width: 600px) {
+      gap: 10px;
+      font-size: 0.88rem;
+      margin-bottom: 28px;
+    }
+
+    .breadcrumb-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: $accent;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      i {
+        transition: transform 0.2s ease;
+        transform: translateY(1px);
+      }
+
+      &:hover {
+        color: color.adjust($accent, $lightness: 10%);
+        transform: translateX(-2px);
+      }
+    }
+
+    .breadcrumb-separator {
+      color: color.change($line, $alpha: 0.8);
+      font-size: 0.7rem;
+      transform: translateY(1px);
+    }
+
+    .breadcrumb-current {
+      color: color.change($line, $alpha: 0.8);
+      font-weight: 400;
+
+      @media only screen and (max-width: 570px) {
+        max-width: max(50px, calc(100vw - 225px));
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     3.2 Research Hero & Metadata
+     ------------------------------------------------------------------------ */
+
+  .research-hero {
+    margin-bottom: 30px;
+
+    @media only screen and (min-width: 768px) {
+      margin-bottom: 40px;
+    }
+
+    .research-meta-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 20px;
+
+      @media only screen and (min-width: 768px) {
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+    }
+
+    .research-title {
+      display: flex;
+      flex-direction: column;
+      text-transform: none;
+      font-size: 1.35rem;
+      line-height: 1.3;
+      font-weight: 700;
+      color: $text-primary;
+      margin: 0 0 10px 0;
+      padding: 0; // Clears 1em padding-top from _typography.scss
+      letter-spacing: -0.3px;
+
+      @media only screen and (min-width: 600px) {
+        font-size: 1.75rem;
+        letter-spacing: -0.4px;
+      }
+
+      @media only screen and (min-width: 768px) {
+        font-size: 2.2rem;
+        margin-bottom: 12px;
+        letter-spacing: -0.5px;
+      }
+
+      .title-text {
+        display: block;
+        line-height: 1.35;
+        font-size: inherit;
+      }
+
+      .circuit-line {
+        position: relative;
+        height: 0;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 8px;
+        margin-bottom: 18px;
+        border-top: 2px solid;
+        border-image: linear-gradient(to left, $line 60%, transparent 100%) 1;
+
+        @media only screen and (min-width: 768px) {
+          margin-top: 5px;
+          margin-bottom: 25px;
+        }
+
+        // Node Type 1: Small square with curved corners on circuit termination
+        .circuit-node {
+          position: absolute;
+          right: 0;
+          top: -5px;
+          width: 8px;
+          height: 8px;
+          background: $accent;
+          box-shadow: 0 0 12px rgba($accent, 0.8);
+          border-radius: 2px;
+        }
+      }
+    }
+
+    .research-subtitle {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: color.adjust($text-secondary, $lightness: 10%);
+      margin: 12px 0 16px 0;
+      padding: 0;
+      max-width: 100%;
+
+      @media only screen and (min-width: 768px) {
+        font-size: 1.12rem;
+        line-height: 1.6;
+        margin: 20px 20px 16px 20px;
+      }
+    }
+
+    .research-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 16px 18px;
+      margin-top: 20px;
+      margin-bottom: 24px;
+      background-color: color.adjust($main, $lightness: 2.5%);
+      border: 1px solid color.adjust($line, $lightness: -24%);
+      border-radius: 8px;
+
+      @media only screen and (min-width: 600px) {
+        gap: 18px;
+        padding: 20px;
+        margin-top: 24px;
+        margin-bottom: 28px;
+      }
+
+      @media only screen and (min-width: 768px) {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        padding: 24px;
+        margin-top: 28px;
+        margin-bottom: 35px;
+        border-radius: 10px;
+      }
+
+      .meta-column {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        // Mobile: Subtle dashed record divider matching cyber-circuit theme
+        @media only screen and (max-width: 767.98px) {
+          &:not(:last-child) {
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba($line, 0.3);
+          }
+        }
+
+        .meta-label {
+          font-size: 0.72rem;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          color: $text-secondary;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          @media only screen and (min-width: 768px) {
+            font-size: 0.75rem;
+            gap: 10px;
+          }
+
+          i {
+            color: $accent;
+            font-size: 0.75rem;
+            transform: translateY(-0.5px);
+          }
+        }
+
+        .meta-value {
+          font-size: 0.88rem;
+          color: $text-primary;
+          line-height: 1.45;
+
+          @media only screen and (min-width: 768px) {
+            font-size: 0.95rem;
+            line-height: 1.5;
+          }
+        }
+
+        .authors-list {
+          display: inline;
+        }
+
+        .author-tag {
+          &.author-highlight {
+            color: $text-primary;
+            font-weight: 500;
+          }
+
+          .author-role {
+            font-size: 0.78rem;
+            color: $text-secondary;
+          }
+        }
+      }
+    }
+
+    .research-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      align-items: stretch;
+      margin-top: 24px;
+      margin-bottom: 28px;
+      width: 100%;
+      box-sizing: border-box;
+
+      @media only screen and (min-width: 768px) {
+        gap: 12px;
+        margin-top: 50px;
+        margin-bottom: 35px;
+        align-items: center;
+      }
+
+      .action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 18px;
+        font-size: 0.88rem;
+        font-weight: 500;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.25s ease;
+        min-height: 44px;
+        box-sizing: border-box;
+        white-space: nowrap;
+        text-align: center;
+
+        span {
+          white-space: nowrap;
+        }
+
+        i {
+          flex-shrink: 0;
+        }
+
+        .external-icon {
+          font-size: 0.72rem;
+          opacity: 0.8;
+          flex-shrink: 0;
+        }
+
+        // --- MOBILE BREAKPOINTS (< 600px) ---
+
+        // Case A: Single action link on mobile: stretches to 100% width and stays that way!
+        &:only-child {
+          width: 100%;
+          flex: 1 1 100%;
+          max-width: 100%;
+        }
+
+        // Case B: Small mobile devices (<= 420px):
+        // All action buttons stretch to 100% width, stacking into clean full-width rows
+        @media only screen and (max-width: 420px) {
+          width: 100%;
+          flex: 1 1 100%;
+          max-width: 100%;
+        }
+
+        // Case C: Mobile & small viewports (420.02px to 599.98px):
+        // Multiple links share the row in pairs (50% each, stretching to fill).
+        // Trailing odd child (e.g. 3rd of 3) expands to 100% full width to stay balanced!
+        @media only screen and (min-width: 420.02px) and (max-width: 599.98px) {
+          flex: 1 1 calc(50% - 10px);
+          width: calc(50% - 10px);
+          max-width: 100%;
+
+          &:last-child:nth-child(odd) {
+            flex: 1 1 100%;
+            width: 100%;
+            max-width: 100%;
+          }
+        }
+
+        // --- TABLET & DESKTOP (>= 600px) ---
+        // Return to natural auto sizing, centered in the hero header
+        @media only screen and (min-width: 600px) {
+          padding: 10px 22px;
+          font-size: 0.92rem;
+          min-height: auto;
+          width: auto;
+          flex: 0 0 auto;
+          max-width: none;
+          min-width: 130px;
+
+          &:only-child {
+            width: auto;
+            flex: 0 0 auto;
+            max-width: none;
+          }
+        }
+
+        &.btn-primary {
+          background: $accent;
+          color: $main;
+          box-shadow: 0 4px 14px rgba($accent, 0.3);
+
+          &:hover {
+            background: color.adjust($accent, $lightness: 8%);
+            box-shadow: 0 6px 20px rgba($accent, 0.45);
+            transform: translateY(-2px);
+          }
+        }
+
+        &.btn-secondary {
+          background: color.adjust($main, $lightness: 4.5%);
+          border: 1px solid color.adjust($line, $lightness: -15%);
+          color: $text-primary;
+
+          i {
+            color: $accent;
+          }
+
+          &:hover {
+            background: $accent;
+            border-color: color.change($accent, $alpha: 0.4);
+            color: $main;
+            transform: translateY(-2px);
+
+            i {
+              color: $main;
+            }
+          }
+        }
+      }
+    }
+
+    .research-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      margin-bottom: 35px;
+
+      @media only screen and (min-width: 768px) {
+        gap: 10px;
+        font-size: 0.85rem;
+      }
+
+      .tags-prefix {
+        color: $text-secondary;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-right: 2px;
+
+        @media only screen and (max-width: 550px) {
+          width: 100%;
+          font-size: 0.72rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 4px;
+        }
+
+        i {
+          color: $accent;
+          font-size: 0.75rem;
+          transform: translateY(0.5px);
+        }
+      }
+
+      .research-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        color: color.adjust($text-secondary, $lightness: 12%);
+        background: color.adjust($main, $lightness: 4.5%);
+        border: 1px solid color.adjust($line, $lightness: -16%);
+        padding: 3px 10px 3px 8px;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px color-mix(in srgb, color-mix(in srgb, $main, #000 70%), transparent 50%);
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: default;
+
+        @media only screen and (min-width: 768px) {
+          gap: 10px;
+          font-size: 0.8rem;
+          letter-spacing: 0.35px;
+          padding: 4px 12px 4px 10px;
+          border-radius: 6px;
+        }
+
+        // Micro cyber-node (Node Type 1: small square with curved corners)
+        &::before {
+          content: '';
+          margin-top: 1px;
+          width: 4px;
+          height: 4px;
+          border-radius: 1px;
+          background: color.change($accent, $alpha: 0.6);
+          transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        &:hover {
+          background: color.change($accent, $alpha: 0.14);
+          border-color: color.change($accent, $alpha: 0.45);
+          color: color.adjust($text-primary, $lightness: 10%);
+          transform: translateY(-1.5px);
+          box-shadow: 0 4px 12px color-mix(in srgb, color-mix(in srgb, $main, #000 70%), transparent 70%);
+
+          &::before {
+            background: $accent;
+            box-shadow: 0 0 6px rgba($accent, 0.8);
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     3.3 Main Article Content (Flat, Legible, Responsive Typography)
+     ------------------------------------------------------------------------ */
+
+  .research-main {
+    margin-top: 60px;
+    margin-bottom: 50px;
+
+    @media only screen and (min-width: 768px) {
+      margin-top: 100px;
+    }
+
+    .research-content {
+      padding: 20px 25px;
+      line-height: 1.6;
+      font-size: 0.9rem;
+      color: $text-primary;
+      background-color: color.adjust($main, $lightness: 1.8%);
+      border: 1px solid color.adjust($line, $lightness: -22%);
+      border-left: 2px solid $accent;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px color-mix(in srgb, color-mix(in srgb, $main, #000 70%), transparent 60%);
+      @include text-justified-hyphens;
+
+      @media only screen and (min-width: 600px) {
+        padding: 28px 30px;
+        font-size: 0.92rem;
+      }
+
+      @media only screen and (min-width: 768px) {
+        padding: 38px 40px;
+        font-size: 0.95rem;
+        border-radius: 10px;
+        box-shadow: 0 6px 20px color-mix(in srgb, color-mix(in srgb, $main, #000 70%), transparent 60%);
+      }
+
+      h2 {
+        font-size: 1.18rem;
+        font-weight: 500;
+        color: $text-primary;
+        margin-top: 28px;
+        margin-bottom: 14px;
+        padding: 0 0 8px 0; // Clears 1em padding-top from _typography.scss
+        border-bottom: 1px solid color.change($line, $alpha: 0.5);
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        line-height: 1.35;
+
+        @media only screen and (min-width: 768px) {
+          font-size: 1.45rem;
+          margin-top: 36px;
+          margin-bottom: 16px;
+          gap: 15px;
+          align-items: center;
+          line-height: 1.3;
+        }
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        &::before {
+          content: '';
+          margin-top: 5px;
+          width: 5px;
+          height: 5px;
+          background: $accent;
+          box-shadow: 0 0 8px rgba($accent, 0.6);
+          border-radius: 2px;
+          display: inline-block;
+          flex-shrink: 0;
+          transform: translateY(5px);
+
+          @media only screen and (min-width: 768px) {
+            margin-top: 4px;
+            width: 6px;
+            height: 6px;
+            transform: translateY(-1px); // Centers node with cap-height
+          }
+        }
+      }
+
+      h3 {
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: color.adjust($accent, $lightness: 15%);
+        margin-top: 22px;
+        margin-bottom: 10px;
+        padding: 0; // Clears 1em padding-top from _typography.scss
+        line-height: 1.3;
+
+        @media only screen and (min-width: 768px) {
+          font-size: 1.2rem;
+          margin-top: 28px;
+          margin-bottom: 12px;
+        }
+      }
+
+      p {
+        margin-bottom: 0px;
+      }
+
+      b, strong {
+        font-weight: 450;
+      }
+
+      ul, ol {
+        margin-bottom: 10px;
+        padding-left: 18px;
+
+        @media only screen and (min-width: 768px) {
+          padding-left: 24px;
+        }
+
+        li {
+          margin-bottom: 8px;
+          color: color.adjust($text-secondary, $lightness: 10%);
+        }
+      }
+
+      blockquote {
+        margin: 18px 0;
+        padding: 12px 16px;
+        border-left: 3px solid color.adjust($line, $lightness: 12%);
+        background: color.adjust($main, $lightness: 3.5%);
+        border-radius: 0 6px 6px 0;
+        font-style: italic;
+        color: $text-primary;
+
+        @media only screen and (min-width: 768px) {
+          margin: 24px 0;
+          padding: 16px 24px;
+          border-radius: 0 8px 8px 0;
+        }
+      }
+
+      code {
+        background: color.adjust($main, $lightness: 4.5%);
+        border: 1px solid color.adjust($line, $lightness: -22%);
+        color: color.adjust($accent, $lightness: 20%);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.88em;
+        font-family: 'IBM Plex Mono', monospace;
+        word-break: break-word;
+      }
+
+      pre {
+        background: color.adjust($main, $lightness: -1.5%);
+        border: 1px solid color.adjust($line, $lightness: -20%);
+        border-radius: 6px;
+        padding: 14px 16px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 16px 0;
+
+        @media only screen and (min-width: 768px) {
+          border-radius: 8px;
+          padding: 16px 20px;
+          margin: 20px 0;
+        }
+
+        code {
+          background: transparent;
+          border: none;
+          padding: 0;
+          color: $text-primary;
+          word-break: normal;
+        }
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     3.4 Lab Dispatches Section (lab.maryamrezaee.me)
+     ------------------------------------------------------------------------ */
+
+  .research-lab-section {
+    margin-top: 60px;
+    margin-bottom: 35px;
+
+    @media only screen and (min-width: 768px) {
+      margin-top: 100px;
+      margin-bottom: 50px;
+    }
+
+    .lab-link-pill {
+      font-size: 0.72rem;
+      color: $accent;
+      background: color.change($accent, $alpha: 0.1);
+      border: 1px solid color.change($accent, $alpha: 0.25);
+      padding: 3px 10px 4px 10px;
+      border-radius: 20px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      margin-bottom: 0;
+      flex-shrink: 0;
+
+      @media only screen and (min-width: 768px) {
+        font-size: 0.8rem;
+        padding: 3px 12px 4px 12px;
+      }
+
+      i {
+        font-size: 0.6rem;
+        margin-top: 2px;
+      }
+
+      &:hover {
+        background: $accent;
+        color: $main;
+      }
+    }
+
+    .lab-dispatch-placeholder {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        "graphic tag"
+        "text    text";
+      gap: 14px 12px;
+      align-items: center;
+      padding: 18px 22px;
+      background-color: color.adjust($main, $lightness: 0.5%);
+      border: 1px solid color.adjust($line, $lightness: -24%);
+      border-radius: 8px;
+
+      @media only screen and (min-width: 680px) {
+        grid-template-columns: auto 1fr auto;
+        grid-template-areas: "graphic text tag";
+        align-items: center;
+        gap: 24px;
+        padding: 24px 28px;
+        border-radius: 10px;
+      }
+
+      .placeholder-graphic {
+        grid-area: graphic;
+        position: relative;
+        width: 42px;
+        height: 42px;
+        border-radius: 6px;
+        background: color.adjust($main, $lightness: 5%);
+        border: 1px solid rgba($accent, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        @media only screen and (min-width: 680px) {
+          width: 48px;
+          height: 48px;
+          border-radius: 8px;
+        }
+
+        i {
+          font-size: 1.15rem;
+          color: $accent;
+          position: relative;
+          z-index: 2;
+
+          @media only screen and (min-width: 680px) {
+            font-size: 1.3rem;
+          }
+        }
+
+        .lab-orb-pulse {
+          position: absolute;
+          inset: -4px;
+          border-radius: 8px;
+          border: 1px solid $accent;
+          opacity: 0.4;
+          animation: pulseBorder 2.4s infinite ease-out;
+
+          @media only screen and (min-width: 680px) {
+            border-radius: 10px;
+          }
+        }
+      }
+
+      .placeholder-tag {
+        grid-area: tag;
+        justify-self: end;
+
+        @media only screen and (min-width: 680px) {
+          justify-self: auto;
+          flex-shrink: 0;
+        }
+
+        span {
+          font-size: 0.7rem;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          color: color.adjust($accent, $lightness: 10%);
+          background: color.change($accent, $alpha: 0.12);
+          border: 1px solid color.change($accent, $alpha: 0.3);
+          padding: 4px 10px;
+          border-radius: 20px;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          white-space: nowrap;
+
+          @media only screen and (min-width: 680px) {
+            font-size: 0.75rem;
+            padding: 5px 12px;
+          }
+        }
+      }
+
+      .placeholder-text {
+        grid-area: text;
+        width: 100%;
+        padding-top: 12px;
+        border-top: 1px solid rgba($line, 0.22);
+
+        @media only screen and (min-width: 680px) {
+          padding-top: 0;
+          border-top: none;
+          flex: 1;
+        }
+
+        h4 {
+          font-size: 0.98rem;
+          font-weight: 500;
+          color: $text-primary;
+          margin: 0 0 6px 0;
+          padding: 0; // Clears 1em padding-top
+          line-height: 1.3;
+
+          @media only screen and (min-width: 680px) {
+            font-size: 1.05rem;
+            line-height: 1.2;
+          }
+        }
+
+        p {
+          font-size: 0.85rem;
+          line-height: 1.55;
+          color: $text-secondary;
+          margin: 0;
+
+          @media only screen and (min-width: 680px) {
+            font-size: 0.9rem;
+            line-height: 1.6;
+          }
+
+          a {
+            color: $accent;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
+    .lab-dispatches-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+
+      @media only screen and (min-width: 600px) {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .lab-dispatch-card {
+        padding: 16px 14px;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background-color: color.adjust($main, $lightness: 1.5%);
+        border: 1px solid color.adjust($line, $lightness: -24%);
+        border-radius: 8px;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+
+        @media only screen and (min-width: 680px) {
+          padding: 22px;
+          gap: 12px;
+          border-radius: 10px;
+        }
+
+        &:hover {
+          border-color: rgba($accent, 0.4);
+          transform: translateY(-2px);
+
+          .dispatch-header i {
+            transform: translateX(4px);
+            color: $accent;
+          }
+        }
+
+        .dispatch-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 0.75rem;
+          color: $text-secondary;
+
+          @media only screen and (min-width: 680px) {
+            font-size: 0.78rem;
+          }
+
+          i {
+            transition: all 0.2s ease;
+          }
+        }
+
+        .dispatch-title {
+          font-size: 0.98rem;
+          color: $text-primary;
+          margin: 0;
+          padding: 0; // Clears 1em padding-top
+          font-weight: 500;
+          line-height: 1.3;
+
+          @media only screen and (min-width: 680px) {
+            font-size: 1.05rem;
+          }
+        }
+
+        .dispatch-excerpt {
+          font-size: 0.82rem;
+          line-height: 1.5;
+          color: $text-secondary;
+          margin: 0;
+
+          @media only screen and (min-width: 680px) {
+            font-size: 0.88rem;
+          }
+        }
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     3.5 Citation Section (BibTeX)
+     ------------------------------------------------------------------------ */
+
+  .research-citation-section {
+    margin-top: 60px;
+    margin-bottom: 35px;
+
+    @media only screen and (min-width: 768px) {
+      margin-top: 100px;
+      margin-bottom: 50px;
+    }
+
+    .copy-bibtex-btn {
+      background: color.adjust($main, $lightness: 4%);
+      border: 1px solid color.adjust($line, $lightness: -15%);
+      color: $text-primary;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      margin-bottom: 0;
+      flex-shrink: 0;
+
+      @media only screen and (min-width: 768px) {
+        font-size: 0.82rem;
+        padding: 6px 8px;
+        gap: 7px;
+      }
+
+      i {
+        color: $accent;
+      }
+
+      &:hover {
+        background: color.change($accent, $alpha: 0.16);
+        border-color: color.change($accent, $alpha: 0.4);
+        color: color.adjust($text-primary, $lightness: 10%);
+      }
+
+      &.copied {
+        background: rgba(46, 204, 113, 0.2);
+        border-color: rgba(46, 204, 113, 0.5);
+        color: #2ecc71;
+
+        i {
+          color: #2ecc71;
+        }
+      }
+    }
+
+    .bibtex-container {
+      padding: 14px 16px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      background-color: color.adjust($main, $lightness: -0.5%);
+      border: 1px solid color.adjust($line, $lightness: -24%);
+      border-radius: 6px;
+      box-shadow: inset 0 0 25px color-mix(in srgb, color-mix(in srgb, $main, #000 70%), transparent 30%);
+
+      @media only screen and (min-width: 768px) {
+        padding: 20px;
+        border-radius: 8px;
+      }
+
+      pre {
+        margin: 0;
+
+        code {
+          font-family: 'IBM Plex Mono', monospace;
+          font-size: 0.78rem;
+          color: color.adjust($accent, $lightness: 15%);
+          line-height: 1.55;
+
+          @media only screen and (min-width: 768px) {
+            font-size: 0.88rem;
+            line-height: 1.6;
+          }
+        }
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     3.6 Prev / Next Project Navigation Footer (Cohesive Cyber-Deck Navigator)
+     ------------------------------------------------------------------------ */
+
+  .research-pagination-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 60px;
+    position: relative;
+    z-index: 2;
+
+    @media only screen and (min-width: 640px) {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 100px;
+    }
+
+    .pagination-col {
+      width: 100%;
+    }
+
+    .all-col {
+      order: 3; // On mobile: sits cleanly under Prev / Next cards
+
+      @media only screen and (min-width: 640px) {
+        order: initial;
+        width: auto;
+      }
+    }
+
+    .pagination-link,
+    .pagination-all-btn {
+      position: relative;
+      z-index: 2;
+    }
+
+    .pagination-link {
+      padding: 14px 16px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      background-color: color.adjust($main, $lightness: 0.5%);
+      border: 1px solid color.adjust($line, $lightness: -24%);
+      border-radius: 8px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+
+      @media only screen and (min-width: 640px) {
+        padding: 16px 20px;
+      }
+
+      .nav-direction {
+        font-size: 0.72rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $accent;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        @media only screen and (min-width: 640px) {
+          font-size: 0.75rem;
+        }
+
+        i {
+          font-size: 0.65rem;
+        }
+      }
+
+      .nav-title {
+        font-size: 0.88rem;
+        font-weight: 500;
+        color: $text-primary;
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+
+        @media only screen and (min-width: 640px) {
+          font-size: 0.95rem;
+        }
+      }
+
+      &:hover:not(.disabled) {
+        border-color: rgba($accent, 0.4);
+        transform: translateY(-2px);
+      }
+
+      &.disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+
+        .nav-direction {
+          color: $text-secondary;
+        }
+
+        .nav-title {
+          font-weight: 400;
+          color: $text-secondary;
+        }
+      }
+    }
+
+    .next-col .pagination-link {
+      align-items: flex-start;
+      text-align: left;
+
+      .nav-direction {
+        justify-content: flex-start;
+      }
+
+      @media only screen and (min-width: 640px) {
+        align-items: flex-end;
+        text-align: right;
+
+        .nav-direction {
+          justify-content: flex-end;
+        }
+      }
+    }
+
+    .pagination-all-btn {
+      width: 100%;
+      height: 42px;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: $text-secondary;
+      text-decoration: none;
+      font-size: 1rem;
+      background-color: color.adjust($main, $lightness: 0.5%);
+      border: 1px solid color.adjust($line, $lightness: -24%);
+      border-radius: 8px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+      box-sizing: border-box;
+
+      // Mobile: prominent "All Research" label alongside icon
+      &::after {
+        content: 'All Research';
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.78rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: $text-secondary;
+        transition: color 0.2s ease;
+
+        @media only screen and (min-width: 640px) {
+          display: none;
+        }
+      }
+
+      @media only screen and (min-width: 640px) {
+        width: 48px;
+        height: 100%;
+        min-height: 48px;
+        font-size: 1.1rem;
+      }
+
+      &:hover {
+        color: $accent;
+        border-color: rgba($accent, 0.4);
+
+        &::after {
+          color: $accent;
+        }
+      }
+    }
+  }
+
+}
+
+/* --------------------------------------------------------------------------
+   4. Animations
+   -------------------------------------------------------------------------- */
+
+@keyframes orb-sonar {
+  0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0; }
+}
+
+@keyframes pulseBorder {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(0.96);
+    opacity: 0.6;
+  }
 }

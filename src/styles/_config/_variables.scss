@@ -1,7 +1,7 @@
 // Site colors
-$main: #121221;             // Dark blueish violet
-$text-primary: #EAEAEA;     // Light grey for primary text
-$text-secondary: #B3B3B3;   // Slightly darker grey for secondary text
+$main: #0B0B14;             // Dark blueish violet
+$text-primary: #DCDCDC;     // Light grey for primary text
+$text-secondary: #AAAAAA;   // Slightly darker grey for secondary text
 $accent: #a786fc;           // A lighter violet for links and accents
 $accent-secondary: #4c45a2; // A slightly darker violet for secondary accents
 $line: #4d4078;             // A darker version of accent for lines and circuits
@@ -9,3 +9,26 @@ $love: red;                 // Color for the heart in the footer
 
 // Breakpoints
 $cut: 550px;
+
+// Standardized mixin for justified text with full cross-browser hyphenation
+// and clean word-breaking across inline spans, bold, italic, and colored text
+@mixin text-justified-hyphens {
+  text-align: justify;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  word-break: normal;
+
+  // Guarantee that child spans, bold, italic, and colored text inherit hyphenation and break cleanly
+  b, strong, em, i, span, mark, small, a {
+    -webkit-hyphens: inherit;
+    -moz-hyphens: inherit;
+    -ms-hyphens: inherit;
+    hyphens: inherit;
+    overflow-wrap: inherit;
+    word-break: inherit;
+  }
+}

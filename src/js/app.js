@@ -316,4 +316,318 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener('resize', syncNewsBarWidth);
   window.addEventListener('DOMContentLoaded', syncNewsBarWidth);
 
+
+  /* 11. Research Page Category Filtering (Multi-Selection Enabled) */
+  const filterBtns = document.querySelectorAll('.research-filter-bar .filter-btn');
+  const researchEntries = document.querySelectorAll('.research-entry');
+  const researchStream = document.getElementById('researchStream');
+  const emptyState = document.getElementById('streamEmptyState');
+  const resetBtn = document.getElementById('resetFilterBtn');
+
+  if (filterBtns.length > 0 && researchEntries.length > 0) {
+    const allBtn = document.querySelector('.research-filter-bar .filter-btn[data-filter="all"]');
+
+    function getActiveFilters() {
+      const active = [];
+      filterBtns.forEach(btn => {
+        const f = btn.getAttribute('data-filter');
+        if (f !== 'all' && btn.classList.contains('active')) {
+          active.push(f);
+        }
+      });
+      return active;
+    }
+
+    function applyFilters() {
+      const activeFilters = getActiveFilters();
+      let visibleCount = 0;
+
+      researchEntries.forEach(entry => {
+        const category = entry.getAttribute('data-category');
+        if (activeFilters.length === 0 || activeFilters.includes(category)) {
+          entry.classList.remove('is-hidden');
+          visibleCount++;
+        } else {
+          entry.classList.add('is-hidden');
+        }
+      });
+
+      if (emptyState) {
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+
+      if (researchStream) {
+        if (visibleCount === 0) {
+          researchStream.classList.add('is-empty');
+        } else {
+          researchStream.classList.remove('is-empty');
+        }
+      }
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        if (filter === 'all') {
+          // Clicking "All" deselects all individual category filters
+          filterBtns.forEach(b => b.classList.remove('active'));
+          if (allBtn) allBtn.classList.add('active');
+        } else {
+          // Clicking an individual category toggles it
+          if (btn.classList.contains('active')) {
+            // Disable this filter
+            btn.classList.remove('active');
+            // If no filters are active now, fall back to "All"
+            const remaining = getActiveFilters();
+            if (remaining.length === 0 && allBtn) {
+              allBtn.classList.add('active');
+            }
+          } else {
+            // Enable this filter
+            btn.classList.add('active');
+            // Deactivate "All" since a specific filter is now on
+            if (allBtn) {
+              allBtn.classList.remove('active');
+            }
+          }
+        }
+
+        applyFilters();
+      });
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        if (allBtn) {
+          allBtn.classList.add('active');
+        }
+        applyFilters();
+      });
+    }
+  }
+
+  /* 12. Research BibTeX Citation Copy */
+  const copyBibtexBtn = document.getElementById('copyBibtexBtn');
+  const bibtexSnippet = document.getElementById('bibtexSnippet');
+
+  if (copyBibtexBtn && bibtexSnippet) {
+    copyBibtexBtn.addEventListener('click', () => {
+      const text = bibtexSnippet.textContent.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const originalHtml = copyBibtexBtn.innerHTML;
+        copyBibtexBtn.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i> <span class="copy-text">Copied!</span>';
+        copyBibtexBtn.classList.add('copied');
+
+        setTimeout(() => {
+          copyBibtexBtn.innerHTML = originalHtml;
+          copyBibtexBtn.classList.remove('copied');
+        }, 2200);
+      }).catch(err => {
+        console.error('Failed to copy BibTeX: ', err);
+      });
+    });
+  }
+
+  /* 13. Discretionary Soft-Hyphenation for Justified Blocks */
+  // Under the W3C CSS Text Module specification, browsers intentionally skip
+  // automatic hyphenation on Capitalized words / Title-Case terms to avoid
+  // breaking proper nouns. Furthermore, words with existing hyphens (e.g. Concept-Based)
+  // are only broken at the hyphen.
+  // This helper injects discretionary soft hyphens (\u00AD) into long capitalized words,
+  // compound terms, and styled text spans inside justified hyphenated containers.
+  // Soft hyphens are invisible unless the browser needs to wrap the line at that point.
+  (function initJustifiedSoftHyphens() {
+    const ACADEMIC_WORDS = {
+      'interpretability': 'in-ter-pret-abil-i-ty',
+      'interpreting': 'in-ter-pret-ing',
+      'interpret': 'in-ter-pret',
+      'interpretation': 'in-ter-pre-ta-tion',
+      'decomposition': 'de-com-po-si-tion',
+      'decomposing': 'de-com-pos-ing',
+      'trustworthy': 'trust-wor-thy',
+      'generative': 'gen-er-a-tive',
+      'bottleneck': 'bot-tle-neck',
+      'bottlenecks': 'bot-tle-necks',
+      'contrastive': 'con-tras-tive',
+      'explanations': 'ex-pla-na-tions',
+      'explanation': 'ex-pla-na-tion',
+      'architecture': 'ar-chi-tec-ture',
+      'architectures': 'ar-chi-tec-tures',
+      'architectural': 'ar-chi-tec-tur-al',
+      'evaluation': 'eval-u-a-tion',
+      'evaluations': 'eval-u-a-tions',
+      'evaluating': 'eval-u-at-ing',
+      'embedding': 'em-bed-ding',
+      'embeddings': 'em-bed-dings',
+      'representation': 'rep-re-sen-ta-tion',
+      'representations': 'rep-re-sen-ta-tions',
+      'classification': 'clas-si-fi-ca-tion',
+      'transformers': 'trans-form-ers',
+      'transformer': 'trans-form-er',
+      'retrieval': 're-triev-al',
+      'generation': 'gen-er-a-tion',
+      'generations': 'gen-er-a-tions',
+      'activation': 'ac-ti-va-tion',
+      'activations': 'ac-ti-va-tions',
+      'transparent': 'trans-par-ent',
+      'transparency': 'trans-par-en-cy',
+      'traceability': 'trace-abil-i-ty',
+      'traceable': 'trace-a-ble',
+      'exploratory': 'ex-plor-a-to-ry',
+      'intermediate': 'in-ter-me-di-ate',
+      'contradictory': 'con-tra-dic-to-ry',
+      'contradiction': 'con-tra-dic-tion',
+      'conflicting': 'con-flict-ing',
+      'reinforcement': 're-in-force-ment',
+      'superposition': 'su-per-po-si-tion',
+      'generalization': 'gen-er-al-i-za-tion',
+      'generalize': 'gen-er-al-ize',
+      'robustness': 'ro-bust-ness',
+      'probabilistic': 'prob-a-bi-lis-tic',
+      'optimization': 'op-ti-mi-za-tion',
+      'optimizing': 'op-ti-miz-ing',
+      'hallucinations': 'hal-lu-ci-na-tions',
+      'hallucination': 'hal-lu-ci-na-tion',
+      'mitigating': 'mit-i-gat-ing',
+      'mitigation': 'mit-i-ga-tion',
+      'synthesizes': 'syn-the-siz-es',
+      'synthesizing': 'syn-the-siz-ing',
+      'repositories': 're-pos-i-to-ries',
+      'repository': 're-pos-i-to-ry',
+      'concept': 'con-cept',
+      'concepts': 'con-cepts',
+      'conceptual': 'con-cep-tu-al',
+      'analysis': 'anal-y-sis',
+      'analyses': 'anal-y-ses',
+      'distribution': 'dis-tri-bu-tion',
+      'distributions': 'dis-tri-bu-tions',
+      'attribution': 'at-tri-bu-tion',
+      'attributions': 'at-tri-bu-tions',
+      'surrogate': 'sur-ro-gate',
+      'surrogates': 'sur-ro-gates',
+      'interpreter': 'in-ter-pret-er',
+      'interpreters': 'in-ter-pret-ers',
+      'proprietary': 'pro-pri-e-tary',
+      'continuous': 'con-tin-u-ous',
+      'competitive': 'com-pet-i-tive',
+      'performance': 'per-form-ance',
+      'parameter': 'pa-ram-e-ter',
+      'parameters': 'pa-ram-e-ters',
+      'efficient': 'ef-fi-cient',
+      'framework': 'frame-work',
+      'frameworks': 'frame-works',
+      'consistency': 'con-sis-ten-cy',
+      'consistent': 'con-sis-tent',
+      'comprehensibility': 'com-pre-hen-si-bil-i-ty',
+      'comprehensibilities': 'com-pre-hen-si-bil-i-ties',
+      'internationalization': 'in-ter-na-tion-al-i-za-tion',
+      'investigating': 'in-ves-ti-gat-ing',
+      'investigation': 'in-ves-ti-ga-tion',
+      'investigations': 'in-ves-ti-ga-tions',
+      'benchmarks': 'bench-marks',
+      'benchmark': 'bench-mark',
+      'experimental': 'ex-per-i-men-tal',
+      'experiments': 'ex-per-i-ments',
+      'experiment': 'ex-per-i-ment',
+      'seminars': 'sem-i-nars',
+      'seminar': 'sem-i-nar',
+      'unsupervised': 'un-su-per-vised',
+      'supervised': 'su-per-vised',
+      'latents': 'la-tents',
+      'latent': 'la-tent',
+      'ambiguity': 'am-bi-gui-ty',
+      'ambiguities': 'am-bi-gui-ties',
+      'adversarial': 'ad-ver-sar-i-al',
+      'distortions': 'dis-tor-tions',
+      'distorted': 'dis-tort-ed',
+      'subtly': 'sub-tly',
+      'distribute': 'dis-trib-ute',
+      'distributed': 'dis-trib-ut-ed',
+      'distributing': 'dis-trib-ut-ing',
+      'routing': 'rout-ing',
+      'failure': 'fail-ure',
+      'failures': 'fail-ures'
+    };
+
+    function hyphenateWord(token) {
+      const match = token.match(/^([^a-zA-Z]*)([a-zA-Z\-]+)([^a-zA-Z]*)$/);
+      if (!match) return token;
+      const lead = match[1];
+      const core = match[2];
+      const trail = match[3];
+
+      if (core.length < 6 || core.includes('\u00AD')) return token;
+
+      // Handle compound words with hyphens (e.g. Concept-Based)
+      if (core.includes('-')) {
+        const parts = core.split('-');
+        return lead + parts.map(p => hyphenateWord(p)).join('-') + trail;
+      }
+
+      const lower = core.toLowerCase();
+      if (ACADEMIC_WORDS[lower]) {
+        const pattern = ACADEMIC_WORDS[lower];
+        let result = '';
+        let pIdx = 0;
+        for (let i = 0; i < core.length; i++) {
+          result += core[i];
+          pIdx++;
+          while (pIdx < pattern.length && pattern[pIdx] === '-') {
+            result += '\u00AD';
+            pIdx++;
+          }
+        }
+        return lead + result + trail;
+      }
+
+      // Morphological fallback for other long words
+      let res = core
+        .replace(/^(anti|auto|contra|counter|hyper|inter|intro|macro|micro|multi|pseudo|retro|semi|super|trans|under)([a-zA-Z]{3,})/i, '$1\u00AD$2')
+        .replace(/([a-zA-Z]{3,})(ability|ibility|ational|ation|tional|tion|sional|sion|fully|fulness|lessness|less|ness|ments|ment|ible|able|ical|ally|ative|itative|atory)$/i, '$1\u00AD$2');
+
+      return lead + res + trail;
+    }
+
+    const containers = document.querySelectorAll(
+      '.research-content, .card-summary, .about-bio p, .highlight-desc, .display-content p, #focus .module-body p, .full-width-cta .cta-text p, .text-justified-hyphens'
+    );
+
+    containers.forEach(container => {
+      const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          const parent = node.parentElement;
+          if (!parent) return NodeFilter.FILTER_REJECT;
+          const tag = parent.tagName.toLowerCase();
+          if (['code', 'pre', 'script', 'style', 'svg', 'math', 'kbd', 'samp'].includes(tag)) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          if (parent.closest('pre, code, svg, math')) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+
+      const textNodes = [];
+      let n;
+      while ((n = walker.nextNode())) {
+        textNodes.push(n);
+      }
+
+      textNodes.forEach(node => {
+        const text = node.textContent;
+        if (!text || !/[a-zA-Z]{6,}/.test(text)) return;
+        const modified = text.split(/(\s+)/).map(token => {
+          if (!token || !/[a-zA-Z]/.test(token)) return token;
+          return hyphenateWord(token);
+        }).join('');
+        if (modified !== text) {
+          node.textContent = modified;
+        }
+      });
+    });
+  })();
+
 }, false);

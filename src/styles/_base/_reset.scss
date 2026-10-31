@@ -20,9 +20,21 @@ body {
   font-weight: 300;
 }
 
-/* Soften the contrast for bold text */
+/* Soften the contrast for bold text & ensure full hyphenation inheritance */
 b, strong {
   font-weight: 550;
+  -webkit-hyphens: inherit;
+  -moz-hyphens: inherit;
+  -ms-hyphens: inherit;
+  hyphens: inherit;
+}
+
+/* Ensure all inline formatting elements inherit hyphenation and break cleanly */
+em, i, span, mark, small, a {
+  -webkit-hyphens: inherit;
+  -moz-hyphens: inherit;
+  -ms-hyphens: inherit;
+  hyphens: inherit;
 }
 
 article, aside, figcaption, figure, footer, header, nav, section {

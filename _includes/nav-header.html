@@ -19,7 +19,7 @@
         </span>
         <div class="dropdown-content">
           <a href="/experience" class="wip-link tooltip-left {% if page.url contains '/experience' %}active{% endif %}" data-tooltip="System Updating...">Experience</a>
-          <a href="/research" class="wip-link tooltip-left {% if page.url contains '/research' %}active{% endif %}" data-tooltip="System Updating...">Research</a>
+          <a href="/research" class="{% if page.url contains '/research' %}active{% endif %}">Research</a>
           <a href="/projects" class="wip-link tooltip-left {% if page.url contains '/projects' %}active{% endif %}" data-tooltip="System Updating...">Projects</a>
           <a href="/talks" class="wip-link tooltip-left {% if page.url contains '/talks' %}active{% endif %}" data-tooltip="System Updating...">Talks</a>
         </div>

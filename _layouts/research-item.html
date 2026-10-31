@@ -1,0 +1,231 @@
+---
+layout: default
+---
+
+<div class="page-research-detail">
+  <div class="research-detail-container page-section">
+
+    <!-- BREADCRUMBS & TOP NAV -->
+    <nav class="research-breadcrumbs js-reveal" aria-label="Breadcrumbs">
+      <a href="/research" class="breadcrumb-back">
+        <i class="fa-solid fa-angle-left" aria-hidden="true"></i> Back to Research
+      </a>
+      <span class="breadcrumb-separator"><i class="fa-solid fa-angle-right" aria-hidden="true"></i></span>
+      <span class="breadcrumb-current">{{ page.title | truncate: 48 }}</span>
+    </nav>
+
+    <!-- RESEARCH HERO HEADER -->
+    <header class="research-hero js-reveal">
+      <div class="research-meta-top">
+        <span class="category-badge">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          {{ page.category_label | default: page.category | capitalize }}
+        </span>
+        {% if page.status %}
+          <span class="status-badge">
+            <i class="fa-solid fa-circle-dot" aria-hidden="true"></i>
+            {{ page.status }}
+          </span>
+        {% endif %}
+        {% if page.date_display %}
+          <span class="date-badge">
+            <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+            {{ page.date_display }}
+          </span>
+        {% endif %}
+      </div>
+
+      <h1 class="research-title">
+        <span class="circuit-line">
+          <span class="circuit-node"></span>
+        </span>
+        <span class="title-text">{{ page.title }}</span>
+      </h1>
+
+      {% if page.subtitle %}
+        <p class="research-subtitle">{{ page.subtitle }}</p>
+      {% endif %}
+
+      <!-- METADATA GRID -->
+      <div class="research-meta-grid">
+        <div class="meta-column">
+          <span class="meta-label"><i class="fa-solid fa-users" aria-hidden="true"></i> Authors & Contributors</span>
+          <div class="meta-value authors-list">
+            {% if page.authors %}
+              {% for author in page.authors %}
+                <span class="author-tag {% if author.highlight %}author-highlight{% endif %}">
+                  {{ author.name }}{% if author.role %} <span class="author-role">({{ author.role }})</span>{% endif %}{% unless forloop.last %}, {% endunless %}
+                </span>
+              {% endfor %}
+            {% else %}
+              <span class="author-tag author-highlight">{{ site.user_name }}</span>
+            {% endif %}
+          </div>
+        </div>
+
+        {% if page.supervisor %}
+          <div class="meta-column">
+            <span class="meta-label"><i class="fa-solid fa-landmark" aria-hidden="true"></i> Affiliation / Advisory</span>
+            <span class="meta-value">{{ page.supervisor }}</span>
+          </div>
+        {% endif %}
+
+        {% if page.venue_full %}
+          <div class="meta-column">
+            <span class="meta-label"><i class="fa-solid fa-award" aria-hidden="true"></i> Venue / Context</span>
+            <span class="meta-value">{{ page.venue_full }}</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- TAGS -->
+      {% if page.tags and page.tags.size > 0 %}
+        <div class="research-tags-row">
+          <span class="tags-prefix"><i class="fa-solid fa-tags" aria-hidden="true"></i> Keywords:</span>
+          {% for tag in page.tags %}
+            <span class="research-tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- PRIMARY ACTION LINKS -->
+      {% if page.links and page.links.size > 0 %}
+        <div class="research-actions">
+          {% for link in page.links %}
+            <a href="{{ link.url }}" class="action-btn {% if link.type == 'primary' %}btn-primary{% else %}btn-secondary{% endif %}" {% unless link.url contains '#' %}target="_blank" rel="noopener noreferrer"{% endunless %}>
+              {% if link.icon %}<i class="{{ link.icon }}" aria-hidden="true"></i>{% endif %}
+              <span>{{ link.name }}</span>
+              {% unless link.url contains '#' %}<i class="fa-solid fa-arrow-up-right-from-square external-icon" aria-hidden="true"></i>{% endunless %}
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </header>
+
+    <!-- MAIN BODY CONTENT -->
+    <main class="research-main js-reveal">
+      <div class="research-content">
+        {{ content }}
+      </div>
+    </main>
+
+    <!-- LAB & DISPATCHES SECTION (lab.maryamrezaee.me) -->
+    <section class="research-lab-section js-reveal">
+      <div class="section-heading-bar">
+        <div class="heading-glow-title">
+          <i class="fa-solid fa-flask" aria-hidden="true"></i>
+          <h3 class="title-text">Lab Notes</h3>
+          <span class="title-glow-orb"></span>
+        </div>
+        <a href="{{ site.lab_url | default: 'https://lab.maryamrezaee.me' }}" target="_blank" rel="noopener noreferrer" class="lab-link-pill wip-link tooltip-top" data-tooltip="System Updating...">
+          lab.maryamrezaee.me <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+        </a>
+      </div>
+
+      {% if page.lab_posts and page.lab_posts.size > 0 %}
+        <div class="lab-dispatches-grid">
+          {% for post in page.lab_posts %}
+            <a href="{{ post.url }}" class="lab-dispatch-card" target="_blank" rel="noopener noreferrer">
+              <div class="dispatch-header">
+                <span class="dispatch-date">{{ post.date }}</span>
+                <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+              </div>
+              <h4 class="dispatch-title">{{ post.title }}</h4>
+              <p class="dispatch-excerpt">{{ post.excerpt }}</p>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="lab-dispatch-placeholder">
+          <div class="placeholder-graphic">
+            <div class="lab-orb-pulse"></div>
+            <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+          </div>
+          <div class="placeholder-tag">
+            <span><i class="fa-solid fa-signal" aria-hidden="true"></i> Uplink Ready</span>
+          </div>
+          <div class="placeholder-text">
+            <h4>Lab Dispatch Uplink Reserved</h4>
+            <p>Technical writeups, experiment traces, and theoretical musings for this work will synchronize here as the <a href="{{ site.lab_url | default: 'https://lab.maryamrezaee.me' }}" target="_blank" rel="noopener noreferrer">lab.maryamrezaee.me</a> ecosystem comes online.</p>
+          </div>
+        </div>
+      {% endif %}
+    </section>
+
+    <!-- BIBTEX CITATION SECTION (Optional) -->
+    {% if page.bibtex %}
+      <section class="research-citation-section js-reveal">
+        <div class="section-heading-bar">
+          <div class="heading-glow-title">
+            <i class="fa-solid fa-quote-left" aria-hidden="true"></i>
+            <h3 class="title-text">Citation</h3>
+            <span class="title-glow-orb"></span>
+          </div>
+          <button type="button" class="copy-bibtex-btn" id="copyBibtexBtn" aria-label="Copy BibTeX Citation">
+            <i class="fa-solid fa-copy" aria-hidden="true"></i>
+            <span class="copy-text">Copy BibTeX</span>
+          </button>
+        </div>
+
+        <div class="bibtex-container">
+          <pre><code id="bibtexSnippet">{{ page.bibtex | strip }}</code></pre>
+        </div>
+      </section>
+    {% endif %}
+
+    <!-- PREV / NEXT NAVIGATION -->
+    {% assign all_research = site.research | sort: 'date' | reverse %}
+    {% assign prev_item = nil %}
+    {% assign next_item = nil %}
+    {% for item in all_research %}
+      {% if item.url == page.url %}
+        {% assign current_idx = forloop.index0 %}
+        {% assign prev_idx = current_idx | minus: 1 %}
+        {% assign next_idx = current_idx | plus: 1 %}
+        {% if prev_idx >= 0 %}
+          {% assign prev_item = all_research[prev_idx] %}
+        {% endif %}
+        {% if next_idx < all_research.size %}
+          {% assign next_item = all_research[next_idx] %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    <footer class="research-pagination-footer js-reveal">
+      <div class="pagination-col prev-col">
+        {% if prev_item %}
+          <a href="{{ prev_item.url }}" class="pagination-link">
+            <span class="nav-direction"><i class="fa-solid fa-angles-left" aria-hidden="true"></i> Previous</span>
+            <span class="nav-title">{{ prev_item.title }}</span>
+          </a>
+        {% else %}
+          <div class="pagination-link disabled">
+            <span class="nav-direction"><i class="fa-solid fa-angles-left" aria-hidden="true"></i> Previous</span>
+            <span class="nav-title">End of Stream</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="pagination-col all-col">
+        <a href="/research" class="pagination-all-btn" aria-label="All Research">
+          <i class="fa-solid fa-table-cells-large" aria-hidden="true"></i>
+        </a>
+      </div>
+
+      <div class="pagination-col next-col">
+        {% if next_item %}
+          <a href="{{ next_item.url }}" class="pagination-link">
+            <span class="nav-direction">Next <i class="fa-solid fa-angles-right" aria-hidden="true"></i></span>
+            <span class="nav-title">{{ next_item.title }}</span>
+          </a>
+        {% else %}
+          <div class="pagination-link disabled">
+            <span class="nav-direction">Next <i class="fa-solid fa-angles-right" aria-hidden="true"></i></span>
+            <span class="nav-title">End of Stream</span>
+          </div>
+        {% endif %}
+      </div>
+    </footer>
+
+  </div>
+</div>

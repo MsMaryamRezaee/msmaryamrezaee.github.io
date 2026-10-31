@@ -8,6 +8,7 @@
 
 .footer-container {
   position: relative; 
+  z-index: 1;
   overflow: hidden;
   background: $main; 
   padding: 250px 5% 30px 5%; // More padding on top, less on bottom

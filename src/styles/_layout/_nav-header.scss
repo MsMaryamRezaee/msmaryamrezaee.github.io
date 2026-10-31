@@ -167,7 +167,9 @@
       background: color.adjust($main, $lightness: 5%);
       border: 1px solid rgba($accent, 0.2);
       border-radius: 6px;
-      min-width: 160px;
+      width: max-content;
+      max-width: 200px;
+      min-width: 60px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.5);
       opacity: 0;
       visibility: hidden;
@@ -209,7 +211,7 @@
     // Dim active dropdown items if they aren't being directly hovered
     // (Uses \(text-secondary for a soft grey highlight and\)main for the dark text inside it)
     .dropdown-content a.active:not(:hover) {
-      background: $text-secondary; 
+      background: $accent; 
       color: $main; 
     }
   }
