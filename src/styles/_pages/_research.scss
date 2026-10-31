@@ -1147,67 +1147,93 @@
     z-index: 2;
     background-color: color.adjust($main, $lightness: 2.2%);
     border: 1px solid color.adjust($line, $lightness: -22%);
+    border-top: 2px solid $accent;
     border-radius: 10px;
     box-shadow: 0 0 30px color-mix(in srgb, color-mix(in srgb, $main, #000 80%), transparent 60%);
-    padding: 26px 30px;
+    padding: 34px 30px 28px 30px;
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
 
     @media only screen and (max-width: 767.98px) {
-      margin-top: 36px;
-      padding: 20px 18px;
+      padding: 30px 18px 22px 18px;
       border-radius: 8px;
     }
 
     &:hover {
       border-color: color.change($accent, $alpha: 0.35);
-      box-shadow: 0 4px 30px color-mix(in srgb, color-mix(in srgb, $main, #000 80%), transparent 70%);
+      border-top-color: $accent;
+      box-shadow: 0 0 25px rgba($accent, 0.12), 0 4px 30px color-mix(in srgb, color-mix(in srgb, $main, #000 80%), transparent 70%);
+
+      .title-node {
+        box-shadow: none;
+      }
+
+      .console-title {
+        text-shadow: none;
+      }
     }
 
     .console-header-bar {
+      position: absolute;
+      top: 0;
+      left: 19px;
+      right: 26px;
+      transform: translateY(-50%);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      padding-bottom: 14px;
-      margin-bottom: 22px;
-      border-bottom: 1px solid color.change($line, $alpha: 0.4);
+      gap: 16px;
+      z-index: 5;
+      pointer-events: none;
 
-      .console-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.76rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: $accent;
-
-        i {
-          font-size: 0.82rem;
-        }
+      > * {
+        pointer-events: auto;
       }
 
-      .console-status {
+      @media only screen and (max-width: 600px) {
+        position: static;
+        transform: none;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 22px;
+        padding-top: 2px;
+      }
+
+      .console-title-badge {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        font-size: 0.72rem;
-        color: $text-secondary;
-        letter-spacing: 0.5px;
-        background: color.adjust($main, $lightness: 5%);
-        border: 1px solid color.adjust($line, $lightness: -20%);
-        padding: 3px 10px;
-        border-radius: 20px;
+        gap: 15px;
+        padding: 3px 15px;
+        position: relative;
+        background: linear-gradient(
+          to bottom,
+          $main 0%,
+          $main 50%,
+          color.adjust($main, $lightness: 2.2%) 50%,
+          color.adjust($main, $lightness: 2.2%) 100%
+        );
+        user-select: none;
+        white-space: nowrap;
 
-        .status-pulse-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
+        @media only screen and (max-width: 600px) {
+          position: absolute;
+          top: 0;
+          left: 18px;
+          transform: translateY(-50%);
+          padding: 3px 10px;
+        }
+
+        .title-node {
+          width: 8px;
+          height: 8px;
           background: $accent;
-          box-shadow: 0 0 8px rgba($accent, 0.8);
+          border-radius: 50%;
+          box-shadow: 0 0 10px $accent, 0 0 18px rgba($accent, 0.85);
           position: relative;
           flex-shrink: 0;
+          display: inline-block;
+          transition: box-shadow 0.3s ease;
 
           &::before {
             content: '';
@@ -1215,11 +1241,84 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 14px;
-            height: 14px;
-            border: 1px solid rgba($accent, 0.5);
+            width: 22px;
+            height: 22px;
+            border: 1px solid rgba($accent, 0.55);
             border-radius: 50%;
             animation: orb-sonar 2s infinite cubic-bezier(0.165, 0.84, 0.44, 1);
+          }
+        }
+
+        .console-title {
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 1rem;
+          font-weight: 700;
+          color: $accent;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          margin: 0;
+          padding: 0;
+          line-height: 1;
+          text-shadow: 0 0 14px rgba($accent, 0.35);
+          transition: text-shadow 0.3s ease;
+
+          @media only screen and (max-width: 600px) {
+            font-size: 1.02rem;
+            letter-spacing: 1.5px;
+          }
+        }
+      }
+
+      .console-status-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Space Grotesk', monospace;
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: $main;
+        background: $accent;
+        padding: 4.5px 13px 5px 13px;
+        border-radius: 50px;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        white-space: nowrap;
+        position: relative;
+        overflow: hidden;
+        cursor: default;
+        user-select: none;
+        box-shadow: 0 0 12px rgba($accent, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        @media only screen and (max-width: 600px) {
+          margin-top: 4px;
+          align-self: flex-start;
+          font-size: 0.68rem;
+          letter-spacing: 1px;
+          padding: 3px 11px;
+        }
+
+        // Sliding shimmer highlight (glimmer)
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+          transform: translateX(-100%);
+          transition: transform 0.6s ease;
+          pointer-events: none;
+        }
+
+        &:hover {
+          transform: translateY(-2px);
+          animation: none;
+          box-shadow: 0 2px 4px rgba($accent, 0.6);
+
+          &::before {
+            transform: translateX(100%);
           }
         }
       }
@@ -1232,7 +1331,7 @@
 
       @media only screen and (min-width: 860px) {
         grid-template-columns: 1fr auto 1fr;
-        gap: 30px;
+        gap: 32px;
         align-items: stretch;
       }
 
@@ -1244,34 +1343,27 @@
         .bay-heading {
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 15px;
+          font-family: 'Space Grotesk', sans-serif;
           font-size: 1.05rem;
-          font-weight: 500;
+          font-weight: 600;
           color: $text-primary;
-          letter-spacing: 0.5px;
-          margin: 0 0 8px 0;
+          letter-spacing: 0.8px;
+          margin: 0 0 20px 0;
           padding: 0; // Clears 1em padding-top from _typography.scss
           line-height: 1.2;
 
           i {
             color: $accent;
-            font-size: 0.92rem;
+            font-size: 0.95rem;
           }
-        }
-
-        .bay-summary {
-          font-size: 0.85rem;
-          line-height: 1.6;
-          color: $text-secondary;
-          margin: 0 0 16px 0;
-          padding: 0;
         }
       }
 
       .console-divider {
         width: 100%;
         height: 1px;
-        background: color.change($line, $alpha: 0.4);
+        background: rgba($accent, 0.18);
         margin: 2px 0;
 
         @media only screen and (min-width: 860px) {
@@ -1283,29 +1375,42 @@
     }
 
     .horizon-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      width: 100%;
+      box-sizing: border-box;
       margin-top: auto;
 
+      @media only screen and (max-width: 480px) {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
       .horizon-tag {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        font-size: 0.72rem;
+        justify-content: center;
+        text-align: center;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.78rem;
         font-weight: 500;
         color: color.adjust($text-secondary, $lightness: 5%);
-        background: color.adjust($main, $lightness: 6%);
-        border: 1px solid color.adjust($line, $lightness: -18%);
-        padding: 4px 10px;
+        background: rgba($accent, 0.05);
+        border: 1px solid rgba($accent, 0.2);
+        padding: 9px 12px;
         border-radius: 6px;
         letter-spacing: 0.3px;
-        transition: all 0.2s ease;
+        line-height: 1.3;
+        transition: all 0.25s ease;
+        box-sizing: border-box;
 
         &:hover {
           color: $text-primary;
-          border-color: color.change($accent, $alpha: 0.4);
-          background: color.change($accent, $alpha: 0.08);
-          transform: translateY(-1px);
+          border-color: $accent;
+          background: rgba($accent, 0.12);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
       }
     }
@@ -1315,66 +1420,55 @@
       flex-wrap: wrap;
       gap: 12px;
       margin-top: auto;
+      width: 100%;
+      box-sizing: border-box;
 
-      @media only screen and (max-width: 480px) {
+      @media only screen and (min-width: 860px) {
         flex-direction: column;
+        align-items: stretch;
+      }
+
+      @media only screen and (max-width: 450px) {
+        flex-direction: column;
+        align-items: stretch;
       }
 
       .console-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        padding: 9px 16px;
-        font-size: 0.82rem;
-        font-weight: 500;
-        border-radius: 6px;
+        padding: 11px 16px;
+        background: rgba($accent, 0.05);
+        border: 1px solid rgba($accent, 0.3);
+        border-radius: 8px;
+        color: $text-primary;
         text-decoration: none;
-        transition: all 0.2s ease;
-        user-select: none;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        flex: 1 1 0px;
+        min-width: 130px;
+        text-align: center;
         white-space: nowrap;
+        box-sizing: border-box;
 
-        @media only screen and (max-width: 480px) {
-          width: 100%;
-          box-sizing: border-box;
+        i {
+          font-size: 1.05rem;
+          margin-right: 10px;
+          color: $accent;
+          transition: transform 0.3s ease;
         }
 
-        &.btn-primary {
-          color: $main;
-          background: $accent;
-          border: 1px solid transparent;
-          box-shadow: 0 2px 10px rgba($accent, 0.25);
-
-          i {
-            font-size: 0.78rem;
-          }
-
-          &:hover {
-            background: color.adjust($accent, $lightness: 8%);
-            box-shadow: 0 4px 16px rgba($accent, 0.4);
-            transform: translateY(-1px);
-          }
-        }
-
-        &.btn-secondary {
+        &:hover {
+          background: rgba($accent, 0.15);
+          border-color: $accent;
           color: $text-primary;
-          background: color.change($accent, $alpha: 0.08);
-          border: 1px solid color.adjust($line, $lightness: -10%);
+          transform: translateY(-3px);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 
           i {
-            color: $accent;
-            font-size: 0.82rem;
-          }
-
-          &:hover {
-            background: $accent;
-            color: $main;
-            border-color: transparent;
-            transform: translateY(-1px);
-
-            i {
-              color: $main;
-            }
+            transform: scale(1.15);
           }
         }
       }

@@ -164,8 +164,8 @@
       position: absolute;
       top: calc(100% + 20px);
       right: 0;
-      background: color.adjust($main, $lightness: 5%);
-      border: 1px solid rgba($accent, 0.2);
+      background: color.adjust($main, $lightness: 2%);
+      border: 1px solid rgba($accent, 0.1);
       border-radius: 6px;
       width: max-content;
       max-width: 200px;
