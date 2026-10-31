@@ -1459,25 +1459,47 @@
         justify-content: center;
         text-align: center;
         font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.78rem;
+        font-size: 0.76rem;
         font-weight: 500;
-        color: color.adjust($text-secondary, $lightness: 5%);
-        background: rgba($accent, 0.05);
-        border: 1px solid rgba($accent, 0.2);
+        color: color.adjust($text-secondary, $lightness: 12%);
+        background: color.change($accent, $alpha: 0.05);
+        border: 2px solid color.change($accent, $alpha: 0.25);
         padding: 10px 12px;
-        border-radius: 6px;
-        letter-spacing: 0.3px;
+        border-radius: 24px; // Tag capsule radius — differentiates from rectangular buttons
+        letter-spacing: 0.4px;
         line-height: 1.3;
-        transition: all 0.25s ease;
         min-height: 45px;
         box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+        cursor: default;
+        user-select: none;
+        transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 
+        // Sliding shimmer highlight (glimmer like status animation)
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+          transform: translateX(-100%);
+          transition: transform 0.6s ease;
+          pointer-events: none;
+        }
+
+        // Hover: flare-up with glowing aura & glimmer (NO translateY / no lifting!)
         &:hover {
-          color: $text-primary;
-          border-color: $accent;
-          background: rgba($accent, 0.12);
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+          color: #ffffff;
+          border-color: color.change($accent, $alpha: 0.75);
+          background: color.change($accent, $alpha: 0.45);
+          box-shadow: 0 0 16px rgba($accent, 0.35), inset 0 0 8px rgba($accent, 0.2);
+
+          &::before {
+            transform: translateX(100%);
+          }
         }
       }
     }
