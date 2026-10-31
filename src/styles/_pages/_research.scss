@@ -2176,6 +2176,26 @@
         padding: 14px 16px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba($accent, 0.4) transparent;
+
+        &::-webkit-scrollbar {
+          height: 5px;
+        }
+        &::-webkit-scrollbar-track {
+          background: transparent;
+          margin: 4px 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: rgba($accent, 0.4);
+          border-radius: 9999px;
+          border: 1px solid transparent;
+          background-clip: padding-box;
+
+          &:hover {
+            background-color: rgba($accent, 0.8);
+          }
+        }
         margin: 16px 0;
 
         @media only screen and (min-width: 768px) {
@@ -2526,6 +2546,26 @@
       padding: 14px 16px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba($accent, 0.4) transparent;
+
+      &::-webkit-scrollbar {
+        height: 5px;
+      }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+        margin: 4px 8px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba($accent, 0.4);
+        border-radius: 9999px;
+        border: 1px solid transparent;
+        background-clip: padding-box;
+
+        &:hover {
+          background-color: rgba($accent, 0.8);
+        }
+      }
       background-color: color.adjust($main, $lightness: -0.5%);
       border: 1px solid color.adjust($line, $lightness: -24%);
       border-radius: 6px;
